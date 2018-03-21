@@ -12,12 +12,11 @@ public enum Couleur {
 		int i=rand.nextInt(6)+1;
 		if(i<4) {
 			return Couleur.ROUGE;
-		}else { if(i<6) {
+		} else if(i<6) {
 			return Couleur.JAUNE;
-			}
+		} else {
 			return Couleur.VERT;
 		}
-		
 	}
 	
 }
