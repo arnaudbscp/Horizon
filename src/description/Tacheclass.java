@@ -3,7 +3,7 @@ import java.util.Collection;
 
 public class Tacheclass implements Tache {
 	private int coutAcceleration;
-	private Alea aleaTache;
+	private Alea[] aleas;
 	private String description;
 	private int dureeInitiale;
 	private int dureeMax;
@@ -13,7 +13,7 @@ public class Tacheclass implements Tache {
 	
 	public Tacheclass(int coutAcc, Alea alea, String desc, int dureeInit, int dureeMax, String id) {
 		this.coutAcceleration = coutAcc; 
-		this.aleaTache = alea;
+		this.aleas = new Alea[3];
 		this.description = desc; 
 		this.dureeInitiale = dureeInit;
 		this.dureeMax = dureeMax; 
@@ -23,8 +23,9 @@ public class Tacheclass implements Tache {
 	public int coutAcceleration() {
 		return this.coutAcceleration;
 	}
-	
-	
+	public Alea getAlea(Couleur couleur) {
+		return aleas[0]; //A COMPLETER
+	}
 	public String getDescription() {
 		return this.description;
 	}
