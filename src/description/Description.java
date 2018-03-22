@@ -1,14 +1,9 @@
 package description;
-import java.util.LinkedList;
 
-public class Description implements Tache {
-	LinkedList listeTaches;
+public class Description {
 	
 	public Description() {
-		this.listeTaches = new LinkedList();
 		
 	}
-	
-	
 	
 }
