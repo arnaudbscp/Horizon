@@ -11,9 +11,9 @@ public class Tacheclass implements Tache {
 	private Collection<Tache> predecesseurs;
 	private Collection<Tache> successeurs;
 	
-	public Tacheclass(int coutAcc, Alea alea, String desc, int dureeInit, int dureeMax, String id) {
+	public Tacheclass(int coutAcc, Alea[] alea, String desc, int dureeInit, int dureeMax, String id) {
 		this.coutAcceleration = coutAcc; 
-		this.aleas = new Alea[3];
+		this.aleas = alea;
 		this.description = desc; 
 		this.dureeInitiale = dureeInit;
 		this.dureeMax = dureeMax; 

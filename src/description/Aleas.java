@@ -1,16 +1,16 @@
 package description;
 
 public class Aleas implements Alea{
-	private String TacheId;
-	private String nom;
+	
 	private TypeAlea typeA;
 	private int grav;
+	private Couleur color;
 	
-	public Aleas(String a, String b, TypeAlea type, int grav) {
-		this.TacheId=a;
-		this.nom=b;
+	public Aleas(TypeAlea type, int grav, Couleur color) {
+		
 		this.typeA=type;
-		this.grav=grav;		
+		this.grav=grav;
+		this.color=color;
 	}
 	public int getGravite() {
 		return this.grav;
