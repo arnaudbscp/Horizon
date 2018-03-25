@@ -1,5 +1,8 @@
 package partie;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import description.Alea;
 import description.Couleur;
 import description.Description;
@@ -32,6 +35,21 @@ public class EssaiDescription {
 		Tache det =d.getFin();
 		System.out.println(det.getDescription()+"  "+det.getId());
 		
+		
+		Collection<Tache> abbt = new ArrayList<Tache>();
+		abbt = be.getSuccesseurs();
+		for(Tache abbb: abbt) {
+			System.out.println(abbb.getDescription());
+		}
+		abbt = be.getSuccesseurs();
+		for(Tache abbb: abbt) {
+			System.out.println(abbb.getDescription());
+		}
+		Collection<Tache> abbtt = new ArrayList<Tache>();
+		abbtt = be.getPredecesseurs();
+		for(Tache abbb: abbtt) {
+			System.out.println(" /"+abbb.getDescription());
+		}
 		
 	}
 }

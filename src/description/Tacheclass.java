@@ -1,8 +1,10 @@
 package description;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 
 
 public class Tacheclass implements Tache {
@@ -22,6 +24,9 @@ public class Tacheclass implements Tache {
 		this.dureeInitiale = dureeInit;
 		this.dureeMax = dureeMax; 
 		this.id = id;
+		this.predecesseurs = new ArrayList<Tache>();
+		this.successeurs = new ArrayList<Tache>();
+		
 	}
 	
 	public int coutAcceleration() {
@@ -46,14 +51,32 @@ public class Tacheclass implements Tache {
 		return this.id;
 	}
 	public Collection<Tache> getPredecesseurs() {
+		
+		Description d= new Description();
+		Set<String> set = d.getRelation().keySet();
+		String[] tab ;
+		Iterator<String> it= set.iterator();
+		while(it.hasNext()) {
+			
+			tab= d.getRelation().get(it.next());
+			for(String a : tab) {
+				if(this.id.equalsIgnoreCase(a)) {
+					this.predecesseurs.add(d.getTacheById(it.toString()));				}
+			}
+			
+		}
+		
 		return this.predecesseurs;
 	}
-	public Collection<Tache> getSuccesseurs() {
-		Description d= new Description();
-		int index =  d.getDescription().indexOf(d.getTacheById(this.id));
-		List<Tacheclass> ab = (List<Tacheclass>)d;
-		ListIterator<Tacheclass> it =ab.listIterator(index);
-		
+	public final Collection<Tache> getSuccesseurs() {
+		if(this.successeurs.isEmpty()) {
+			Description  d= new Description();
+			String[] a = d.getRelation().get(this.id);
+			for(String b : a) {
+				this.successeurs.add(d.getTacheById(b));
+			}
+		}
+		return this.successeurs;
 		
 	}
 }

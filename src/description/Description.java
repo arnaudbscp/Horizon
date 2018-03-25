@@ -64,8 +64,9 @@ public class Description {
 		}
 		return null;
 	}
-	protected  LinkedList<Tacheclass> getDescription(){
-		return this.tabTache;
+	protected HashMap<String, String[]> getRelation(){
+		
+		return relation;
 	}
 	public final Tache getDebut() {
 		return this.tabTache.getFirst();
