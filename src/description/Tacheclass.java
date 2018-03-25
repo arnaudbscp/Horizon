@@ -1,9 +1,13 @@
 package description;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
 
 public class Tacheclass implements Tache {
 	private int coutAcceleration;
-	private Alea[] aleas;
+	private Aleas[] aleas;
 	private String description;
 	private int dureeInitiale;
 	private int dureeMax;
@@ -11,7 +15,7 @@ public class Tacheclass implements Tache {
 	private Collection<Tache> predecesseurs;
 	private Collection<Tache> successeurs;
 	
-	public Tacheclass(int coutAcc, Alea[] alea, String desc, int dureeInit, int dureeMax, String id) {
+	public Tacheclass(int coutAcc, Aleas[] alea, String desc, int dureeInit, int dureeMax, String id) {
 		this.coutAcceleration = coutAcc; 
 		this.aleas = alea;
 		this.description = desc; 
@@ -24,7 +28,10 @@ public class Tacheclass implements Tache {
 		return this.coutAcceleration;
 	}
 	public Alea getAlea(Couleur couleur) {
-		return aleas[0]; //A COMPLETER
+		if(couleur.equals(Couleur.ROUGE)) return aleas[0];
+		else if(couleur.equals(Couleur.JAUNE)) {return aleas[1];			
+		}
+		return aleas[2];
 	}
 	public String getDescription() {
 		return this.description;
@@ -42,6 +49,11 @@ public class Tacheclass implements Tache {
 		return this.predecesseurs;
 	}
 	public Collection<Tache> getSuccesseurs() {
-		return this.successeurs;
+		Description d= new Description();
+		int index =  d.getDescription().indexOf(d.getTacheById(this.id));
+		List<Tacheclass> ab = (List<Tacheclass>)d;
+		ListIterator<Tacheclass> it =ab.listIterator(index);
+		
+		
 	}
 }

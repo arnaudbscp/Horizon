@@ -1,5 +1,6 @@
 package description;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -63,7 +64,9 @@ public class Description {
 		}
 		return null;
 	}
-	
+	protected  LinkedList<Tacheclass> getDescription(){
+		return this.tabTache;
+	}
 	public final Tache getDebut() {
 		return this.tabTache.getFirst();
 	}
