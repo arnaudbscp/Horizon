@@ -41,10 +41,6 @@ public class EssaiDescription {
 		for(Tache abbb: abbt) {
 			System.out.println(abbb.getDescription());
 		}
-		abbt = be.getSuccesseurs();
-		for(Tache abbb: abbt) {
-			System.out.println(abbb.getDescription());
-		}
 		Collection<Tache> abbtt = new ArrayList<Tache>();
 		abbtt = be.getPredecesseurs();
 		for(Tache abbb: abbtt) {
