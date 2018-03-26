@@ -51,26 +51,23 @@ public class Tacheclass implements Tache {
 		return this.id;
 	}
 	public Collection<Tache> getPredecesseurs() {
-		
+		if(this.predecesseurs.isEmpty()) {
 		Description d= new Description();
-		Set<String> set = d.getRelation().keySet();
-		String[] tab ;
-		Iterator<String> it= set.iterator();
-		while(it.hasNext()) {
-			
-			tab= d.getRelation().get(it.next());
-			for(String a : tab) {
-				if(this.id.equalsIgnoreCase(a)) {
-					this.predecesseurs.add(d.getTacheById(it.toString()));				}
+		HashMap<String, String[]> relations = d.getRelation();
+		for(HashMap.Entry<String,String[]> e : relations.entrySet()) {
+			String[] rel = e.getValue();
+			for(String a : rel) {
+				if(a == this.id) {
+					this.predecesseurs.add(d.getTacheById(e.getKey()));
+				}
 			}
-			
 		}
-		
+		}
 		return this.predecesseurs;
 	}
 	public final Collection<Tache> getSuccesseurs() {
 		if(this.successeurs.isEmpty()) {
-			Description  d= new Description();
+			Description d = new Description();
 			String[] a = d.getRelation().get(this.id);
 			for(String b : a) {
 				this.successeurs.add(d.getTacheById(b));

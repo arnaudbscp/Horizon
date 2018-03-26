@@ -42,7 +42,7 @@ public class EssaiDescription {
 			System.out.println(abbb.getDescription());
 		}
 		Collection<Tache> abbtt = new ArrayList<Tache>();
-		abbtt = be.getPredecesseurs();
+		abbtt = det.getPredecesseurs();
 		for(Tache abbb: abbtt) {
 			System.out.println(" /"+abbb.getDescription());
 		}
