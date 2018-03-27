@@ -1,6 +1,7 @@
 package description;
 
 import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -78,5 +79,21 @@ public class Description {
 	
 	public Couleur getRandom() {
 		return Couleur.tirage();
+	}
+	
+	public Collection<Tache> getCheminCritique() {
+		ArrayList<Tache> liste = new ArrayList<>();
+		Tache tache1 = this.getDebut(); 
+		liste.add(tache1);
+		Collection<Tache> successeurs = new ArrayList<>();
+		successeurs = tache1.getSuccesseurs();
+		HashMap<String, Collection<Tache>> successeurs2 = new HashMap<>();
+		for(Tache i : successeurs) {
+			successeurs2.put(i.getId(), i.getSuccesseurs());
+		}
+		//SUCCESSEURS 2 = <"2", "5, 7">, <"3", "5, 7">, <"4", "5, 7"> 
+		for(HashMap.Entry<String,Collection<Tache>> e : successeurs2.entrySet()) {
+			String[] tab = (String[]) e.getValue().toArray();	
+		}
 	}
 }
