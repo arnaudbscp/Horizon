@@ -2,7 +2,7 @@ package partie;
 
 import java.util.ArrayList;
 
-public class DonneesJoueurs {
+public class DonneesJoueurs implements DonneesJoueur {
 	private int montantCaisse;
 	private int qualiteProduit; 
 	private ArrayList<Realisation> liste;
@@ -13,11 +13,11 @@ public class DonneesJoueurs {
 	}
 	
 	public void baisseQualite(int delta) {
-		
+		this.qualiteProduit -= delta;
 	}
 	
 	public void depense(int somme) {
-		
+		this.montantCaisse -= somme;
 	}
 	
 	public int getCaisse() {
