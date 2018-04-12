@@ -3,10 +3,16 @@ package partie;
 import java.util.ArrayList;
 
 public class DonneesJoueurs implements DonneesJoueur {
-	private int montantCaisse;
+	private int montantCaisse; 
 	private int qualiteProduit; 
 	private ArrayList<Realisation> liste;
 	private String nom;
+	
+	public DonneesJoueurs(String nom) {
+		this.nom = nom;
+		this.montantCaisse = 300; 
+		this.qualiteProduit = 0;
+	}
 	
 	public void actualisation(int temps) {
 		
