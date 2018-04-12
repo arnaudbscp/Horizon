@@ -7,7 +7,7 @@ public interface VueJoueur {
 	public void FinDuTour();
 	public int getCaisse();
 	public int getCurrent(String id);
-	public String getDebutId(String id);
+	public String getDebutId();
 	public Description getDescription();
 	public int getDuree(String id);
 	public Etat getEtat(String id);

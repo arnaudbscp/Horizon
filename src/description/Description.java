@@ -95,5 +95,6 @@ public class Description {
 		for(HashMap.Entry<String,Collection<Tache>> e : successeurs2.entrySet()) {
 			String[] tab = (String[]) e.getValue().toArray();	
 		}
+		return successeurs;
 	}
 }
