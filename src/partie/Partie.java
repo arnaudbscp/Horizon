@@ -2,13 +2,14 @@ package partie;
 
 import java.util.ArrayList;
 
+import description.Couleur;
 import description.Description;
 
 public class Partie {
 	
 	private Description description; 
 	private String[] joueurs; 
-	private ArrayList<DonneesJoueurs> liste;
+	private ArrayList<VueJoueurs> liste;
 	
 	public Partie(Description d, String[] tab) {
 		this.description = d; 
@@ -26,4 +27,13 @@ public class Partie {
 		}
 		return null;
 	}
+	
+	public void passerTour() {
+		
+	}
+	
+	public void tourSemaine(Couleur c) {
+	
+	}
+	
 }
