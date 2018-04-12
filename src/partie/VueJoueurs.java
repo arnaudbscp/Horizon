@@ -14,7 +14,7 @@ public class VueJoueurs implements VueJoueur{
 	private int duree;
 	private int current;
 	private Etat etat;
-	private int numeroT;
+	private int numeroT; // mettre numero tour dans partie / faire un enum pour numéro tour
 	private boolean active;
 	
 	public VueJoueurs(DonneesJoueurs j) {
