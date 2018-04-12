@@ -9,16 +9,9 @@ public interface DonneesJoueur {
 	public void baisseQualite(int delta);
 	public void depense(int delta);
 	public int getCaisse();
-	//public graphe.Graphe getGraphe();
 	public  String getNom();
 	public int  getQualite();
-	//public Realisation getRealisation();
+	public Realisation getRealisation();
 	public Strategie getStrategie();
-	public void uneSemaine();
-	
-	
-	
-	
-	
 	
 }

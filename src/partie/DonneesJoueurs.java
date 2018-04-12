@@ -24,10 +24,6 @@ public class DonneesJoueurs implements DonneesJoueur {
 		return this.montantCaisse;
 	}
 	
-	public Graphe getGraphe() {
-		
-	}
-	
 	public String getNom() {
 		return this.nom;
 	}
@@ -43,10 +39,5 @@ public class DonneesJoueurs implements DonneesJoueur {
 	public Strategie getStrategie() {
 		
 	}
-	
-	public void uneSemaine() {
-		
-	}
-	
 	
 }
