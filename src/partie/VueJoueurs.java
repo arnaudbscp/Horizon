@@ -14,25 +14,25 @@ public class VueJoueurs implements VueJoueur{
 	private int duree;
 	private int current;
 	private Etat etat;
-	private boolean[] protection;
+	private int numeroT;
+	private boolean active;
 	
 	public VueJoueurs(DonneesJoueurs j) {
 		this.joueur = j;
 		this.nom = joueur.getNom();
 		this.caisse = 300;
 		this.qualite = joueur.getQualite();
+		this.numeroT = 0;
 	}
 
 	@Override
 	public void FinDuTour() {
-		// TODO Auto-generated method stub
-		
+		this.numeroT++;
 	}
 
 	@Override
 	public int getCaisse() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.caisse;
 	}
 
 	@Override
@@ -42,57 +42,51 @@ public class VueJoueurs implements VueJoueur{
 	}
 
 	@Override
-	public String getDebutId(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDebutId() {
+		return this.debutId;
 	}
 
 	@Override
 	public Description getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.description;
 	}
 
 	@Override
 	public int getDuree(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getDescription().getTacheById(id).getDureeInitiale();
 	}
 
 	@Override
 	public Etat getEtat(String id) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public String getFinId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.finId;
 	}
 
 	@Override
 	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.nom;
 	}
 
 	@Override
 	public int getNumeroTour() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.numeroT;
 	}
 
 	@Override
 	public int getQualite() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.qualite;
 	}
 
 	@Override
 	public void setAcceleration(String id, boolean active) {
-		// TODO Auto-generated method stub
-		
+		if(active) {
+			this.duree = getDuree(id)-1;
+		}
 	}
 
 	@Override
