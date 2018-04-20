@@ -31,7 +31,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public String getDebutId() {
-		return this.debutId;
+		return this.description.getDebut().getId();
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public String getFinId() {
-		return this.finId;
+		return this.description.getFin().getId();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public int getQualite() {
-		return this.qualite;
+		return this.joueur.getQualite();
 	}
 
 	@Override
