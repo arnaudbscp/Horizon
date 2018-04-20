@@ -8,20 +8,21 @@ public class Partie {
 	
 	private Description description; 
 	private String[] joueurs; 
-	private ArrayList<DonneesJoueurs> liste;
+	private ArrayList<VueJoueurs> liste;
 	
 	public Partie(Description d, String[] tab) {
+		liste = new ArrayList<>();
 		this.description = d; 
 		this.joueurs = tab;
-		for(String s : tab) {
-			liste.add(new DonneesJoueurs(s));
+		for(int i = 0; i< tab.length; i++) {
+			liste.add(new VueJoueurs(tab[i]));
 		}
 	}
 	
-	public VueJoueurs getVueJoueur(String joueur) {
-		for(DonneesJoueurs j : liste) {
+	public DonneesJoueurs getVueJoueur(String joueur) {
+		for(VueJoueurs j : liste) {
 			if(j.getNom() == joueur) {
-				return new VueJoueurs(j); 
+				return j.getJoueur(); 
 			}
 		}
 		return null;

@@ -57,7 +57,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public String getNom() {
-		return this.nom;
+		return this.joueur.getNom();
 	}
 
 	@Override
@@ -81,6 +81,10 @@ public class VueJoueurs implements VueJoueur{
 	public void setProtection(String id, Couleur couleur, boolean active) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public DonneesJoueurs getJoueur() {
+		return joueur;
 	}
 
 }
