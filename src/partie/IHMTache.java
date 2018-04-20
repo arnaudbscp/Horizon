@@ -22,8 +22,7 @@ public class IHMTache extends Application {
 		Label id = new Label(d.getDebut().getId());
 		Label intitule = new Label(d.getDebut().getDescription());
 		intitule.setStyle("-fx-background-color: lightgrey;"
-                + " -fx-alignment: right;"
-                + " -fx-font: 20px Arial;");
+                + " -fx-alignment: right;");
 		
 		Label alea1 = new Label(d.getDebut().getAlea(Couleur.ROUGE).getGravite() + " : " + d.getDebut().getAlea(Couleur.ROUGE).getType());
 		Label alea2 = new Label(d.getDebut().getAlea(Couleur.JAUNE).getGravite() + " : " + d.getDebut().getAlea(Couleur.JAUNE).getType());
