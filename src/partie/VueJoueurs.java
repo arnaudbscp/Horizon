@@ -5,24 +5,12 @@ import description.Description;
 
 public class VueJoueurs implements VueJoueur{
 	private DonneesJoueurs joueur;
-	private String nom;
-	private int caisse;
-	private int qualite;
-	private String debutId;
-	private String finId;
 	private Description description;
-	private int duree;
-	private int current;
-	private Etat etat;
-	private int numeroT;
-	private boolean active;
+	private int numeroT; // mettre numero tour dans partie / faire un enum pour numéro tour
 	
-	public VueJoueurs(DonneesJoueurs j) {
-		this.joueur = j;
-		this.nom = joueur.getNom();
-		this.caisse = 300;
-		this.qualite = joueur.getQualite();
-		this.numeroT = 0;
+	public VueJoueurs(String nom) {
+		joueur = new DonneesJoueurs(nom);
+		description = new Description();
 	}
 
 	@Override
@@ -69,7 +57,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public String getNom() {
-		return this.nom;
+		return this.joueur.getNom();
 	}
 
 	@Override
@@ -93,6 +81,10 @@ public class VueJoueurs implements VueJoueur{
 	public void setProtection(String id, Couleur couleur, boolean active) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public DonneesJoueurs getJoueur() {
+		return joueur;
 	}
 
 }
