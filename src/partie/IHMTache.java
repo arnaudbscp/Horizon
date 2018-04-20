@@ -30,7 +30,7 @@ public class IHMTache extends Application {
 
 		Canvas ronds = new Canvas(300, 100);
 		GraphicsContext gc = ronds.getGraphicsContext2D();
-		gc.setFill(Color.BLUE); 
+		gc.setFill(Color.BLUE);
 		gc.setStroke(Color.BLACK);
 		
 		HBox top = new HBox();
