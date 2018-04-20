@@ -2,6 +2,8 @@ package partie;
 
 import java.util.ArrayList;
 
+import strategie.Strategie;
+
 public class DonneesJoueurs implements DonneesJoueur {
 	private int montantCaisse; 
 	private int qualiteProduit; 
@@ -11,7 +13,7 @@ public class DonneesJoueurs implements DonneesJoueur {
 	public DonneesJoueurs(String nom) {
 		this.nom = nom;
 		this.montantCaisse = 300; 
-		this.qualiteProduit = 0;
+		this.qualiteProduit = 100;
 	}
 	
 	public void actualisation(int temps) {
@@ -41,9 +43,17 @@ public class DonneesJoueurs implements DonneesJoueur {
 	public Realisation getRealisation(String id) {
 		
 	}
-	
+
+	@Override
+	public Realisation getRealisation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Strategie getStrategie() {
-		
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
