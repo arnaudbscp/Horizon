@@ -97,4 +97,8 @@ public class Description {
 		}
 		return successeurs;
 	}
+	
+	public Collection<Tacheclass> getTaches() {
+		return this.tabTache;
+	}
 }

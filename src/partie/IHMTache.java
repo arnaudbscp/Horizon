@@ -1,7 +1,10 @@
 package partie;
 
+import description.Aleas;
 import description.Couleur;
 import description.Description;
+import description.Tache;
+import description.Tacheclass;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -14,49 +17,59 @@ import javafx.stage.Stage;
 
 public class IHMTache extends Application {
 		
-	Scene scene;
+	private Scene scene;
+	private Description description = new Description(); 
+	private Label id; 
+	private Label intitule; 
+	private Label alea1; 
+	private Label alea2; 
+	private Label alea3; 
+	private HBox top; 
+	private HBox bottom; 
+	private HBox middle; 
+	private VBox tache;
 	
-	public void start(Stage stage)  {
-		Description d = new Description();
+	
+	//Les durées seront à ajouter au constructeur
+	public IHMTache(Tache t) {
 		
-		Label id = new Label(d.getDebut().getId());
-		Label intitule = new Label(d.getDebut().getDescription());
-		intitule.setStyle("-fx-background-color: lightgrey;"
-                + " -fx-alignment: right;");
+		//Déclaration de tous les éléments nécessaires à l'IHM d'une tâche
+		this.id = new Label(t.getId()); 
+		this.intitule = new Label(t.getDescription());
+		this.alea1 = new Label(t.getAlea(Couleur.ROUGE).getGravite() + " : " + t.getAlea(Couleur.ROUGE).getType());
+		this.alea2 = new Label(t.getAlea(Couleur.JAUNE).getGravite() + " : " + t.getAlea(Couleur.JAUNE).getType());
+		this.alea3 = new Label(t.getAlea(Couleur.VERT).getGravite() + " : " + t.getAlea(Couleur.VERT).getType());
 		
-		Label alea1 = new Label(d.getDebut().getAlea(Couleur.ROUGE).getGravite() + " : " + d.getDebut().getAlea(Couleur.ROUGE).getType());
-		Label alea2 = new Label(d.getDebut().getAlea(Couleur.JAUNE).getGravite() + " : " + d.getDebut().getAlea(Couleur.JAUNE).getType());
-		Label alea3 = new Label(d.getDebut().getAlea(Couleur.VERT).getGravite() + " : " + d.getDebut().getAlea(Couleur.VERT).getType());
-
-		Canvas ronds = new Canvas(300, 100);
-		GraphicsContext gc = ronds.getGraphicsContext2D();
-		gc.setFill(Color.BLUE);
-		gc.setStroke(Color.BLACK);
+		//Déclaration des éléments de positionnement (HBox, VBox, etc.) 
+		this.top = new HBox(); //HBox du haut contenant l'ID et l'intitulé de la tâche
+		this.bottom = new HBox(); //HBox du bas contenant les trois alés
+		this.middle = new HBox(); //Hbox du milieu qui contiendra les ronds des semaines, etc. 
+		this.tache = new VBox(); //VBox qui placera les 3 HBox précédentes de manière vertical (VBox principale)
 		
-		HBox top = new HBox();
-		top.getChildren().addAll(id, intitule);
-		top.setStyle("-fx-background-color: lightgrey;"
+		//Ajout des données à ces éléments de positionnement 
+		this.top.getChildren().addAll(this.id, this.intitule);
+		this.bottom.getChildren().addAll(this.alea1, this.alea2, this.alea3);
+		//middle sera à faire puisqu'il concerne les durées
+		this.tache.getChildren().addAll(top, middle, bottom);
+		
+		//Propriétés des éléments de positionnement (couleurs, espacements, etc.) 
+		this.top.setStyle("-fx-background-color: lightblue;"
                 + " -fx-font: 30px Arial;");
 		
-		HBox middle = new HBox(); 
-		middle.getChildren().addAll(ronds);
-		
-		HBox bottom = new HBox(); 
-		bottom.getChildren().addAll(alea1, alea2, alea3);
-		bottom.setStyle("-fx-background-color: lightgrey;"
+		this.bottom.setStyle("-fx-background-color: lightblue;"
                 + " -fx-alignment: center;"
                 + " -fx-font: 20px Arial;");
+		this.bottom.setMinWidth(scene.getWidth()/3);
+		this.bottom.setSpacing(100);
 		
-		VBox tache = new VBox();
-		tache.getChildren().addAll(top, middle, bottom);
+		this.scene = new Scene(tache);
+	}
+	
+	public void start(Stage stage)  {
+		IHMTache t1 = new IHMTache(this.description.getDebut());
 		
-		
-		
-		scene = new Scene(tache);
-		bottom.setMinWidth(scene.getWidth()/3);
-		bottom.setSpacing(100);
         stage.setTitle("Tâche initiale");
-        stage.setScene(scene);
+        stage.setScene(t1.scene);
         stage.show();
 	}
 	
