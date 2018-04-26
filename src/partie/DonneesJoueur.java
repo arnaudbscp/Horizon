@@ -1,5 +1,7 @@
 package partie;
 
+import java.util.ArrayList;
+
 import strategie.Strategie;
 
 public interface DonneesJoueur {
@@ -11,7 +13,7 @@ public interface DonneesJoueur {
 	public int getCaisse();
 	public  String getNom();
 	public int  getQualite();
-	public Realisation getRealisation();
+	public ArrayList<Realisation> getRealisation();
 	public Strategie getStrategie();
 	
 }

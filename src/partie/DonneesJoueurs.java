@@ -1,7 +1,8 @@
 package partie;
 
 import java.util.ArrayList;
-
+import description.Description;
+import description.Tacheclass;
 import strategie.Strategie;
 
 public class DonneesJoueurs implements DonneesJoueur {
@@ -9,16 +10,23 @@ public class DonneesJoueurs implements DonneesJoueur {
 	private int qualiteProduit; 
 	private ArrayList<Realisation> liste;
 	private String nom;
+	private Strategie s;
 	
 	public DonneesJoueurs(String nom) {
 		this.nom = nom;
 		this.montantCaisse = 300; 
-		this.qualiteProduit = 100;
-	}
-	
-	public void actualisation(int temps) {
+		this.qualiteProduit = 0;
+		liste = new ArrayList<>();
+		Description d = new Description();
+		for (int i = 0; i < d.getTaches().size(); i++) {
+			liste.add(new Realisation((Tacheclass) d.getTaches()));
+		}
+		liste.get(0).setEtat(Etat.EN_COURS);
+		
 		
 	}
+	
+	public void actualisation(int temps) {}
 	
 	public void baisseQualite(int delta) {
 		this.qualiteProduit -= delta;
@@ -41,19 +49,22 @@ public class DonneesJoueurs implements DonneesJoueur {
 	}
 	
 	public Realisation getRealisation(String id) {
-		
+		for (Realisation r : liste) {
+			if (r.getTache().getId().equals(id)) {
+				return r;
+			}
+		}
+		return null;
 	}
 
 	@Override
-	public Realisation getRealisation() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Realisation> getRealisation() {
+		return liste;
 	}
 
 	@Override
 	public Strategie getStrategie() {
-		// TODO Auto-generated method stub
-		return null;
+		return s;
 	}
 	
 }

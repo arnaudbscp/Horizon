@@ -13,6 +13,7 @@ public class Tacheclass implements Tache {
 	private String description;
 	private int dureeInitiale;
 	private int dureeMax;
+	private int avancement;
 	private String id;
 	private Collection<Tache> predecesseurs;
 	private Collection<Tache> successeurs;
@@ -27,6 +28,10 @@ public class Tacheclass implements Tache {
 		this.predecesseurs = new ArrayList<Tache>();
 		this.successeurs = new ArrayList<Tache>();
 		
+	}
+	
+	public void avancer() {
+		avancement++;
 	}
 	
 	public int coutAcceleration() {
@@ -75,5 +80,9 @@ public class Tacheclass implements Tache {
 		}
 		return this.successeurs;
 		
+	}
+	
+	public int getAvancement() {
+		return avancement;
 	}
 }

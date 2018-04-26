@@ -1,5 +1,8 @@
 package description;
 
+import partie.DonneesJoueur;
+import partie.Realisation;
+
 public class Aleas implements Alea{
 	
 	private TypeAlea typeA;
@@ -7,11 +10,15 @@ public class Aleas implements Alea{
 	private Couleur color;
 	
 	public Aleas(TypeAlea type, int grav, Couleur color) {
-		
 		this.typeA=type;
 		this.grav=grav;
 		this.color=color;
 	}
+	
+	public void appliquer(DonneesJoueur equipe, Realisation r) {
+		// a remplir
+	}
+
 	public int getGravite() {
 		return this.grav;
 	}

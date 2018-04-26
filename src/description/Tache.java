@@ -12,6 +12,8 @@ public interface Tache {
 	public String getId();
 	public Collection<Tache> getPredecesseurs();
 	public Collection<Tache> getSuccesseurs();
+	public int getAvancement();
+	public void avancer();
 
 
 }

@@ -20,7 +20,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public int getCaisse() {
-		return this.caisse;
+		return this.joueur.getCaisse();
 	}
 
 	@Override
@@ -46,8 +46,7 @@ public class VueJoueurs implements VueJoueur{
 
 	@Override
 	public Etat getEtat(String id) {
-		
-		return null;
+		return this.joueur.getRealisation(id).getEtat();
 	}
 
 	@Override
@@ -71,15 +70,15 @@ public class VueJoueurs implements VueJoueur{
 	}
 
 	@Override
-	public void setAcceleration(String id, boolean active) {
-		if(active) {
-			this.duree = getDuree(id)-1;
+	public void setAcceleration(String id, boolean ok) {
+		if(ok) {
+			this.joueur.getRealisation(id).setAcceleration(ok);
 		}
 	}
 
 	@Override
-	public void setProtection(String id, Couleur couleur, boolean active) {
-		// TODO Auto-generated method stub
+	public void setProtection(String id, Couleur couleur, boolean ok) {
+		this.joueur.getRealisation(id).setProtection(couleur, ok);
 		
 	}
 
