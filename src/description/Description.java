@@ -98,7 +98,11 @@ public class Description {
 		return successeurs;
 	}
 	
-	public Collection<Tacheclass> getTaches() {
-		return this.tabTache;
+	public ArrayList<Tacheclass> getTaches() {
+		ArrayList<Tacheclass> tab = new ArrayList<>();
+		for(Tacheclass t : this.tabTache) {
+			tab.add(t);
+		}
+		return tab;
 	}
 }

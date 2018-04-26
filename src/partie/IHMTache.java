@@ -31,7 +31,7 @@ public class IHMTache extends Application {
 	
 	
 	//Les durées seront à ajouter au constructeur
-	public IHMTache(Tache t) {
+	public Scene IHMTache(Tache t) {
 		
 		//Déclaration de tous les éléments nécessaires à l'IHM d'une tâche
 		this.id = new Label(t.getId()); 
@@ -60,16 +60,14 @@ public class IHMTache extends Application {
                 + " -fx-alignment: center;"
                 + " -fx-font: 20px Arial;");
 		this.bottom.setMinWidth(scene.getWidth()/3);
-		this.bottom.setSpacing(100);
+		bottom.setSpacing(100);
 		
-		this.scene = new Scene(tache);
+		return new Scene(tache);
 	}
 	
 	public void start(Stage stage)  {
-		IHMTache t1 = new IHMTache(this.description.getDebut());
-		
         stage.setTitle("Tâche initiale");
-        stage.setScene(t1.scene);
+        stage.setScene(this.IHMTache(this.description.getDebut()));
         stage.show();
 	}
 	
