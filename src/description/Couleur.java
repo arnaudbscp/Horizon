@@ -5,8 +5,6 @@ public enum Couleur {
 	JAUNE,
 	VERT;
 	
-
-	
 	public static Couleur tirage() {
 		Random rand = new Random();
 		int i=rand.nextInt(6)+1;

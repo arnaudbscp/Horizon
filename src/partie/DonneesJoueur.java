@@ -14,6 +14,7 @@ public interface DonneesJoueur {
 	public  String getNom();
 	public int  getQualite();
 	public ArrayList<Realisation> getRealisation();
+	public Realisation getRealisation(String id);
 	public Strategie getStrategie();
 	
 }

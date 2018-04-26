@@ -85,4 +85,10 @@ public class Tacheclass implements Tache {
 	public int getAvancement() {
 		return avancement;
 	}
+
+	@Override
+	public void setDuree(int i) {
+		this.dureeInitiale +=i;
+		
+	}
 }

@@ -14,6 +14,7 @@ public interface Tache {
 	public Collection<Tache> getSuccesseurs();
 	public int getAvancement();
 	public void avancer();
+	public void setDuree(int i);
 
 
 }

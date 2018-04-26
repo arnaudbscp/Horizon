@@ -57,4 +57,8 @@ public class Realisation {
 			this.acceleration = acceleration;
 		}
 	}
+
+	public int getDuree() {
+		return this.tache.getDureeInitiale();
+	}
 }
