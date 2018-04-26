@@ -19,7 +19,7 @@ public class DonneesJoueurs implements DonneesJoueur {
 		liste = new ArrayList<>();
 		Description d = new Description();
 		for (int i = 0; i < d.getTaches().size(); i++) {
-			liste.add(new Realisation((Tacheclass) d.getTaches()));
+			liste.add(new Realisation((Tacheclass) d.getTaches().get(i)));
 		}
 		liste.get(0).setEtat(Etat.EN_COURS);
 		
