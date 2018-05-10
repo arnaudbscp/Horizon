@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import tours.Tour;
+import tours.TourJalon;
+import tours.TourQuizz;
+import tours.TourSemaine;
+
 public class Description {
 	
 	private LinkedList<Tacheclass> tabTache;
 	private HashMap<String, String[]> relation;
+	private Tour[] sequence;
 	public Description() {
 		tabTache =new LinkedList<>();
 		
@@ -53,8 +59,21 @@ public class Description {
 		tabTache.add(new Tacheclass(20,tache7,"planifier", 5,8,"7"));
 		tabTache.add(new Tacheclass(10,tache8,"presenter", 9,11,"8"));
 		
-		
-		
+		// la sequence a suivre chaque tour de jeu commence en checkant a quel type de tours on a à faire!! 
+		sequence[0]= new TourJalon("Jalon", 0, new Tacheclass[] {
+				tabTache.get(0), tabTache.get(1),tabTache.get(2),tabTache.get(3),tabTache.get(4)}); 
+		sequence[1]=new TourSemaine("Semaine", 1, new Tacheclass[] {tabTache.get(0)});	
+		sequence[2]=new TourSemaine("Semaine", 2, new Tacheclass[] {tabTache.get(1)});	
+		sequence[3]=new TourSemaine("Semaine", 3, new Tacheclass[] {tabTache.get(2)});	
+		sequence[4]=new TourSemaine("Semaine", 4, new Tacheclass[] {tabTache.get(3)});	
+		sequence[5]=new TourQuizz("Quizz", 5, null);	
+		sequence[6]=new TourJalon("Jalon", 6, new Tacheclass[] {tabTache.get(4),tabTache.get(5),tabTache.get(6),tabTache.get(7)}); 
+		sequence[7]=new TourSemaine("Semaine", 7, new Tacheclass[] {tabTache.get(4)});	
+		sequence[8]=new TourSemaine("Semaine", 8, new Tacheclass[] {tabTache.get(5)});	
+		sequence[9]=new TourSemaine("Semaine", 9, new Tacheclass[] {tabTache.get(6)});	
+		sequence[10]=new TourQuizz("Quizz", 10, null);
+		sequence[11]=new TourSemaine("Semaine", 11, new Tacheclass[] {tabTache.get(7)});	
+		sequence[12]= new TourSemaine("FINAL", 12, null);
 	}
 	
 	public Tache getTacheById(String id) {
