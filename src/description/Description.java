@@ -59,7 +59,7 @@ public class Description {
 		tabTache.add(new Tacheclass(20,tache7,"planifier", 5,8,"7"));
 		tabTache.add(new Tacheclass(10,tache8,"presenter", 9,11,"8"));
 		
-		// la sequence a suivre chaque tour de jeu commence en checkant a quel type de tours on a à faire!! 
+		// la sequence a suivre chaque tour de jeu commence en checkant a quel type de tours on a à faire!! !
 		sequence[0]= new TourJalon("Jalon", 0, new Tacheclass[] {
 				tabTache.get(0), tabTache.get(1),tabTache.get(2),tabTache.get(3),tabTache.get(4)}); 
 		sequence[1]=new TourSemaine("Semaine", 1, new Tacheclass[] {tabTache.get(0)});	
