@@ -19,10 +19,9 @@ public class Description {
 		tabTache =new LinkedList<>();
 		
 		relation= new HashMap<String, String[]>();
-		Aleas[] a ={(new Aleas(TypeAlea.DELAI, 1,Couleur.ROUGE)),
+		Aleas[] tache1 ={(new Aleas(TypeAlea.DELAI, 1,Couleur.ROUGE)),
 				(new Aleas(TypeAlea.DELAI, 2,Couleur.JAUNE)),
 				(new Aleas(TypeAlea.COUT, 1,Couleur.VERT))};
-		tabTache.add(new Tacheclass(10,a,"reflechir", 0,2,"1"));
 		Aleas[] tache2 ={(new Aleas(TypeAlea.DELAI, 1,Couleur.ROUGE)),
 				(new Aleas(TypeAlea.DELAI, 1,Couleur.JAUNE)),
 				(new Aleas(TypeAlea.COUT, 2,Couleur.VERT))};
@@ -51,6 +50,7 @@ public class Description {
 		relation.put("5", new String[] {"6"});
 		relation.put("6", new String[] {"8"});
 		relation.put("7", new String[] {"8"});
+		tabTache.add(new Tacheclass(10, tache1, "réfléchir", 0, 2, "1")); 
 		tabTache.add(new Tacheclass(20,tache2,"dire", 2,5,"2"));
 		tabTache.add(new Tacheclass(10,tache3,"ecouter", 2,4,"3"));
 		tabTache.add(new Tacheclass(10,tache4,"faire", 2,4,"4"));
