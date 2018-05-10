@@ -124,4 +124,7 @@ public class Description {
 		}
 		return tab;
 	}
+	public Tour[] getSequence() {
+		return sequence;
+	}
 }
