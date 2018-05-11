@@ -52,6 +52,7 @@ public class testpartie {
 		partie.passerTour();  //passer le tour 1
 		partie.tourSemaine(Couleur.VERT);
 		assertEquals(290, donneesJoueur.getCaisse());
+		
 	}
 	/**
 	 * Testé: La durée de la tâche 1 est augmentée de 2 semaines quand l'aléa BB (DELAI de gravité 2)
