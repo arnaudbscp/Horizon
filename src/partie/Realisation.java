@@ -61,4 +61,15 @@ public class Realisation {
 	public int getDuree() {
 		return this.tache.getDureeInitiale();
 	}
+	public void avancer() { // Avancer de la Réalisation (pour mettre a jour les ETATS ou mettre un fonction avancer dans partie qui gere tout (cad les etats terminet les successeurs en etata iminents)
+		if(this.tache.getDureeInitiale()>this.tache.getAvancement()) {
+			this.tache.avancer();
+		}
+		if(this.tache.getDureeInitiale()==this.tache.getAvancement()) {
+			etat=Etat.TERMINEE;
+			for(Tache t : this.tache.getSuccesseurs()) {
+				
+			}
+		}
+	}
 }

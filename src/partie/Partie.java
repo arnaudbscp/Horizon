@@ -16,12 +16,13 @@ public class Partie {
 		liste = new ArrayList<>();
 		this.description = d; 
 		this.joueur = j;
+		liste.add(new VueJoueurs(j));
 	}
 	
-	public VueJoueur getVueJoueur(String joueur) {
+	public DonneesJoueur getVueJoueur(String joueur) {
 		for(VueJoueurs j : liste) {
-			if(j.getNom() == joueur) {
-				return (VueJoueur) j.getJoueur(); 
+			if(j.getNom().equalsIgnoreCase(joueur)) {
+				return  j.getJoueur(); 
 			}
 		}
 		return null;
@@ -29,6 +30,7 @@ public class Partie {
 	
 	public void passerTour() {
 		ArrayList<Realisation> l = getActu();
+		
 		for (Realisation r : l) {
 				r.getTache().avancer();
 				tour++;

@@ -11,6 +11,7 @@ public class VueJoueurs implements VueJoueur{
 	public VueJoueurs(String nom) {
 		joueur = new DonneesJoueurs(nom);
 		description = new Description();
+		
 	}
 
 	@Override

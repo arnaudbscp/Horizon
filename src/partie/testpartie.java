@@ -35,7 +35,8 @@ public class testpartie {
 	public void init() {
 		description = new Description();
 		Partie partie = new Partie(description,"NOM_JOUEUR");
-		donneesJoueur = (DonneesJoueur) partie.getVueJoueur(NOM_JOUEUR);
+		donneesJoueur = partie.getVueJoueur(NOM_JOUEUR);
+		
 	}
 	/**
 	 * Testé: La caisse d'un joueur est diminuée de 10€ quand un aléa EURO de gravité 1 est tiré.<br>
