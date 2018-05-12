@@ -19,10 +19,10 @@ public class Partie {
 		liste.add(new VueJoueurs(j));
 	}
 	
-	public DonneesJoueur getVueJoueur(String joueur) {
+	public VueJoueurs getVueJoueur(String joueur) {
 		for(VueJoueurs j : liste) {
 			if(j.getNom().equalsIgnoreCase(joueur)) {
-				return  j.getJoueur(); 
+				return  j; 
 			}
 		}
 		return null;
