@@ -29,7 +29,19 @@ public class IHMTexte {
 		}
 		
 		for(Tour t : d.getSequence()) {
-			
+			switch(t.getType()) {
+			case "Semaine": 
+				partie.jouerEtape(vueSam);
+				break;
+			case "Quizz": 
+				//Pas pour l'étape 2 
+				break;
+			case "Jalon": 
+				//Pas pour l'étape 2 
+				break;
+			case "FINAL": 
+				
+			}
 		}
 	}
 }
