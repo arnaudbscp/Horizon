@@ -8,6 +8,7 @@ import partie.DonneesJoueurs;
 import partie.Partie;
 import partie.VueJoueur;
 import partie.VueJoueurs;
+import tours.Tour;
 
 public class IHMTexte {
 	
@@ -27,6 +28,8 @@ public class IHMTexte {
 		afficheTache(t);
 		}
 		
-	
+		for(Tour t : d.getSequence()) {
+			
+		}
 	}
 }
