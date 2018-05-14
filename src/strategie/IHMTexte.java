@@ -1,10 +1,13 @@
-package partie;
+package strategie;
 
 import description.Couleur;
 import description.Description;
 import description.Tache;
 import description.Tacheclass;
-import strategie.Strategie;
+import partie.DonneesJoueurs;
+import partie.Partie;
+import partie.VueJoueur;
+import partie.VueJoueurs;
 
 public class IHMTexte implements Strategie {
 
