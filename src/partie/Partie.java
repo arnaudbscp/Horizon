@@ -22,6 +22,10 @@ public class Partie implements Strategie {
 		this.description = d; 
 		this.joueur = j;
 		liste.add(new VueJoueurs(j));
+		for(VueJoueurs a: liste) {
+			a.getJoueur().getRealisation("1").setEtat(Etat.IMMINENT);
+			
+		}
 	}
 	
 	public DonneesJoueurs getDonneesJoueur(String joueur) {
@@ -55,7 +59,9 @@ public class Partie implements Strategie {
 		}
 		tour++;
 	}
-	
+	public int getTour() {
+		return tour;
+	}
 	private void setImminent(Realisation r) {
 		// TODO Auto-generated method stub
 		Collection<Tache> a = r.getTache().getSuccesseurs();
@@ -77,15 +83,17 @@ public class Partie implements Strategie {
 		for(int i = 0; i < liste.size(); i++) {
 			int gravite;
 			for (Realisation rea : l) {
-				gravite = rea.getTache().getAlea(c).getGravite();
-				if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI) {
-					rea.getTache().setDuree(rea.getTache().getDureeInitiale()+gravite);
-				}
-				if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT) {
-					liste.get(i).getJoueur().depense(gravite);
-				}
-				if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL)) {
-					liste.get(i).getJoueur().baisseQualite(gravite);
+				if(rea.getEtat()==Etat.IMMINENT) {
+					gravite = rea.getTache().getAlea(c).getGravite();
+					if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI) {
+						rea.getTache().setDuree(rea.getTache().getDureeInitiale()+gravite);
+					}
+					if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT) {
+						liste.get(i).getJoueur().depense(gravite*10);
+					}
+					if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL)) {
+						liste.get(i).getJoueur().baisseQualite(gravite);
+					}
 				}
 			}
 		}

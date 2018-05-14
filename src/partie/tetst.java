@@ -1,5 +1,8 @@
 package partie;
 
+import static org.junit.Assert.assertEquals;
+
+import description.Couleur;
 import description.Description;
 
 public class tetst {
@@ -17,7 +20,14 @@ public class tetst {
 		if(v == null) {
 			System.out.println("1");
 		}
+		System.out.println(partie.getTour());
+		partie.passerTour();
+		System.out.println(partie.getTour());
 		System.out.println(v.getCaisse());
+		partie.tourSemaine(Couleur.VERT);
+		System.out.println(donneesJoueur.getCaisse());
+		assertEquals(290, donneesJoueur.getCaisse());
 		
+
 	}
 }
