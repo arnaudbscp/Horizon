@@ -35,7 +35,7 @@ public class testpartie {
 	public void init() {
 		description = new Description();
 		Partie partie = new Partie(description,"NOM_JOUEUR");
-		donneesJoueur = partie.getVueJoueur(NOM_JOUEUR);
+		donneesJoueur = partie.getDonneesJoueur(NOM_JOUEUR);
 		
 	}
 	/**

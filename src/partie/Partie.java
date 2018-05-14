@@ -1,9 +1,13 @@
 package partie;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
 import description.Couleur;
 import description.Description;
 import description.TypeAlea;
+import description.Tache;
+import description.Tacheclass;
 
 public class Partie {
 	
@@ -19,6 +23,14 @@ public class Partie {
 		liste.add(new VueJoueurs(j));
 	}
 	
+	public DonneesJoueurs getDonneesJoueur(String joueur) {
+		for(VueJoueurs j : liste) {
+			if(j.getNom().equalsIgnoreCase(joueur)) {
+				return  j.getJoueur(); 
+			}
+		}
+		return null;
+	}
 	public VueJoueurs getVueJoueur(String joueur) {
 		for(VueJoueurs j : liste) {
 			if(j.getNom().equalsIgnoreCase(joueur)) {
@@ -27,16 +39,28 @@ public class Partie {
 		}
 		return null;
 	}
-	
 	public void passerTour() {
 		ArrayList<Realisation> l = getActu();
 		
 		for (Realisation r : l) {
+			if(r.getEtat()==Etat.EN_COURS) {
 				r.getTache().avancer();
-				tour++;
+				if(r.getTache().getDureeInitiale()==r.getTache().getAvancement()) {
+					r.setEtat(Etat.TERMINEE);
+					setImminent(r);
+				}
+			}
+				
 		}
+		tour++;
 	}
 	
+	private void setImminent(Realisation r) {
+		// TODO Auto-generated method stub
+		Collection<Tache> a = r.getTache().getSuccesseurs();
+		
+	}
+
 	public ArrayList<Realisation> getActu() {
 		ArrayList<Realisation> r = new ArrayList<>();
 		for(int i = 0; i < liste.size();i++) {
@@ -54,7 +78,7 @@ public class Partie {
 			for (Realisation rea : l) {
 				gravite = rea.getTache().getAlea(c).getGravite();
 				if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI) {
-					rea.getTache().setDuree(rea.getTache().getAlea(c).getGravite());
+					rea.getTache().setDuree(rea.getTache().getDureeInitiale()+gravite);
 				}
 				if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT) {
 					liste.get(i).getJoueur().depense(gravite);
