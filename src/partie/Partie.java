@@ -6,10 +6,11 @@ import java.util.Collection;
 import description.Couleur;
 import description.Description;
 import description.TypeAlea;
+import strategie.Strategie;
 import description.Tache;
 import description.Tacheclass;
 
-public class Partie {
+public class Partie implements Strategie {
 	
 	private Description description; 
 	private int tour;
@@ -90,4 +91,18 @@ public class Partie {
 		}
 	}
 	
+	public void jouerEtape(VueJoueur vue) {
+		System.out.println("Nom: " + vue.getNom() + "/// Caisse: " + vue.getCaisse() + "/// Qualit�: " + vue.getQualite() 
+		+ "///ID Premi�re t�che: " + vue.getDebutId() + "///ID Derni�re t�che: " + vue.getFinId());
+		System.out.println(vue.getDescription());
+	}
+
+
+	public void jouerJalon(VueJoueur vue) {
+		
+	}
+
+	public void jouerTest(VueJoueur vue) {
+		
+	}
 }
