@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import tours.Tour;
 import tours.TourJalon;
 import tours.TourQuizz;
-import tours.TourSemaine;
+import tours.TourAlea;
 
 public class Description {
 	
@@ -63,18 +63,18 @@ public class Description {
 		sequence = new Tour[] {
 				new TourJalon("Jalon", 0, new Tacheclass[] {
 						tabTache.get(0), tabTache.get(1),tabTache.get(2),tabTache.get(3),tabTache.get(4)}),
-				new TourSemaine("Semaine", 1, new Tacheclass[] {tabTache.get(0)}),
-				new TourSemaine("Semaine", 2, new Tacheclass[] {tabTache.get(1)}),	
-				new TourSemaine("Semaine", 3, new Tacheclass[] {tabTache.get(2)}),	
-				new TourSemaine("Semaine", 4, new Tacheclass[] {tabTache.get(3)}),	
+				new TourAlea("Semaine", 1, new Tacheclass[] {tabTache.get(0)}),
+				new TourAlea("Semaine", 2, new Tacheclass[] {tabTache.get(1)}),	
+				new TourAlea("Semaine", 3, new Tacheclass[] {tabTache.get(2)}),	
+				new TourAlea("Semaine", 4, new Tacheclass[] {tabTache.get(3)}),	
 				new TourQuizz("Quizz", 5, null),
 				new TourJalon("Jalon", 6, new Tacheclass[] {tabTache.get(4),tabTache.get(5),tabTache.get(6),tabTache.get(7)}),
-				new TourSemaine("Semaine", 7, new Tacheclass[] {tabTache.get(4)}),
-				new TourSemaine("Semaine", 8, new Tacheclass[] {tabTache.get(5)}),	
-				new TourSemaine("Semaine", 9, new Tacheclass[] {tabTache.get(6)}),	
+				new TourAlea("Semaine", 7, new Tacheclass[] {tabTache.get(4)}),
+				new TourAlea("Semaine", 8, new Tacheclass[] {tabTache.get(5)}),	
+				new TourAlea("Semaine", 9, new Tacheclass[] {tabTache.get(6)}),	
 				new TourQuizz("Quizz", 10, null),
-				new TourSemaine("Semaine", 11, new Tacheclass[] {tabTache.get(7)}),
-				new TourSemaine("FINAL", 12, null)
+				new TourAlea("Semaine", 11, new Tacheclass[] {tabTache.get(7)}),
+				new TourAlea("FINAL", 12, null)
 		};
 	
 	}

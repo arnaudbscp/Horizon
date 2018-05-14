@@ -24,9 +24,8 @@ public class IHMTexte {
 		Partie partie = new Partie(d, "SAMUEL");
 		DonneesJoueurs donneesSam = partie.getVueJoueur("SAMUEL").getJoueur();
 		VueJoueurs vueSam = partie.getVueJoueur("SAMUEL");
-		for(Tache t : d.getTaches()) {
-		afficheTache(t);
-		}
+		
+		afficheTache(d.getDebut());
 		
 		for(Tour t : d.getSequence()) {
 			switch(t.getType()) {
