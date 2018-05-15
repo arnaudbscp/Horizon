@@ -13,11 +13,29 @@ import tours.Tour;
 public class IHMTexte {
 	
 	public static void afficheTache(Tache t) {
+		//Affichage ID + Intitulé
 		System.out.println(t.getId() + " | " + t.getDescription()); 
-		System.out.println("Durée initiale: " + t.getDureeInitiale() + " - Durée max: " + t.getDureeMax());
-		System.out.println(t.getAlea(Couleur.ROUGE).getType() + " - " + t.getAlea(Couleur.JAUNE).getType() + " - " + t.getAlea(Couleur.VERT).getType());
-		System.out.println("------------------------------------");
-	}
+		//Affichage des ronds pour les semaines
+		for(int i = 0; i<t.getDureeInitiale(); i++) {
+			System.out.print(" ○ ");
+		} for(int j = 0; j<t.getDureeMax()-t.getDureeInitiale(); j++) {
+			System.out.print(" ● ");
+		}
+		System.out.print("\n");
+		//Affichage des aléas sous forme de lettres
+		System.out.print(" ");
+		for(int k = 0; k < t.getAlea(Couleur.ROUGE).getGravite(); k++) {
+			System.out.print("D");
+		} 
+		System.out.print(" / ");
+		for(int l = 0; l < t.getAlea(Couleur.JAUNE).getGravite(); l++) {
+			System.out.print("C");
+		} 
+		System.out.print(" / ");
+		for(int m = 0; m < t.getAlea(Couleur.VERT).getGravite(); m++) {
+			System.out.print("Q");
+		}
+	} 
 	
 	public static void main(String[] args) {
 		Description d = new Description(); 
