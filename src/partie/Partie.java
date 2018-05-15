@@ -65,6 +65,12 @@ public class Partie implements Strategie {
 	private void setImminent(Realisation r) {
 		// TODO Auto-generated method stub
 		Collection<Tache> a = r.getTache().getSuccesseurs();
+		String[] b = null;
+		int c=0;
+		for(Tache t:a) {
+			b[c++]=t.getId();
+		}
+		
 		
 	}
 
