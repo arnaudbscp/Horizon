@@ -10,7 +10,7 @@ import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
 
-public class IHMTexte {
+public class IHMTexte implements Strategie {
 	
 	public static void afficheTache(Tache t) {
 		//Affichage ID + Intitulé
@@ -73,5 +73,19 @@ public class IHMTexte {
 				
 			}
 		}
+	}
+
+
+	public void jouerEtape(VueJoueur vue) {
+		
+	}
+
+	public void jouerJalon(VueJoueur vue) {
+	
+		
+	}
+
+	public void jouerTest(VueJoueur vue) {
+		
 	}
 }
