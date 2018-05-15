@@ -30,7 +30,7 @@ public class IHMTexte {
 		for(Tour t : d.getSequence()) {
 			switch(t.getType()) {
 			case "Semaine": 
-				t.getTaches()[0].avancer();
+				partie.tourSemaine(t.getTaches()[0].getId());
 				break;
 			case "Quizz": 
 				//Pas pour l'étape 2 

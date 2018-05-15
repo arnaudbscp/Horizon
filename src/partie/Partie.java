@@ -16,6 +16,7 @@ public class Partie implements Strategie {
 	private int tour;
 	private String joueur; 
 	private ArrayList<VueJoueurs> liste;
+	private Couleur[] aleas;
 		
 	public Partie(Description d, String j) {
 		liste = new ArrayList<>();
@@ -84,26 +85,33 @@ public class Partie implements Strategie {
 		return r;
 	}
 	
-	public void tourSemaine(Couleur c) {
-		ArrayList<Realisation> l = getActu();
+	public void tourSemaine(String id) {// check si la semaine a commencer (encours) sinon (on check si il a deja eu un tirage pour cette tache )* a faire plus tard sinon tirage la couleur
+		ArrayList<Realisation> l = getActu(); 
 		for(int i = 0; i < liste.size(); i++) {
 			int gravite;
 			for (Realisation rea : l) {
-				if(rea.getEtat()==Etat.IMMINENT) {
-					gravite = rea.getTache().getAlea(c).getGravite();
-					if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI) {
-						rea.getTache().setDuree(rea.getTache().getDureeInitiale()+gravite);
-					}
-					if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT) {
-						liste.get(i).getJoueur().depense(gravite*10);
-					}
-					if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL)) {
-						liste.get(i).getJoueur().baisseQualite(gravite);
+				if(rea.getTache().getId() == id) {
+					if(rea.getEtat()==Etat.IMMINENT) {
+						Couleur c = Couleur.tirage();
+						gravite = rea.getTache().getAlea(c).getGravite();
+						if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI) {
+							rea.getTache().setDuree(rea.getTache().getDureeInitiale()+gravite);
+						}
+						if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT) {
+							liste.get(i).getJoueur().depense(gravite*10);
+						}
+						if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL)) {
+							liste.get(i).getJoueur().baisseQualite(gravite);
+						}
+					} else {
+						rea.getTache().avancer();
 					}
 				}
 			}
 		}
 	}
+	
+	
 	
 	public void jouerEtape(VueJoueur vue) {
 		
