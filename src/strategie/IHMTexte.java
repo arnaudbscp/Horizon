@@ -17,9 +17,9 @@ public class IHMTexte {
 		System.out.println(t.getId() + " | " + t.getDescription()); 
 		//Affichage des ronds pour les semaines
 		for(int i = 0; i<t.getDureeInitiale(); i++) {
-			System.out.print(" ○ ");
-		} for(int j = 0; j<t.getDureeMax()-t.getDureeInitiale(); j++) {
 			System.out.print(" ● ");
+		} for(int j = 0; j<t.getDureeMax()-t.getDureeInitiale(); j++) {
+			System.out.print(" ○ ");
 		}
 		System.out.print(" \n");
 		//Affichage des aléas sous forme de lettres
@@ -44,12 +44,20 @@ public class IHMTexte {
 		DonneesJoueurs donneesSam = partie.getVueJoueur("SAMUEL").getJoueur();
 		VueJoueurs vueSam = partie.getVueJoueur("SAMUEL");
 		
-		//afficheTache(d.getDebut());
+		afficheTache(d.getDebut());
 		
-		for(Tache t : d.getTaches()) {
+		for(Tache t : d.getDebut().getSuccesseurs()) {
 			afficheTache(t);
 		}
-		
+		System.out.println(".--------------.");
+		System.out.println("|     JALON    |");
+		System.out.println("'--------------'\n");
+		for(Tache t : d.getTaches()) {
+			if(t.getId() != "1" && t.getId() != "2" && t.getId() != "3" && t.getId() != "4") {
+				afficheTache(t);
+			}
+		}
+
 		for(Tour t : d.getSequence()) {
 			switch(t.getType()) {
 			case "Semaine": 
