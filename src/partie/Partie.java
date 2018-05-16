@@ -10,6 +10,12 @@ import strategie.Strategie;
 import description.Tache;
 import description.Tacheclass;
 
+/**
+ * 
+ * @author bascopa
+ *
+ */
+
 public class Partie {
 	
 	private Description description; 
