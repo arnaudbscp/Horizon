@@ -10,22 +10,20 @@ import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
 
-public class IHMTexte {
+public class IHMTexte implements Strategie {
 	
 	public static void afficheTache(Tache t) {
-		System.out.println(".-------------.");
 		//Affichage ID + Intitulé
-		System.out.println("|" + t.getId() + " | " + t.getDescription() + "|"); 
+		System.out.println(t.getId() + " | " + t.getDescription()); 
 		//Affichage des ronds pour les semaines
-		System.out.print("|");
 		for(int i = 0; i<t.getDureeInitiale(); i++) {
-			System.out.print(" ○ ");
-		} for(int j = 0; j<t.getDureeMax()-t.getDureeInitiale(); j++) {
 			System.out.print(" ● ");
+		} for(int j = 0; j<t.getDureeMax()-t.getDureeInitiale(); j++) {
+			System.out.print(" ○ ");
 		}
-		System.out.print(" |\n");
+		System.out.print(" \n");
 		//Affichage des aléas sous forme de lettres
-		System.out.print("| ");
+		System.out.print(" ");
 		for(int k = 0; k < t.getAlea(Couleur.ROUGE).getGravite(); k++) {
 			System.out.print("D");
 		} 
@@ -37,7 +35,7 @@ public class IHMTexte {
 		for(int m = 0; m < t.getAlea(Couleur.VERT).getGravite(); m++) {
 			System.out.print("Q");
 		}
-		System.out.println("  |\n'-------------'");
+		System.out.println("\n");
 	} 
 	
 	public static void main(String[] args) {
@@ -48,6 +46,18 @@ public class IHMTexte {
 		
 		afficheTache(d.getDebut());
 		
+		for(Tache t : d.getDebut().getSuccesseurs()) {
+			afficheTache(t);
+		}
+		System.out.println(".--------------.");
+		System.out.println("|     JALON    |");
+		System.out.println("'--------------'\n");
+		for(Tache t : d.getTaches()) {
+			if(t.getId() != "1" && t.getId() != "2" && t.getId() != "3" && t.getId() != "4") {
+				afficheTache(t);
+			}
+		}
+
 		for(Tour t : d.getSequence()) {
 			switch(t.getType()) {
 			case "Semaine": 
@@ -63,5 +73,19 @@ public class IHMTexte {
 				
 			}
 		}
+	}
+
+
+	public void jouerEtape(VueJoueur vue) {
+		
+	}
+
+	public void jouerJalon(VueJoueur vue) {
+	
+		
+	}
+
+	public void jouerTest(VueJoueur vue) {
+		
 	}
 }

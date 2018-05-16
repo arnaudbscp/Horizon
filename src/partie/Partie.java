@@ -10,7 +10,7 @@ import strategie.Strategie;
 import description.Tache;
 import description.Tacheclass;
 
-public class Partie implements Strategie {
+public class Partie {
 	
 	private Description description; 
 	private int tour;
@@ -111,18 +111,4 @@ public class Partie implements Strategie {
 		}
 	}
 	
-	
-	
-	public void jouerEtape(VueJoueur vue) {
-		
-	}
-
-
-	public void jouerJalon(VueJoueur vue) {
-		
-	}
-
-	public void jouerTest(VueJoueur vue) {
-		
-	}
 }
