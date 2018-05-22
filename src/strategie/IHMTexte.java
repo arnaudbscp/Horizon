@@ -67,7 +67,7 @@ public class IHMTexte {
 				//Pas pour l'étape 2 
 				break;
 			case "Jalon": 
-				//Pas pour l'étape 2 
+				partie.tourJalon(String.valueOf(t.getTour()));
 				break;
 			case "FINAL": 
 				

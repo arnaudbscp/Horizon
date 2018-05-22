@@ -124,7 +124,7 @@ public class Partie {
 		ArrayList<Realisation> l = getActu();
 		//On cherche sur quel jalon on se trouve
 		for(Tour t : description.getSequence()) {
-			if(t.getType() == "Jalon") {
+			if(t.getType() == "Jalon" && String.valueOf(t.getTour()) == id) {
 				Tache[] taches = t.getTaches();
 				//On va appliquer les décisions pour chaque tâche et pour chaque VueJoueur de la liste
 				for(Tache x : taches) {
