@@ -126,7 +126,7 @@ public class Partie {
 		for(Tour t : description.getSequence()) {
 			if(t.getType() == "Jalon") {
 				Tache[] taches = t.getTaches();
-				//On va appliquer les décisions pour chaque tâche et pour chaque réalisation
+				//On va appliquer les décisions pour chaque tâche et pour chaque VueJoueur de la liste
 				for(Tache x : taches) {
 					for(VueJoueurs v : this.liste) {
 						if(v.getNumeroTour() == Integer.valueOf(x.getId())) {
