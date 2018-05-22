@@ -26,6 +26,10 @@ public class Partie {
 	private String joueur;
 	private ArrayList<VueJoueurs> liste;
 	private Couleur[] aleas;
+	
+	public ArrayList<VueJoueurs> getVueJoueurs() {
+		return this.liste;
+	}
 
 	public Partie(Description d, String j) {
 		liste = new ArrayList<>();
@@ -135,7 +139,7 @@ public class Partie {
 		// la liste
 		for (Tache x : taches) {
 			for (VueJoueurs v : this.liste) {
-				if (v.getNumeroTour() == Integer.valueOf(x.getId())) {
+				System.out.println("DECISIONS A PRENDRE POUR LA TACHE " + x.getId());
 					// On stock les décision du joueur dans des int (YES = 0, NO = 1)
 					int decisionAccel = JOptionPane.showConfirmDialog(null, "Accélérer la tâche " + x.getId() + "?",
 							"Tâche " + x.getId(), JOptionPane.YES_NO_OPTION);
@@ -159,7 +163,6 @@ public class Partie {
 					if (decisionProtVert == 0) {
 						v.setProtection(x.getId(), Couleur.VERT);
 					}
-				}
 			}
 		}
 	}

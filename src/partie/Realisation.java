@@ -16,6 +16,7 @@ public class Realisation {
 		this.tache = t;
 		this.etat = Etat.NON_ENTAMEE;
 		this.acceleration = false;
+		protec = new boolean[3];
 	}
 	
 	@Override
