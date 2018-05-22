@@ -16,5 +16,5 @@ public interface VueJoueur {
 	public int getNumeroTour();
 	public int getQualite();
 	public void setAcceleration(String id, boolean active);
-	public void setProtection(String id, Couleur couleur, boolean active);
+	public void setProtection(String id, Couleur couleur);
 }

@@ -78,8 +78,8 @@ public class VueJoueurs implements VueJoueur{
 	}
 
 	@Override
-	public void setProtection(String id, Couleur couleur, boolean ok) {
-		this.joueur.getRealisation(id).setProtection(couleur, ok);
+	public void setProtection(String id, Couleur couleur) {
+		this.joueur.getRealisation(id).setProtection(couleur);
 		
 	}
 
