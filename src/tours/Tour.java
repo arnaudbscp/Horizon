@@ -6,7 +6,7 @@ public abstract class Tour {
 
 	private String type;
 	private int tour;
-	private Tache[] taches;
+	public Tache[] taches;
 	
 	public Tour(String type, int tour, Tache[] taches) {
 		

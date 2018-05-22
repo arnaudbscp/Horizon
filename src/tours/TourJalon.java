@@ -9,6 +9,15 @@ public class TourJalon extends Tour{
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public String[] getIdJ() {
+		String[] a= new String[8];
+		int i=0;
+		for(Tache b: taches) {
+			a[0] = b.getId();
+		}
+		
+		return a;
+		
+	}
 	
 }
