@@ -16,6 +16,7 @@ public abstract class Tour {
 	}
 
 	public String getType() {
+		
 		return type;
 	}
 
