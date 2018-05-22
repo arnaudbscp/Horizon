@@ -24,8 +24,7 @@ public class Realisation {
 				+ ", etat=" + etat + "]";
 	}
 
-	public void setProtection(Couleur c, boolean ok) {
-		if(ok) {
+	public void setProtection(Couleur c) {
 			if(c.equals(Couleur.ROUGE)) {
 				protec[0] = true;
 			}else if(c.equals(Couleur.JAUNE)) {
@@ -33,7 +32,6 @@ public class Realisation {
 			}else {
 				protec[2] = true;
 			}
-		}
 	}
 
 	public Tache getTache() {

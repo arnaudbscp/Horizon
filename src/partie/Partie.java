@@ -3,10 +3,13 @@ package partie;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.JOptionPane;
+
 import description.Couleur;
 import description.Description;
 import description.TypeAlea;
 import strategie.Strategie;
+import tours.Tour;
 import description.Tache;
 import description.Tacheclass;
 
@@ -111,6 +114,41 @@ public class Partie {
 						}
 					} else {
 						rea.getTache().avancer();
+					}
+				}
+			}
+		}
+	}
+	
+	public void tourJalon(String id) {
+		ArrayList<Realisation> l = getActu();
+		//On cherche sur quel jalon on se trouve
+		for(Tour t : description.getSequence()) {
+			if(t.getType() == "Jalon") {
+				Tache[] taches = t.getTaches();
+				//On va appliquer les décisions pour chaque tâche et pour chaque réalisation
+				for(Tache x : taches) {
+					for(Realisation r : l) {
+						if(r.getTache() == x) {
+							//On stock les décision du joueur dans des int (YES = 0, NO = 1) 
+							int decisionAccel = JOptionPane.showConfirmDialog(null, "Accélérer la tâche "+ x.getId() + "?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
+							int decisionProtRouge = JOptionPane.showConfirmDialog(null, "Protéger l'aléa rouge ?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
+							int decisionProtJaune = JOptionPane.showConfirmDialog(null, "Protéger l'aléa jaune ?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
+							int decisionProtVert = JOptionPane.showConfirmDialog(null, "Protéger l'aléa vert ?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
+							//On réalise ou non les décisions prises par le joueur (penser à ajouter les dépenses)
+							if(decisionAccel == 0) {
+								r.setAcceleration(true);
+							}
+							if(decisionProtRouge == 0) {
+								r.setProtection(Couleur.ROUGE);
+							}
+							if(decisionProtJaune == 0) {
+								r.setProtection(Couleur.JAUNE);
+							}
+							if(decisionProtVert == 0) {
+								r.setProtection(Couleur.VERT);
+							}
+ 						}
 					}
 				}
 			}
