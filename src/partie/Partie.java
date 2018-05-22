@@ -128,8 +128,8 @@ public class Partie {
 				Tache[] taches = t.getTaches();
 				//On va appliquer les décisions pour chaque tâche et pour chaque réalisation
 				for(Tache x : taches) {
-					for(Realisation r : l) {
-						if(r.getTache() == x) {
+					for(VueJoueurs v : this.liste) {
+						if(v.getNumeroTour() == Integer.valueOf(x.getId())) {
 							//On stock les décision du joueur dans des int (YES = 0, NO = 1) 
 							int decisionAccel = JOptionPane.showConfirmDialog(null, "Accélérer la tâche "+ x.getId() + "?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
 							int decisionProtRouge = JOptionPane.showConfirmDialog(null, "Protéger l'aléa rouge ?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
@@ -137,16 +137,16 @@ public class Partie {
 							int decisionProtVert = JOptionPane.showConfirmDialog(null, "Protéger l'aléa vert ?", "Tâche "+x.getId(), JOptionPane.YES_NO_OPTION);
 							//On réalise ou non les décisions prises par le joueur (penser à ajouter les dépenses)
 							if(decisionAccel == 0) {
-								r.setAcceleration(true);
+								v.setAcceleration(x.getId(), true);
 							}
 							if(decisionProtRouge == 0) {
-								r.setProtection(Couleur.ROUGE);
+								v.setProtection(x.getId(), Couleur.ROUGE);
 							}
 							if(decisionProtJaune == 0) {
-								r.setProtection(Couleur.JAUNE);
+								v.setProtection(x.getId(), Couleur.JAUNE);
 							}
 							if(decisionProtVert == 0) {
-								r.setProtection(Couleur.VERT);
+								v.setProtection(x.getId(), Couleur.VERT);
 							}
  						}
 					}
