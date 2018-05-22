@@ -14,6 +14,7 @@ public class TourJalon extends Tour{
 		int i=0;
 		for(Tache b: taches) {
 			a[0] = b.getId();
+			
 		}
 		
 		return a;
