@@ -50,14 +50,14 @@ public class Description {
 		relation.put("5", new String[] {"6"});
 		relation.put("6", new String[] {"8"});
 		relation.put("7", new String[] {"8"});
-		tabTache.add(new Tacheclass(10, tache1, "réfléchir", 2, 4, "1")); 
-		tabTache.add(new Tacheclass(20,tache2,"dire", 3,4,"2"));
-		tabTache.add(new Tacheclass(10,tache3,"ecouter", 2,4,"3"));
-		tabTache.add(new Tacheclass(10,tache4,"faire", 2,4,"4"));
-		tabTache.add(new Tacheclass(10,tache5,"demander", 1,4,"5"));
-		tabTache.add(new Tacheclass(10,tache6,"controler", 3,4,"6"));
-		tabTache.add(new Tacheclass(20,tache7,"planifier", 3,6,"7"));
-		tabTache.add(new Tacheclass(10,tache8,"presenter", 2,4,"8"));
+		tabTache.add(new Tacheclass(10, tache1, "Réfléchir", 2, 4, "1")); 
+		tabTache.add(new Tacheclass(20,tache2,"Dire", 3,4,"2"));
+		tabTache.add(new Tacheclass(10,tache3,"Ecouter", 2,4,"3"));
+		tabTache.add(new Tacheclass(10,tache4,"Faire", 2,4,"4"));
+		tabTache.add(new Tacheclass(10,tache5,"Demander", 1,4,"5"));
+		tabTache.add(new Tacheclass(10,tache6,"Contrôler", 3,4,"6"));
+		tabTache.add(new Tacheclass(20,tache7,"Planifier", 3,6,"7"));
+		tabTache.add(new Tacheclass(10,tache8,"Présenter", 2,4,"8"));
 		
 		// la sequence a suivre chaque tour de jeu commence en checkant a quel type de tours on a à faire!! !
 		sequence = new Tour[] {

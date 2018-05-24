@@ -30,6 +30,10 @@ public class Tacheclass implements Tache {
 		
 	}
 	
+	public void getAleas() {
+		return this.aleas;
+	}
+	
 	public void avancer() {
 		avancement++;
 	}
