@@ -30,7 +30,7 @@ public class Tacheclass implements Tache {
 		
 	}
 	
-	public void getAleas() {
+	public Aleas[] getAleas() {
 		return this.aleas;
 	}
 	
