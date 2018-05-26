@@ -127,7 +127,7 @@ public class IHMTache extends Application {
 			aleas.getChildren().addAll(labelAlea1, labelAlea2, labelAlea3);
 			
 			//Personnalisation de la VBox principale et ajout de tous les éléments à cette dernière
-			main.setBackground(new Background(new BackgroundFill(Color.AQUA, null, null)));
+			main.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
 			main.getChildren().addAll(top, semaines, aleas);
 			
 			
