@@ -41,10 +41,14 @@ public class IHMTache extends Application {
 	public VBox main;
 	public GraphicsContext gc2;
 	public Label prix;
-	public int cptClickedAccel = 0;
+	public int cptClickAccel = 0;
+	public int cptClickBouclier = 0;
 	public ImageView ivBouclier1; 
 	public ImageView ivBouclier2;
 	public ImageView ivBouclier3;
+	public ImageView ivCroix1;
+	public ImageView ivCroix2;
+	public ImageView ivCroix3;
 	public Image bouclier_off;
 	
 	public static void main(String[] args) {
@@ -53,33 +57,61 @@ public class IHMTache extends Application {
 	
 	class EventAcceleration implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {
-			cptClickedAccel += 1;
+			cptClickAccel += 1;
 			File accelFileClicked = new File("ressources/bouton_accelerer_clicked.png");
 			Image accelImgClicked = null;
 			try {
 				accelImgClicked = new Image(accelFileClicked.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
-			if(cptClickedAccel == 1 || cptClickedAccel % 3 == 0) {
+			if(cptClickAccel == 1 || cptClickAccel % 3 == 0) {
 			gc2.drawImage(accelImgClicked, 0, 5);
 			prix.setTextFill(Color.web("009c00"));
 			}
 		}	
 	}
 	
-	class EventBouclier implements EventHandler<MouseEvent> {
+	class EventBouclierSurvol implements EventHandler<MouseEvent> {
+		public ImageView iv; 
+		
+		public EventBouclierSurvol(ImageView iv) {
+			this.iv = iv;
+		}
+		
 		public void handle(MouseEvent event) {
-			if(ivBouclier1.contains(new Point2D(event.getX(), event.getY()))) {
 			File bouclierOn = new File("ressources/bouclier_on.png");
 			Image bouclierOnImg = null;
 			try {
 				bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
 			} catch (MalformedURLException e) {	e.printStackTrace();}
-			ivBouclier1.setImage(bouclierOnImg);
-			} else {
-				ivBouclier1.setImage(bouclier_off);
+			iv.setImage(bouclierOnImg);
 			}
 		}
+	
+	class EventBouclierClick implements EventHandler<MouseEvent> {
+		public ImageView iv1;
+		public ImageView iv2;
 		
+		public EventBouclierClick(ImageView iv1, ImageView iv2) {
+			this.iv1 = iv1;
+			this.iv2 = iv2;
+		}
+		
+		public void handle(MouseEvent event) {
+			cptClickBouclier += 1;
+			if(cptClickBouclier == 1 || cptClickBouclier % 3 == 0) {
+				File bouclierOn = new File("ressources/bouclier_on.png");
+				File tickFile = new File("ressources/tick.png");
+				Image bouclierOnImg = null;
+				Image tick = null;
+				try {
+					bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
+					tick = new Image(tickFile.toURI().toURL().toString());
+				} catch (MalformedURLException e) {	e.printStackTrace();}
+				
+				iv1.setImage(bouclierOnImg);
+				iv2.setImage(tick);
+			}
+		}
 	}
 	
 	public VBox creerIHM(Tacheclass t) throws Exception {
@@ -146,13 +178,13 @@ public class IHMTache extends Application {
 		acceleration.getChildren().addAll(accelCanvas, prix);
 		//Gestion des évènements visuels lors du passage de la souris sur le bouton accélérer
 		acceleration.setOnMouseMoved(e -> {
-			if(cptClickedAccel == 0  || cptClickedAccel % 2 == 0) {
+			if(cptClickAccel == 0  || cptClickAccel % 2 == 0) {
 			gc2.drawImage(accelImgOnMouseMove, 0, 4);
 			prix.setTextFill(Color.web("0066ff"));
 			}
 			});
 		acceleration.setOnMouseExited(e -> {
-			if(cptClickedAccel == 0 || cptClickedAccel % 2 == 0) {
+			if(cptClickAccel == 0 || cptClickAccel % 2 == 0) {
 			gc2.drawImage(accelImg, 0, 5);
 			prix.setTextFill(Color.web("#368D81"));
 			}
@@ -175,17 +207,21 @@ public class IHMTache extends Application {
 		Image croix = new Image(croixFile.toURI().toURL().toString());
 		Image tick = new Image(tickFile.toURI().toURL().toString());
 		ivBouclier1 = new ImageView(bouclier_off);
-		ivBouclier1.setOnMouseMoved(new EventBouclier());
+		//Gestion des évènements visuels pour les boucliers de protection des aléas
+		ivCroix1 = new ImageView(croix);
+		ivCroix2 = new ImageView(croix);
+		ivCroix3 = new ImageView(croix);
+		ivBouclier1.setOnMouseMoved(new EventBouclierSurvol(ivBouclier1));
+		ivBouclier1.setOnMouseExited(e -> {ivBouclier1.setImage(bouclier_off);});
+		ivBouclier1.setOnMouseClicked(new EventBouclierClick(ivBouclier1, ivCroix1));
 		ivBouclier2 = new ImageView(bouclier_off);
-		ivBouclier2.setOnMouseMoved(new EventBouclier());
+		ivBouclier2.setOnMouseExited(e -> {ivBouclier2.setImage(bouclier_off);});
+		ivBouclier2.setOnMouseMoved(new EventBouclierSurvol(ivBouclier2));
+		ivBouclier2.setOnMouseClicked(new EventBouclierClick(ivBouclier2, ivCroix2));
 		ivBouclier3 = new ImageView(bouclier_off);
-		ivBouclier3.setOnMouseMoved(new EventBouclier());
-		ImageView ivCroix1 = new ImageView(croix);
-		ImageView ivCroix2 = new ImageView(croix);
-		ImageView ivCroix3 = new ImageView(croix);
-		ImageView ivTick1 = new ImageView(tick);
-		ImageView ivTick2 = new ImageView(tick);
-		ImageView ivTick3 = new ImageView(tick);
+		ivBouclier3.setOnMouseMoved(new EventBouclierSurvol(ivBouclier3));
+		ivBouclier3.setOnMouseExited(e -> {ivBouclier3.setImage(bouclier_off);});
+		ivBouclier3.setOnMouseClicked(new EventBouclierClick(ivBouclier3, ivCroix3));
 		Label labelAlea1 = new Label(); 
 		labelAlea1.setText("ROUGE: "+aleaRouge.getType().toString().toUpperCase()+"\nGravité: "+aleaRouge.getGravite());
 		labelAlea1.setFont(new Font("Arial", 22));
