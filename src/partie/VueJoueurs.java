@@ -1,7 +1,10 @@
 package partie;
 
+import java.util.ArrayList;
+
 import description.Couleur;
 import description.Description;
+import description.Tache;
 
 public class VueJoueurs implements VueJoueur{
 	private DonneesJoueurs joueur;
@@ -86,5 +89,18 @@ public class VueJoueurs implements VueJoueur{
 	public DonneesJoueurs getJoueur() {
 		return joueur;
 	}
-
+	
+	public boolean isImminent(Realisation r) {
+		ArrayList<Tache> a= new ArrayList<>();
+		int b=0;
+		for(Tache c : a) {
+			if(this.joueur.getRealisation(c.getId()).getEtat().equals(Etat.TERMINEE)) {
+				b++;
+			}
+		}
+		return b==a.size();
+	}
+	
+	
+	
 }

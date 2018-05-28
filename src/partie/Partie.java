@@ -111,13 +111,13 @@ public class Partie {
 					if (rea.getEtat() == Etat.IMMINENT) {
 						Couleur c = Couleur.tirage();
 						gravite = rea.getTache().getAlea(c).getGravite();
-						if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI) {
+						if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI && !rea.isProtec(c)) {
 							rea.getTache().setDuree(rea.getTache().getDureeInitiale() + gravite);
 						}
-						if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT) {
+						if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT && !rea.isProtec(c)) {
 							liste.get(i).getJoueur().depense(gravite * 10);
 						}
-						if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL)) {
+						if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL) && !rea.isProtec(c)) {
 							liste.get(i).getJoueur().baisseQualite(gravite);
 						}
 					} else {
