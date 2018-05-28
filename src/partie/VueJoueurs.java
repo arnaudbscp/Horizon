@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import description.Couleur;
 import description.Description;
 import description.Tache;
+import description.TypeAlea;
 
 public class VueJoueurs implements VueJoueur{
 	private DonneesJoueurs joueur;
@@ -101,6 +102,23 @@ public class VueJoueurs implements VueJoueur{
 		return b==a.size();
 	}
 	
-	
+
+	public void tourSemaine(Couleur c, String id) {
+		Realisation rea = joueur.getRealisation(id);
+		if (rea.getEtat() == Etat.IMMINENT) {
+		 int gravite = rea.getTache().getAlea(c).getGravite();
+			if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI && !rea.isProtec(c)) {
+				 joueur.getRealisation(id).getTache().setDuree(rea.getTache().getDureeInitiale() + gravite);
+			}
+			if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT && !rea.isProtec(c)) {
+				this.joueur.depense(gravite * 10);
+			}
+			if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL) && !rea.isProtec(c)) {
+				this.joueur.baisseQualite(gravite);
+			}
+		} else {
+			rea.getTache().avancer();
+		}
+	}
 	
 }

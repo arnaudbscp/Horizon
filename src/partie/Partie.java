@@ -26,6 +26,7 @@ public class Partie {
 	private String joueur;
 	private ArrayList<VueJoueurs> liste;
 	private Couleur[] aleas;
+	private int indiceA =0;
 	
 	public ArrayList<VueJoueurs> getVueJoueurs() {
 		return this.liste;
@@ -40,6 +41,7 @@ public class Partie {
 			a.getJoueur().getRealisation("1").setEtat(Etat.IMMINENT);
 
 		}
+		aleas = new Couleur[8];
 	}
 
 	public DonneesJoueurs getDonneesJoueur(String joueur) {
@@ -101,31 +103,16 @@ public class Partie {
 		return r;
 	}
 
-	public void tourSemaine(String id) {// check si la semaine a commencer (encours) sinon (on check si il a deja eu un
+	public void tourSemaine(VueJoueurs j, String id) {// check si la semaine a commencer (encours) sinon (on check si il a deja eu un
 										// tirage pour cette tache )* a faire plus tard sinon tirage la couleur
-		ArrayList<Realisation> l = getActu();
-		for (int i = 0; i < liste.size(); i++) {
-			int gravite;
-			for (Realisation rea : l) {
-				if (rea.getTache().getId() == id) {
-					if (rea.getEtat() == Etat.IMMINENT) {
-						Couleur c = Couleur.tirage();
-						gravite = rea.getTache().getAlea(c).getGravite();
-						if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI && !rea.isProtec(c)) {
-							rea.getTache().setDuree(rea.getTache().getDureeInitiale() + gravite);
-						}
-						if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT && !rea.isProtec(c)) {
-							liste.get(i).getJoueur().depense(gravite * 10);
-						}
-						if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL) && !rea.isProtec(c)) {
-							liste.get(i).getJoueur().baisseQualite(gravite);
-						}
-					} else {
-						rea.getTache().avancer();
-					}
-				}
-			}
+		if(this.aleas[indiceA].equals(null)) {
+			Couleur c = Couleur.tirage();
+			aleas[indiceA++]=c;
+			j.tourSemaine(c, id);
+		}else {
+			j.tourSemaine(aleas[Integer.parseInt(id)-1],id);
 		}
+		j.FinDuTour();
 	}
 
 	public void tourJalon(int tour) {
