@@ -12,6 +12,8 @@ import description.Tache;
 import description.Tacheclass;
 import description.TypeAlea;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -31,14 +33,53 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
 public class IHMTache extends Application {
 
 	public Tacheclass tache;
 	public VBox main;
+	public GraphicsContext gc2;
+	public Label prix;
+	public int cptClickedAccel = 0;
+	public ImageView ivBouclier1; 
+	public ImageView ivBouclier2;
+	public ImageView ivBouclier3;
+	public Image bouclier_off;
 	
 	public static void main(String[] args) {
 		Application.launch(IHMTache.class, args);
+	}
+	
+	class EventAcceleration implements EventHandler<MouseEvent> {
+		public void handle(MouseEvent event) {
+			cptClickedAccel += 1;
+			File accelFileClicked = new File("ressources/bouton_accelerer_clicked.png");
+			Image accelImgClicked = null;
+			try {
+				accelImgClicked = new Image(accelFileClicked.toURI().toURL().toString());
+			} catch (MalformedURLException e) {e.printStackTrace();}
+			if(cptClickedAccel == 1 || cptClickedAccel % 3 == 0) {
+			gc2.drawImage(accelImgClicked, 0, 5);
+			prix.setTextFill(Color.web("009c00"));
+			}
+		}	
+	}
+	
+	class EventBouclier implements EventHandler<MouseEvent> {
+		public void handle(MouseEvent event) {
+			if(ivBouclier1.contains(new Point2D(event.getX(), event.getY()))) {
+			File bouclierOn = new File("ressources/bouclier_on.png");
+			Image bouclierOnImg = null;
+			try {
+				bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
+			} catch (MalformedURLException e) {	e.printStackTrace();}
+			ivBouclier1.setImage(bouclierOnImg);
+			} else {
+				ivBouclier1.setImage(bouclier_off);
+			}
+		}
+		
 	}
 	
 	public VBox creerIHM(Tacheclass t) throws Exception {
@@ -91,16 +132,33 @@ public class IHMTache extends Application {
 		HBox acceleration = new HBox();
 		acceleration.setAlignment(Pos.CENTER);
 		File accelFile = new File("ressources/bouton_accelerer.png");
+		File accelFileOnMouseMove = new File("ressources/bouton_accelerer_onmousemove.png");
 		Image accelImg = new Image(accelFile.toURI().toURL().toString());
+		Image accelImgOnMouseMove = new Image(accelFileOnMouseMove.toURI().toURL().toString());
 		Canvas accelCanvas = new Canvas(210, 60);
-		GraphicsContext gc2 = accelCanvas.getGraphicsContext2D();
+		this.gc2 = accelCanvas.getGraphicsContext2D();
 		gc2.drawImage(accelImg, 0, 5);
-		Label prix = new Label();
+		prix = new Label();
 		prix.setText(tache.coutAcceleration()+"€");
 		prix.setFont(new Font("Arial", 38));
 		prix.setTextFill(Color.web("#368D81"));
 		acceleration.setSpacing(5);
 		acceleration.getChildren().addAll(accelCanvas, prix);
+		//Gestion des évènements visuels lors du passage de la souris sur le bouton accélérer
+		acceleration.setOnMouseMoved(e -> {
+			if(cptClickedAccel == 0  || cptClickedAccel % 2 == 0) {
+			gc2.drawImage(accelImgOnMouseMove, 0, 4);
+			prix.setTextFill(Color.web("0066ff"));
+			}
+			});
+		acceleration.setOnMouseExited(e -> {
+			if(cptClickedAccel == 0 || cptClickedAccel % 2 == 0) {
+			gc2.drawImage(accelImg, 0, 5);
+			prix.setTextFill(Color.web("#368D81"));
+			}
+			});
+		//Gestion des évènements + modification des données lors du clic sur le bouton 
+		acceleration.setOnMouseClicked(new EventAcceleration());
 		semaines.getChildren().addAll(canvas, acceleration);
 		
 		//Elements pour les Aléas et ajout de ces éléments
@@ -113,12 +171,15 @@ public class IHMTache extends Application {
 		File bouclierFile = new File("ressources/bouclier_off.png");
 		File croixFile = new File("ressources/croix.png");
 		File tickFile = new File("ressources/tick.png");
-		Image bouclier_off = new Image(bouclierFile.toURI().toURL().toString());
+		bouclier_off = new Image(bouclierFile.toURI().toURL().toString());
 		Image croix = new Image(croixFile.toURI().toURL().toString());
 		Image tick = new Image(tickFile.toURI().toURL().toString());
-		ImageView ivBouclier1 = new ImageView(bouclier_off);
-		ImageView ivBouclier2 = new ImageView(bouclier_off);
-		ImageView ivBouclier3 = new ImageView(bouclier_off);
+		ivBouclier1 = new ImageView(bouclier_off);
+		ivBouclier1.setOnMouseMoved(new EventBouclier());
+		ivBouclier2 = new ImageView(bouclier_off);
+		ivBouclier2.setOnMouseMoved(new EventBouclier());
+		ivBouclier3 = new ImageView(bouclier_off);
+		ivBouclier3.setOnMouseMoved(new EventBouclier());
 		ImageView ivCroix1 = new ImageView(croix);
 		ImageView ivCroix2 = new ImageView(croix);
 		ImageView ivCroix3 = new ImageView(croix);
@@ -169,21 +230,8 @@ public class IHMTache extends Application {
 	
 	public void start(Stage stage) throws Exception {
 			Description desc = new Description(); 
-			VBox[] taches = new VBox[6];
-			int index = 0;
-			for(Tacheclass t : desc.getTaches()) {
-				if(Integer.valueOf(t.getId()) < 6) {
-					taches[index] = this.creerIHM(t);
-					index++;
-				}
-			}
-			GridPane grille = new GridPane(); 
-			grille.addColumn(0, taches[0]);
-			grille.addColumn(1, taches[1]);
-			grille.addColumn(0, taches[2]);
-			grille.addColumn(1, taches[3]);
-			grille.addColumn(2, taches[4]);
-			Scene scene = new Scene(grille);
+			VBox main = creerIHM((Tacheclass)desc.getDebut());
+			Scene scene = new Scene(main);
 			stage.setTitle("Test IHMTâche");
 			stage.setScene(scene);
 			stage.show();
