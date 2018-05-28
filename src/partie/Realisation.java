@@ -71,4 +71,14 @@ public class Realisation {
 			}
 		}
 	}
+	public boolean isProtec(Couleur c) {
+		if(c.equals(Couleur.ROUGE)) {
+			return this.protec[0];
+		}
+		if(c.equals(Couleur.JAUNE)) {
+			return this.protec[1];
+		}else {
+			return this.protec[2];
+		}
+	}
 }
