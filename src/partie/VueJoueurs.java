@@ -118,9 +118,9 @@ public class VueJoueurs implements VueJoueur{
 				this.joueur.baisseQualite(gravite);
 			}
 		}
-		joueur.getRealisation(id).setEtat(Etat.EN_COURS);
-		while(!joueur.getRealisation(id).getEtat().equals(Etat.TERMINEE)) {
-		joueur.getRealisation(id).avancer();}
+		joueur.getRealisation(id).setEtat(Etat.EN_COURS); // 
+		
+		joueur.getRealisation(id).avancer();
 		if(joueur.getRealisation(id).getEtat().equals(Etat.TERMINEE)) {
 			for(Tache a : joueur.getRealisation(id).getTache().getSuccesseurs()) {
 				if(isImminent(joueur.getRealisation(a.getId()))) {
