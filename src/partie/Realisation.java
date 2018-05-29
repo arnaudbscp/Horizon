@@ -66,9 +66,7 @@ public class Realisation {
 		}
 		if(this.tache.getDureeInitiale()==this.tache.getAvancement()) {
 			etat=Etat.TERMINEE;
-			for(Tache t : this.tache.getSuccesseurs()) {
-				
-			}
+			
 		}
 	}
 	public boolean isProtec(Couleur c) {
