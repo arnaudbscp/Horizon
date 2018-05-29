@@ -110,6 +110,7 @@ public class IHMTache extends Application {
 				
 				iv1.setImage(bouclierOnImg);
 				iv2.setImage(tick);
+				//Commentaire
 			}
 		}
 	}
