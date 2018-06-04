@@ -94,6 +94,7 @@ public class VueJoueurs implements VueJoueur{
 	public boolean isImminent(Realisation r) {
 		ArrayList<Tache> a= new ArrayList<>();
 		int b=0;
+		a= (ArrayList<Tache>) r.getTache().getPredecesseurs();
 		for(Tache c : a) {
 			if(this.joueur.getRealisation(c.getId()).getEtat().equals(Etat.TERMINEE)) {
 				b++;
@@ -116,8 +117,16 @@ public class VueJoueurs implements VueJoueur{
 			if (rea.getTache().getAlea(c).getType() == (TypeAlea.QUAL) && !rea.isProtec(c)) {
 				this.joueur.baisseQualite(gravite);
 			}
-		} else {
-			rea.getTache().avancer();
+		}
+		joueur.getRealisation(id).setEtat(Etat.EN_COURS); // 
+		
+		joueur.getRealisation(id).avancer();
+		if(joueur.getRealisation(id).getEtat().equals(Etat.TERMINEE)) {
+			for(Tache a : joueur.getRealisation(id).getTache().getSuccesseurs()) {
+				if(isImminent(joueur.getRealisation(a.getId()))) {
+					joueur.getRealisation(a.getId()).setEtat(Etat.IMMINENT);
+				}
+			}
 		}
 	}
 	
