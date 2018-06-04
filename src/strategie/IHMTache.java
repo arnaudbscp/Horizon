@@ -18,7 +18,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -30,19 +33,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import partie.VueJoueur;
+import partie.VueJoueurs;
+import tours.Tour;
 import javafx.scene.input.MouseEvent;
 
-public class IHMTache extends Application {
+public class IHMTache extends Application implements Strategie {
 
 	public Tacheclass tache;
 	public VBox main;
 	public GraphicsContext gc2;
 	public Label prix;
 	public int cptClickAccel = 0;
-	public int cptClickBouclier = 0;
+	public int cptClickBouclier1 = 0;
+	public int cptClickBouclier2 = 0;
+	public int cptClickBouclier3 = 0;
 	public ImageView ivBouclier1; 
 	public ImageView ivBouclier2;
 	public ImageView ivBouclier3;
@@ -50,6 +59,9 @@ public class IHMTache extends Application {
 	public ImageView ivCroix2;
 	public ImageView ivCroix3;
 	public Image bouclier_off;
+	public Description desc;
+	public TabPane jalon;
+	public Button submit;
 	
 	public static void main(String[] args) {
 		Application.launch(IHMTache.class, args);
@@ -63,7 +75,7 @@ public class IHMTache extends Application {
 			try {
 				accelImgClicked = new Image(accelFileClicked.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
-			if(cptClickAccel == 1 || cptClickAccel % 3 == 0) {
+			if(cptClickAccel == 1 || !(cptClickAccel % 2 == 0)) {
 			gc2.drawImage(accelImgClicked, 0, 5);
 			prix.setTextFill(Color.web("009c00"));
 			}
@@ -78,12 +90,20 @@ public class IHMTache extends Application {
 		}
 		
 		public void handle(MouseEvent event) {
+			int cpt = 0;
+			switch(iv.getId()) { 
+			case "bouclier1": cpt = cptClickBouclier1; break; 
+			case "bouclier2": cpt = cptClickBouclier2; break; 
+			case "bouclier3": cpt = cptClickBouclier3;
+			}
+			if(cpt == 0 || cpt % 2 == 0) {
 			File bouclierOn = new File("ressources/bouclier_on.png");
 			Image bouclierOnImg = null;
 			try {
 				bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
 			} catch (MalformedURLException e) {	e.printStackTrace();}
 			iv.setImage(bouclierOnImg);
+			}
 			}
 		}
 	
@@ -97,8 +117,14 @@ public class IHMTache extends Application {
 		}
 		
 		public void handle(MouseEvent event) {
-			cptClickBouclier += 1;
-			if(cptClickBouclier == 1 || cptClickBouclier % 3 == 0) {
+			int cpt = 0;
+			switch(iv1.getId()) { 
+			case "bouclier1": cptClickBouclier1++; cpt = cptClickBouclier1; break; 
+			case "bouclier2": cptClickBouclier2++; cpt = cptClickBouclier2; break; 
+			case "bouclier3": cptClickBouclier3++; cpt = cptClickBouclier3;
+			}
+			
+			if(cpt == 1 || !(cpt % 2 == 0)) {
 				File bouclierOn = new File("ressources/bouclier_on.png");
 				File tickFile = new File("ressources/tick.png");
 				Image bouclierOnImg = null;
@@ -110,7 +136,14 @@ public class IHMTache extends Application {
 				
 				iv1.setImage(bouclierOnImg);
 				iv2.setImage(tick);
-				//Commentaire
+			} else {
+				iv1.setImage(bouclier_off);
+				File croixFile = new File("ressources/croix.png");
+				Image croix = null;
+				try {
+					croix = new Image(croixFile.toURI().toURL().toString());
+				} catch (MalformedURLException e) {e.printStackTrace();}
+				iv2.setImage(croix);
 			}
 		}
 	}
@@ -208,20 +241,29 @@ public class IHMTache extends Application {
 		Image croix = new Image(croixFile.toURI().toURL().toString());
 		Image tick = new Image(tickFile.toURI().toURL().toString());
 		ivBouclier1 = new ImageView(bouclier_off);
+		ivBouclier1.setId("bouclier1");
 		//Gestion des évènements visuels pour les boucliers de protection des aléas
 		ivCroix1 = new ImageView(croix);
 		ivCroix2 = new ImageView(croix);
 		ivCroix3 = new ImageView(croix);
 		ivBouclier1.setOnMouseMoved(new EventBouclierSurvol(ivBouclier1));
-		ivBouclier1.setOnMouseExited(e -> {ivBouclier1.setImage(bouclier_off);});
+		ivBouclier1.setOnMouseExited(e -> {
+			if(cptClickBouclier1 == 0 || cptClickBouclier1 % 2 == 0) {
+			ivBouclier1.setImage(bouclier_off);}});
 		ivBouclier1.setOnMouseClicked(new EventBouclierClick(ivBouclier1, ivCroix1));
 		ivBouclier2 = new ImageView(bouclier_off);
-		ivBouclier2.setOnMouseExited(e -> {ivBouclier2.setImage(bouclier_off);});
+		ivBouclier2.setId("bouclier2");
+		ivBouclier2.setOnMouseExited(e -> {
+			if(cptClickBouclier2 == 0 || cptClickBouclier2 % 2 == 0) {
+			ivBouclier2.setImage(bouclier_off);}});
 		ivBouclier2.setOnMouseMoved(new EventBouclierSurvol(ivBouclier2));
 		ivBouclier2.setOnMouseClicked(new EventBouclierClick(ivBouclier2, ivCroix2));
 		ivBouclier3 = new ImageView(bouclier_off);
+		ivBouclier3.setId("bouclier3");
 		ivBouclier3.setOnMouseMoved(new EventBouclierSurvol(ivBouclier3));
-		ivBouclier3.setOnMouseExited(e -> {ivBouclier3.setImage(bouclier_off);});
+		ivBouclier3.setOnMouseExited(e -> {
+			if(cptClickBouclier3 == 0 || cptClickBouclier3 % 2 == 0) {
+			ivBouclier3.setImage(bouclier_off);}});
 		ivBouclier3.setOnMouseClicked(new EventBouclierClick(ivBouclier3, ivCroix3));
 		Label labelAlea1 = new Label(); 
 		labelAlea1.setText("ROUGE: "+aleaRouge.getType().toString().toUpperCase()+"\nGravité: "+aleaRouge.getGravite());
@@ -252,6 +294,10 @@ public class IHMTache extends Application {
 		alea3.setAlignment(Pos.BOTTOM_CENTER);
 		aleas.getChildren().addAll(alea1, alea2, alea3);
 		
+		//Bouton valider
+		submit = new Button();
+		submit.setText("Valider décisions");
+		submit.setAlignment(Pos.CENTER);
 		
 		//Personnalisation de la VBox principale et ajout de tous les éléments à cette dernière
 		File backgroundFile = new File("ressources/fond.png");
@@ -259,18 +305,66 @@ public class IHMTache extends Application {
 		main.setBackground(new Background(new BackgroundImage(background, null, null, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		main.setMinSize(600, 400);
 		main.setMaxSize(600, 400);
-		main.getChildren().addAll(top, semaines, aleas);
+		main.getChildren().addAll(top, semaines, aleas, submit);
 		
 		return main;
 	}
 
 	
 	public void start(Stage stage) throws Exception {
-			Description desc = new Description(); 
-			VBox main = creerIHM((Tacheclass)desc.getDebut());
-			Scene scene = new Scene(main);
+			desc = new Description(); 
+			VueJoueurs vj = new VueJoueurs("Samuel");
+			
+			for(Tour t : desc.getSequence()) {
+				switch(t.getType()) {
+				case "Jalon":
+					jouerJalon(vj);
+					break;
+				case "Semaine":
+					jouerEtape(vj);
+					break;
+				case "Quizz":
+					jouerTest(vj);
+				} 
+			}
+			
+			Scene scene = new Scene(jalon);
 			stage.setTitle("Test IHMTâche");
 			stage.setScene(scene);
 			stage.show();
+	}
+
+
+	
+	public void jouerEtape(VueJoueur vue) {
+		
+	}
+
+
+	
+	public void jouerJalon(VueJoueur vue) {
+		jalon = new TabPane(); 
+		Tache[] tab = null;
+		for(Tour t : desc.getSequence()) {
+			if(t.getType() == "Jalon" && t.getTour() == 0) {
+				tab = t.taches;
+			}
+		}
+		for(Tache t : tab) {
+			Tab onglet = new Tab();
+			onglet.setText("Tâche " + t.getId());
+			try {
+				onglet.setContent(creerIHM((Tacheclass)t));
+			} catch (Exception e) {e.printStackTrace();}
+			onglet.setClosable(false);
+			jalon.getTabs().add(onglet);
+		}
+		
+	}
+
+
+	
+	public void jouerTest(VueJoueur vue) {
+		
 	}
 }
