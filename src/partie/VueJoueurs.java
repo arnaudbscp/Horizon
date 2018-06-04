@@ -31,7 +31,7 @@ public class VueJoueurs implements VueJoueur{
 	@Override
 	public int getCurrent(String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.description.getTacheById(id).getAvancement() ;
 	}
 
 	@Override
@@ -82,8 +82,8 @@ public class VueJoueurs implements VueJoueur{
 	}
 
 	@Override
-	public void setProtection(String id, Couleur couleur) {
-		this.joueur.getRealisation(id).setProtection(couleur);
+	public void setProtection(String id, Couleur couleur, boolean ok) {
+		this.joueur.getRealisation(id).setProtection(couleur, ok);
 		
 	}
 

@@ -25,13 +25,13 @@ public class Realisation {
 				+ ", etat=" + etat + "]";
 	}
 
-	public void setProtection(Couleur c) {
+	public void setProtection(Couleur c, boolean ok) {
 			if(c.equals(Couleur.ROUGE)) {
-				protec[0] = true;
+				protec[0] = ok;
 			}else if(c.equals(Couleur.JAUNE)) {
-				protec[1] = true;
+				protec[1] = ok;
 			}else {
-				protec[2] = true;
+				protec[2] = ok;
 			}
 	}
 
@@ -52,9 +52,9 @@ public class Realisation {
 	}
 
 	public void setAcceleration(boolean acceleration) {
-		if(acceleration) {
+		
 			this.acceleration = acceleration;
-		}
+		
 	}
 
 	public int getDuree() {
