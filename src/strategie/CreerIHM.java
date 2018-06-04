@@ -5,6 +5,7 @@ import description.Tache;
 import description.Tacheclass;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
@@ -17,6 +18,10 @@ public class CreerIHM extends Application {
 
 	public TabPane jalon;
 	public Description desc;
+	public VueJoueurs vj;
+	public VBox resume;
+	public static Label caisse;
+	
 	
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -24,8 +29,8 @@ public class CreerIHM extends Application {
 
 	public void start(Stage stage) throws Exception {
 		desc = new Description();
-		IHMTache tache = new IHMTache((Tacheclass)desc.getDebut());
-		VueJoueurs vj = new VueJoueurs("Samuel");
+		vj = new VueJoueurs("Samuel");
+		IHMTache tache = new IHMTache((Tacheclass)desc.getDebut(), vj);
 		for(Tour t : desc.getSequence()) {
 			switch(t.getType()) {
 			case "Jalon":
@@ -59,7 +64,7 @@ public class CreerIHM extends Application {
 			}
 		}
 		for(Tache t : tab) {
-			IHMTache bunny = new IHMTache((Tacheclass)t);
+			IHMTache bunny = new IHMTache((Tacheclass)t, vj);
 			Tab onglet = new Tab();
 			onglet.setText("Tâche " + t.getId());
 			try {
@@ -68,10 +73,24 @@ public class CreerIHM extends Application {
 			onglet.setClosable(false);
 			jalon.getTabs().add(onglet);
 		}
+		
+		Tab submit = new Tab(); 
+		submit.setText("Résumé");
+		submit.setContent(creerResume());
+		submit.setClosable(false);
+		jalon.getTabs().add(submit);
 	}
 	
 	public void jouerTest(VueJoueur vue) {
 		
+	}
+	
+	private VBox creerResume() {
+		resume = new VBox();
+		caisse = new Label();
+		caisse.setText("Votre caisse: " + vj.getCaisse());
+		resume.getChildren().addAll(caisse);
+		return resume;
 	}
 	
 }

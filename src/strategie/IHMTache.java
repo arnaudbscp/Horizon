@@ -37,6 +37,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import partie.DonneesJoueurs;
 import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
@@ -44,6 +45,8 @@ import javafx.scene.input.MouseEvent;
 
 public class IHMTache {
 
+	public VueJoueurs joueur;
+	public DonneesJoueurs donnees;
 	public Tacheclass tache;
 	public VBox main;
 	public GraphicsContext gc2;
@@ -63,8 +66,10 @@ public class IHMTache {
 	public TabPane jalon;
 	public Button submit;
 	
-	public IHMTache(Tacheclass t) {
+	public IHMTache(Tacheclass t, VueJoueurs v) {
 		this.tache = t;
+		this.joueur = v;
+		this.donnees = v.getJoueur();
 	}
 	
 
@@ -79,6 +84,11 @@ public class IHMTache {
 			if(cptClickAccel == 1 || !(cptClickAccel % 2 == 0)) {
 			gc2.drawImage(accelImgClicked, 0, 5);
 			prix.setTextFill(Color.web("009c00"));
+			donnees.getRealisation(tache.getId()).setAcceleration(true);
+			donnees.depense(tache.coutAcceleration());
+			} else {
+				donnees.getRealisation(tache.getId()).setAcceleration(false);
+				donnees.depense(-(tache.coutAcceleration()));
 			}
 		}	
 	}
@@ -111,6 +121,7 @@ public class IHMTache {
 	class EventBouclierClick implements EventHandler<MouseEvent> {
 		public ImageView iv1;
 		public ImageView iv2;
+		public Couleur couleurAlea;
 		
 		public EventBouclierClick(ImageView iv1, ImageView iv2) {
 			this.iv1 = iv1;
@@ -134,7 +145,19 @@ public class IHMTache {
 					bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
 					tick = new Image(tickFile.toURI().toURL().toString());
 				} catch (MalformedURLException e) {	e.printStackTrace();}
-				
+				switch(iv1.getId()) {
+				case "bouclier1":
+					couleurAlea = Couleur.ROUGE;
+					break;
+				case "bouclier2": 
+					couleurAlea = Couleur.JAUNE;
+					break;
+				case "bouclier3":
+					couleurAlea = Couleur.VERT;
+				}
+				donnees.getRealisation(tache.getId()).setProtection(couleurAlea, true);
+				donnees.depense(10);
+				CreerIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); //A mettre à chaque dépense
 				iv1.setImage(bouclierOnImg);
 				iv2.setImage(tick);
 			} else {
@@ -144,7 +167,9 @@ public class IHMTache {
 				try {
 					croix = new Image(croixFile.toURI().toURL().toString());
 				} catch (MalformedURLException e) {e.printStackTrace();}
-				iv2.setImage(croix);
+				iv2.setImage(croix); 
+				donnees.getRealisation(tache.getId()).setProtection(couleurAlea, false);
+				donnees.depense(-10);
 			}
 		}
 	}
