@@ -42,7 +42,7 @@ import partie.VueJoueurs;
 import tours.Tour;
 import javafx.scene.input.MouseEvent;
 
-public class IHMTache extends Application implements Strategie {
+public class IHMTache {
 
 	public Tacheclass tache;
 	public VBox main;
@@ -63,10 +63,11 @@ public class IHMTache extends Application implements Strategie {
 	public TabPane jalon;
 	public Button submit;
 	
-	public static void main(String[] args) {
-		Application.launch(IHMTache.class, args);
+	public IHMTache(Tacheclass t) {
+		this.tache = t;
 	}
 	
+
 	class EventAcceleration implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {
 			cptClickAccel += 1;
@@ -148,8 +149,7 @@ public class IHMTache extends Application implements Strategie {
 		}
 	}
 	
-	public VBox creerIHM(Tacheclass t) throws Exception {
-		this.tache = t;
+	public VBox creerIHM() throws Exception {
 		
 		//Déclaration de la VBox principale (qui contiendra tous les éléments d'une tâche) 
 		main = new VBox();
@@ -309,62 +309,5 @@ public class IHMTache extends Application implements Strategie {
 		
 		return main;
 	}
-
 	
-	public void start(Stage stage) throws Exception {
-			desc = new Description(); 
-			VueJoueurs vj = new VueJoueurs("Samuel");
-			
-			for(Tour t : desc.getSequence()) {
-				switch(t.getType()) {
-				case "Jalon":
-					jouerJalon(vj);
-					break;
-				case "Semaine":
-					jouerEtape(vj);
-					break;
-				case "Quizz":
-					jouerTest(vj);
-				} 
-			}
-			
-			Scene scene = new Scene(jalon);
-			stage.setTitle("Test IHMTâche");
-			stage.setScene(scene);
-			stage.show();
-	}
-
-
-	
-	public void jouerEtape(VueJoueur vue) {
-		
-	}
-
-
-	
-	public void jouerJalon(VueJoueur vue) {
-		jalon = new TabPane(); 
-		Tache[] tab = null;
-		for(Tour t : desc.getSequence()) {
-			if(t.getType() == "Jalon" && t.getTour() == 0) {
-				tab = t.taches;
-			}
-		}
-		for(Tache t : tab) {
-			Tab onglet = new Tab();
-			onglet.setText("Tâche " + t.getId());
-			try {
-				onglet.setContent(creerIHM((Tacheclass)t));
-			} catch (Exception e) {e.printStackTrace();}
-			onglet.setClosable(false);
-			jalon.getTabs().add(onglet);
-		}
-		
-	}
-
-
-	
-	public void jouerTest(VueJoueur vue) {
-		
-	}
 }
