@@ -85,7 +85,7 @@ public class IHMTache {
 			prix.setTextFill(Color.web("009c00"));
 			donnees.getRealisation(tache.getId()).setAcceleration(true);
 			donnees.depense(tache.coutAcceleration());
-			CreerIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); 
+			MoteurIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); 
 			
 			} else {
 				donnees.getRealisation(tache.getId()).setAcceleration(false);
@@ -158,7 +158,7 @@ public class IHMTache {
 				}
 				donnees.getRealisation(tache.getId()).setProtection(couleurAlea, true);
 				donnees.depense(10);
-				CreerIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); //A mettre à chaque dépense
+				MoteurIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); //A mettre à chaque dépense
 				iv1.setImage(bouclierOnImg);
 				iv2.setImage(tick);
 			} else {

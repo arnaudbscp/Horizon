@@ -26,7 +26,7 @@ import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
 
-public class CreerIHM extends Application {
+public class MoteurIHM extends Application {
 
 	public TabPane jalon;
 	public Description desc;
@@ -116,7 +116,6 @@ public class CreerIHM extends Application {
 		Label init = new Label("Caisse initiale: 300\n\n");
 		Label op = new Label();
 		for(Tacheclass t : (Tacheclass[]) desc.getSequence()[0].taches) {
-			System.out.println("Tâche " + t.getId());
 			int coutTache = 0;
 			int cptProtec = 0;
 			Label onOff = new Label(); 
