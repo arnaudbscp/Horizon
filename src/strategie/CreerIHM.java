@@ -12,6 +12,7 @@ import description.Tacheclass;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -103,6 +104,8 @@ public class CreerIHM extends Application {
 		VBox resume = new VBox();
 		Font font = new Font("Arial", 20);
 		File billetFile = new File("ressources/billet.png");
+		Button valider = new Button();
+		valider.setText("Valider décisions");
 		Image billet = null;
 		ImageView iv = null;
 		try {
@@ -133,11 +136,12 @@ public class CreerIHM extends Application {
 		init.setFont(font);
 		op.setFont(font);
 		caisse.setFont(font);
-		resume.getChildren().addAll(iv, init, op, caisse);
+		resume.getChildren().addAll(iv, init, op, caisse, valider);
 		resume.setMargin(iv, new Insets(10, 0, 0, 250));
 		resume.setMargin(init, new Insets(0, 0, 0, 200));
 		resume.setMargin(op, new Insets(0, 0, 0, 35));
-		resume.setMargin(caisse, new Insets(0, 0, 0, 200));
+		resume.setMargin(caisse, new Insets(-5, 0, 0, 200));
+		resume.setMargin(valider, new Insets(15, 0, 0, 240));
 		return resume;
 	}
 	

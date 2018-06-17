@@ -64,7 +64,6 @@ public class IHMTache {
 	public Image bouclier_off;
 	public Description desc;
 	public TabPane jalon;
-	public Button submit;
 	
 	public IHMTache(Tacheclass t, VueJoueurs v) {
 		this.tache = t;
@@ -321,18 +320,13 @@ public class IHMTache {
 		alea3.setAlignment(Pos.BOTTOM_CENTER);
 		aleas.getChildren().addAll(alea1, alea2, alea3);
 		
-		//Bouton valider
-		submit = new Button();
-		submit.setText("Valider décisions");
-		submit.setAlignment(Pos.CENTER);
-		
 		//Personnalisation de la VBox principale et ajout de tous les éléments à cette dernière
 		File backgroundFile = new File("ressources/fond.png");
 		Image background = new Image(backgroundFile.toURI().toURL().toString());
 		main.setBackground(new Background(new BackgroundImage(background, null, null, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		main.setMinSize(600, 400);
 		main.setMaxSize(600, 400);
-		main.getChildren().addAll(top, semaines, aleas, submit);
+		main.getChildren().addAll(top, semaines, aleas);
 		
 		return main;
 	}
