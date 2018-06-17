@@ -22,8 +22,6 @@ public class DonneesJoueurs implements DonneesJoueur {
 			liste.add(new Realisation((Tacheclass) d.getTaches().get(i)));
 		}
 		liste.get(0).setEtat(Etat.EN_COURS);
-		
-		
 	}
 	
 	public void actualisation(int temps) {}

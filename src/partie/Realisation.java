@@ -79,4 +79,8 @@ public class Realisation {
 			return this.protec[2];
 		}
 	}
+	
+	public boolean estAccelerer() {
+		return this.acceleration;
+	}
 }

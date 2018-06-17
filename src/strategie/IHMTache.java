@@ -86,11 +86,13 @@ public class IHMTache {
 			prix.setTextFill(Color.web("009c00"));
 			donnees.getRealisation(tache.getId()).setAcceleration(true);
 			donnees.depense(tache.coutAcceleration());
+			CreerIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); 
+			
 			} else {
 				donnees.getRealisation(tache.getId()).setAcceleration(false);
 				donnees.depense(-(tache.coutAcceleration()));
 			}
-		}	
+		}	 
 	}
 	
 	class EventBouclierSurvol implements EventHandler<MouseEvent> {
