@@ -21,18 +21,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import partie.Partie;
 import partie.Realisation;
 import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
 
 public class MoteurIHM extends Application {
+	
+	public Scene scene;
+	public Stage stage;
+	public Partie partie;
 
+	//Attributs et éléments nécessaires pour la création de l'IHM Jalon
 	public TabPane jalon;
 	public Description desc;
 	public VueJoueurs vj;
 	public VBox resume;
 	public static Label caisse;
+	
+	//Attributs et éléments nécessaires pour la création d'une IHM Semaine
+	public VBox semaine;
+	
 	
 	private VBox creerResume() {
 		VBox resume = new VBox();
@@ -40,6 +50,7 @@ public class MoteurIHM extends Application {
 		File billetFile = new File("ressources/billet.png");
 		Button valider = new Button();
 		valider.setText("Valider décisions");
+		valider.setOnMouseClicked(e -> {jouerEtape(vj);});
 		Image billet = null;
 		ImageView iv = null;
 		try {
@@ -82,15 +93,19 @@ public class MoteurIHM extends Application {
 		Application.launch(args);
 	}
 
-	public void start(Stage stage) throws Exception {
+	public void start(Stage primaryStage) throws Exception {
+		stage = primaryStage;
 		desc = new Description();
-		vj = new VueJoueurs("Samuel");
-		IHMTache tache = new IHMTache((Tacheclass)desc.getDebut(), vj);
+		partie = new Partie(desc, "Samuel");
+		vj = partie.getVueJoueur("Samuel");
+		scene = null;
+	
 		for(Tour t : desc.getSequence()) {
 			if(t.getTour() == 0) {
 			switch(t.getType()) {
 			case "Jalon":
 				jouerJalon(vj);
+				scene = new Scene(jalon);
 				break;
 			case "Semaine":
 				jouerEtape(vj);
@@ -101,15 +116,19 @@ public class MoteurIHM extends Application {
 			}
 		}
 		
-		Scene scene = new Scene(jalon);
-		stage.setTitle("Jalon");
+		stage.setTitle("Horizon v2.0");
 		stage.setScene(scene);
 		stage.show();
 	}
 	
 	
 	public void jouerEtape(VueJoueur vue) {
-		
+		IHMTache constructeur = new IHMTache((Tacheclass)desc.getDebut(), vj);
+		semaine = new VBox();
+		try {semaine = constructeur.creerIHMSemaine();
+		} catch (Exception e) {	e.printStackTrace();}
+		scene = new Scene(semaine);
+		stage.setScene(scene);
 	}
 	
 	public void jouerJalon(VueJoueur vue) {
@@ -125,7 +144,7 @@ public class MoteurIHM extends Application {
 			Tab onglet = new Tab();
 			onglet.setText("Tâche " + t.getId());
 			try {
-				onglet.setContent(bunny.creerIHM());
+				onglet.setContent(bunny.creerIHMJalon());
 			} catch (Exception e) {e.printStackTrace();}
 			onglet.setClosable(false);
 			jalon.getTabs().add(onglet);

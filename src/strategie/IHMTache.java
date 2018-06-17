@@ -13,8 +13,10 @@ import description.Tacheclass;
 import description.TypeAlea;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -175,7 +177,7 @@ public class IHMTache {
 		}
 	}
 	
-	public VBox creerIHM() throws Exception {
+	public VBox creerIHMJalon() throws Exception {
 		
 		//Déclaration de la VBox principale (qui contiendra tous les éléments d'une tâche) 
 		main = new VBox();
@@ -330,5 +332,43 @@ public class IHMTache {
 		
 		return main;
 	}
+	
+	public VBox creerIHMSemaine() throws Exception {
+		//On reprend la même IHM que pour le jalon en supprimant les capacités de décision
+		VBox boite = creerIHMJalon();
+		VBox semaines = (VBox) boite.getChildren().get(1);
+		//On supprime le bouton permettant d'accélérer: 
+		semaines.getChildren().remove(semaines.getChildren().get(1));
+		//De même pour les boucliers permettant la protection: 
+		HBox aleas = (HBox) boite.getChildren().get(2);
+		VBox alea1 = (VBox) aleas.getChildren().get(0);
+		VBox alea2 = (VBox) aleas.getChildren().get(1);
+		VBox alea3 = (VBox) aleas.getChildren().get(2);
+		alea1.getChildren().remove(alea1.getChildren().get(1));
+		alea1.getChildren().remove(alea1.getChildren().get(1));
+		alea2.getChildren().remove(alea2.getChildren().get(1));
+		alea2.getChildren().remove(alea2.getChildren().get(1));
+		alea3.getChildren().remove(alea3.getChildren().get(1));
+		alea3.getChildren().remove(alea3.getChildren().get(1));
+		boite.setMargin(semaines, new Insets(20, 0, 0, 0));
+		boite.setMargin(aleas, new Insets(-40, 0, 0, 0));
+		//On créer et affiche l'avancement en-dessous des semaines
+		Label avancement = new Label(); 
+		avancement.setText("Avancement: " + tache.getAvancement() + " / " + tache.getDureeInitiale());
+		avancement.setFont(new Font("Arial", 20));
+		avancement.setTextFill(Color.BLUE);
+		semaines.getChildren().add(avancement);
+		semaines.setMargin(avancement, new Insets(0, 0, 0, 200));
+		//On affiche les informations du joueur en bas de la VBox
+		Label infos = new Label();
+		infos.setText("Joueur: " + joueur.getNom() + " - Votre caisse: " + joueur.getCaisse() + "€ - Qualité: " + joueur.getQualite()+"%");
+		infos.setFont(new Font("Arial", 18));
+		infos.setTextFill(Color.BLUE);
+		boite.getChildren().add(infos);
+		boite.setMargin(infos, new Insets(20, 0, 0, 70));
+		
+		return boite;
+	}
+
 	
 }
