@@ -15,7 +15,7 @@ public class DonneesJoueurs implements DonneesJoueur {
 	public DonneesJoueurs(String nom) {
 		this.nom = nom;
 		this.montantCaisse = 300; 
-		this.qualiteProduit = 0;
+		this.qualiteProduit = 100;
 		liste = new ArrayList<>();
 		Description d = new Description();
 		for (int i = 0; i < d.getTaches().size(); i++) {
