@@ -10,14 +10,17 @@ import description.Description;
 import description.Tache;
 import description.Tacheclass;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -32,8 +35,8 @@ public class MoteurIHM extends Application {
 	
 	public Scene scene;
 	public Stage stage;
-	public Partie partie;
-
+	public static Partie partie;
+	
 	//Attributs et éléments nécessaires pour la création de l'IHM Jalon
 	public TabPane jalon;
 	public Description desc;
@@ -44,6 +47,8 @@ public class MoteurIHM extends Application {
 	//Attributs et éléments nécessaires pour la création d'une IHM Semaine
 	public VBox semaine;
 	public Button valider;
+	
+	public IHMTache constructeur;
 	
 	private VBox creerResume() {
 		VBox resume = new VBox();
@@ -92,6 +97,45 @@ public class MoteurIHM extends Application {
 		return resume;
 	}
 	
+	public class EventPasserSemaine implements EventHandler<MouseEvent> {
+		public Tacheclass tache;
+		public GraphicsContext gc;
+		public Label avancement;
+		
+		public EventPasserSemaine(Tacheclass t, GraphicsContext g, Label lab) {
+			tache = t; 
+			gc = g; 
+			avancement = lab;
+		}
+		
+		
+		public void handle(MouseEvent event) {
+			File fileAvancement = new File("ressources/rond_avancement.png");
+			Image imgAvancement = null;
+			try {
+				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
+			} catch (MalformedURLException e) {e.printStackTrace();}
+			if(tache.getAvancement() < tache.getDureeInitiale()) {
+			tache.avancer();
+			}
+			if(tache.getAvancement() <= tache.getDureeInitiale()) {
+				if(tache.getAvancement() == 1) {gc.drawImage(imgAvancement, 50, 10);}
+				else if(tache.getAvancement() == 2) {gc.drawImage(imgAvancement, 180, 10);}
+				else if(tache.getAvancement() == 3) {gc.drawImage(imgAvancement, 310, 10);}
+			avancement.setText("Avancement: "+tache.getAvancement()+" / "+tache.getDureeInitiale()); 
+				}
+			try {
+				if(constructeur.tache.getAvancement() == constructeur.tache.getDureeInitiale()) {
+					partie.passerTour();
+					jouerEtape(vj);
+				
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -119,6 +163,7 @@ public class MoteurIHM extends Application {
 		menu.setMargin(quitter, new Insets(0, 0, 10, 40));
 		jouer.setOnMouseClicked(e -> {jouerJalon(vj, 0); scene = new Scene(jalon); stage.setScene(scene);});
 		quitter.setOnMouseClicked(e -> {primaryStage.close();});
+
 		
 		scene = new Scene(menu);
 		stage.setTitle("Horizon v2.0");
@@ -128,9 +173,16 @@ public class MoteurIHM extends Application {
 	
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
-		IHMTache constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj, partie);
+		constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj);
 		semaine = new VBox();
 		semaine = constructeur.creerIHMSemaine();
+		EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
+		constructeur.passer.setOnMouseClicked(event);
+		
+		System.out.println("Avancement tâche: " + constructeur.tache.getAvancement());
+		System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
+		
+		
 		scene = new Scene(semaine);
 		stage.setScene(scene);
 		}
@@ -145,7 +197,7 @@ public class MoteurIHM extends Application {
 			}
 		}
 		for(Tache t : tab) {
-			IHMTache bunny = new IHMTache((Tacheclass)t, vj, partie);
+			IHMTache bunny = new IHMTache((Tacheclass)t, vj);
 			Tab onglet = new Tab();
 			onglet.setText("Tâche " + t.getId());
 			try {
