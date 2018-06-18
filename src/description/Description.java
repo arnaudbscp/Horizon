@@ -10,6 +10,17 @@ import tours.TourJalon;
 import tours.TourQuizz;
 import tours.TourAlea;
 
+/**
+ * 
+ * @author bascopa
+ * <p> Objet qui permet d'obtenir la structure du jeu. Au moyen des éléments suivants:
+
+    La liste des tâches,
+    la liste des aleas envisagés,
+    les relations entre tâches (i.e. le dessin du graphe).
+	</p>
+ */
+
 public class Description {
 	
 	private LinkedList<Tacheclass> tabTache;
@@ -79,6 +90,11 @@ public class Description {
 	
 	}
 	
+	/**
+	 * <p>Fournit la tâche désignée par un identifiant donné</p>
+	 * @param id
+	 * @return la tâche
+	 */
 	public Tache getTacheById(String id) {
 		for(Tacheclass ta : tabTache) {
 			if(id.equalsIgnoreCase(ta.getId())) {
@@ -87,22 +103,44 @@ public class Description {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @return la relation
+	 */
 	protected HashMap<String, String[]> getRelation(){
 		
 		return relation;
 	}
+	
+	/**
+	 * Fournit la tâche initiale (elle est unique).
+	 * @return la tache
+	 */
 	public final Tache getDebut() {
 		return this.tabTache.getFirst();
 	}
 	
+	/**
+	 * Fournit la tâche terminale (elle est uniquye).
+	 * @return la tache de fin
+	 */
 	public final Tache getFin() {
 		return this.tabTache.getLast();
 	}
 	
+	/**
+	 * Fournit une couleur d'alea au hasard (cf Couleur.tirage()).
+	 * @return Couleur
+	 */
 	public Couleur getRandom() {
 		return Couleur.tirage();
 	}
 	
+	/**
+	 * 
+	 * @return le chemin critique
+	 */
 	public Collection<Tache> getCheminCritique() {
 		ArrayList<Tache> liste = new ArrayList<>();
 		Tache tache1 = this.getDebut(); 
@@ -120,6 +158,10 @@ public class Description {
 		return successeurs;
 	}
 	
+	/**
+	 * 
+	 * @return Retourne l'ensemble des taches.
+	 */
 	public ArrayList<Tacheclass> getTaches() {
 		ArrayList<Tacheclass> tab = new ArrayList<>();
 		for(Tacheclass t : this.tabTache) {
@@ -127,6 +169,11 @@ public class Description {
 		}
 		return tab;
 	}
+	
+	/**
+	 * 
+	 * @return la séquence
+	 */
 	public Tour[] getSequence() {
 		return sequence;
 	}

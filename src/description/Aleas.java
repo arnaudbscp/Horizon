@@ -3,6 +3,13 @@ package description;
 import partie.DonneesJoueur;
 import partie.Realisation;
 
+/**
+ * 
+ * @author bascopa
+ * <p>Class qui implémente l'interface Alea.</p>
+ * <p>Voir l'interface pour plus de détails.</p>
+ */
+
 public class Aleas implements Alea{
 	
 	private TypeAlea typeA;

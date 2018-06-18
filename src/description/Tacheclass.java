@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-
+/**
+ * 
+ * @author bascopa
+ *<p> Class qui implemente Tache. Voir l'interface pour plus de précisions.</p>
+ */
 
 public class Tacheclass implements Tache {
 	private int coutAcceleration;
