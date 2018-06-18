@@ -66,9 +66,12 @@ public class Realisation {
 		}
 		if(this.tache.getDureeInitiale()==this.tache.getAvancement()) {
 			etat=Etat.TERMINEE;
-			
 		}
 	}
+	public void reculer() {
+		this.tache.reculer();
+	}
+	
 	public boolean isProtec(Couleur c) {
 		if(c.equals(Couleur.ROUGE)) {
 			return this.protec[0];
