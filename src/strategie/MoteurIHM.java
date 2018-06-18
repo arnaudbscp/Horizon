@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import partie.Partie;
 import partie.Realisation;
@@ -104,13 +105,18 @@ public class MoteurIHM extends Application {
 		
 		Font font = new Font("Arial", 32);
 		VBox menu = new VBox(); 
-		Label horizon = new Label("Horizon v2.0");
+		Label horizon = new Label("   Horizon v2.0   ");
+		horizon.setFont(font);
+		horizon.setStyle("-fx-text-fill: blue");
 		Button jouer = new Button("JOUER");
 		jouer.setFont(font);
 		Button quitter = new Button("QUITTER");
 		quitter.setFont(font);
 		menu.getChildren().addAll(horizon, jouer, quitter);
-		menu.setSpacing(30);
+		menu.setSpacing(40);
+		menu.setMargin(horizon, new Insets(10, 0, 0, 0));
+		menu.setMargin(jouer, new Insets(0, 0, 0, 60));
+		menu.setMargin(quitter, new Insets(0, 0, 10, 40));
 		jouer.setOnMouseClicked(e -> {jouerJalon(vj, 0); scene = new Scene(jalon); stage.setScene(scene);});
 		quitter.setOnMouseClicked(e -> {primaryStage.close();});
 		
