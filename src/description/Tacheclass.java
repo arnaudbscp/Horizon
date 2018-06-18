@@ -38,6 +38,10 @@ public class Tacheclass implements Tache {
 		avancement++;
 	}
 	
+	public void reculer() {
+		avancement--;
+	}
+	
 	public int coutAcceleration() {
 		return this.coutAcceleration;
 	}
@@ -92,7 +96,6 @@ public class Tacheclass implements Tache {
 
 	@Override
 	public void setDuree(int i) {
-		this.dureeInitiale +=i;
-		
+		this.dureeInitiale = i;
 	}
 }

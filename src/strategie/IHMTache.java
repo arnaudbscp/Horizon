@@ -64,8 +64,11 @@ public class IHMTache {
 	public ImageView ivCroix2;
 	public ImageView ivCroix3;
 	public Image bouclier_off;
+	public Image rondVide; 
+	public Image rondPlein;
 	public Description desc;
 	public TabPane jalon;
+	public Canvas canvasSemaines;
 	
 	public IHMTache(Tacheclass t, VueJoueurs v) {
 		this.tache = t;
@@ -87,11 +90,15 @@ public class IHMTache {
 			prix.setTextFill(Color.web("009c00"));
 			donnees.getRealisation(tache.getId()).setAcceleration(true);
 			donnees.depense(tache.coutAcceleration());
+			tache.setDuree(tache.getDureeInitiale()-1);
+			redessinerSemaines(rondVide, rondPlein, canvasSemaines);
 			MoteurIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); 
-			
 			} else {
 				donnees.getRealisation(tache.getId()).setAcceleration(false);
 				donnees.depense(-(tache.coutAcceleration()));
+				donnees.getRealisation(tache.getId()).reculer();
+				redessinerSemaines(rondVide, rondPlein, canvasSemaines);
+				tache.setDuree(tache.getDureeInitiale()+1);
 			}
 		}	 
 	}
@@ -206,23 +213,10 @@ public class IHMTache {
 		File fileRondPlein = new File("ressources/rond_plein.png");
 		Image rondVide = new Image(fileRondVide.toURI().toURL().toString());
 		Image rondPlein = new Image(fileRondPlein.toURI().toURL().toString());
-		Canvas canvas = new Canvas(600, 130);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		for(int i = 0; i < tache.getDureeMax(); i++) {
-			if(i < tache.getDureeInitiale()) {
-				if(i == 0) {
-				gc.drawImage(rondVide, 50, 10);
-				} else {
-					gc.drawImage(rondVide, 180, 10);
-				}
-			} else {
-				if(i == tache.getDureeInitiale()) {
-					gc.drawImage(rondPlein, 310, 10);
-				} else {
-					gc.drawImage(rondPlein, 440, 10);
-				}
-			}
-		}
+		canvasSemaines = new Canvas(600, 130);
+		GraphicsContext gc = canvasSemaines.getGraphicsContext2D();
+		redessinerSemaines(rondVide, rondPlein, canvasSemaines);
+		
 		HBox acceleration = new HBox();
 		acceleration.setAlignment(Pos.CENTER);
 		File accelFile = new File("ressources/bouton_accelerer.png");
@@ -253,7 +247,7 @@ public class IHMTache {
 			});
 		//Gestion des évènements + modification des données lors du clic sur le bouton 
 		acceleration.setOnMouseClicked(new EventAcceleration());
-		semaines.getChildren().addAll(canvas, acceleration);
+		semaines.getChildren().addAll(canvasSemaines, acceleration);
 		
 		//Elements pour les Aléas et ajout de ces éléments
 		Aleas aleaRouge = (Aleas) this.tache.getAlea(Couleur.ROUGE);
@@ -369,6 +363,37 @@ public class IHMTache {
 		
 		return boite;
 	}
+	
+	public void redessinerSemaines(Image rondVide, Image rondPlein, Canvas canvas) {
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		/*
+		for(int i = 0; i < tache.getDureeMax(); i++) {
+			if(i < tache.getDureeInitiale()) {
+				if(i == 0) {
+				gc.drawImage(rondVide, 50, 10);
+				} else {
+					gc.drawImage(rondVide, 180, 10);
+				}
+			} else {
+				if(i == tache.getDureeInitiale()) {
+					gc.drawImage(rondPlein, 310, 10);
+				} else {
+					gc.drawImage(rondPlein, 440, 10);
+				}
+			}
+		}*/ 
+		int marge = 50;
+		for(int i = 0; i < tache.getDureeMax(); i++) {
+			if(i < tache.getDureeInitiale()) {
+				gc.drawImage(rondVide, marge, 10);
+				marge += 130;
+			} else {
+				gc.drawImage(rondPlein, marge, 10);
+				marge += 130;
+			}
+		}
+	}
+	
 
 	
 }
