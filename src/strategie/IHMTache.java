@@ -40,6 +40,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import partie.DonneesJoueurs;
+import partie.Partie;
 import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
@@ -74,11 +75,14 @@ public class IHMTache {
 	public GraphicsContext gc = canvasSemaines.getGraphicsContext2D();
 	public Button passer;
 	public Label avancement;
+	public int cptClickAvancement = 1;
+	public Partie partie;
 	
-	public IHMTache(Tacheclass t, VueJoueurs v) {
+	public IHMTache(Tacheclass t, VueJoueurs v, Partie p) {
 		this.tache = t;
 		this.joueur = v;
 		this.donnees = v.getJoueur();
+		this.partie = p;
 	}
 	
 
@@ -382,19 +386,29 @@ public class IHMTache {
 		}
 	}
 	
+	
 	public class EventPasserSemaine implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {
+			cptClickAvancement++;
 			File fileAvancement = new File("ressources/rond_avancement.png");
 			Image imgAvancement = null;
 			try {
 				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
+			if(tache.getAvancement() < tache.getDureeInitiale()) {
 			tache.avancer();
+			System.out.println("Avancement tâche: "+tache.getAvancement());
+			}
 			if(tache.getAvancement() <= tache.getDureeInitiale()) {
 				if(tache.getAvancement() == 1) {gc.drawImage(imgAvancement, 50, 10);}
 				else if(tache.getAvancement() == 2) {gc.drawImage(imgAvancement, 180, 10);}
+				else if(tache.getAvancement() == 3) {gc.drawImage(imgAvancement, 310, 10);}
 			avancement.setText("Avancement: "+tache.getAvancement()+" / "+tache.getDureeInitiale()); 
+			if(tache.getAvancement() == tache.getDureeInitiale()) {
+				partie.passerTour();	
 			}
+			}
+			
 		}
 	}
 	

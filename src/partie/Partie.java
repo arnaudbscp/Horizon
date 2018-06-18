@@ -142,13 +142,13 @@ public class Partie {
 						v.setAcceleration(x.getId(), true);
 					}
 					if (decisionProtRouge == 0) {
-						v.setProtection(x.getId(), Couleur.ROUGE);
+						v.setProtection(x.getId(), Couleur.ROUGE, true);
 					}
 					if (decisionProtJaune == 0) {
-						v.setProtection(x.getId(), Couleur.JAUNE);
+						v.setProtection(x.getId(), Couleur.JAUNE, true);
 					}
 					if (decisionProtVert == 0) {
-						v.setProtection(x.getId(), Couleur.VERT);
+						v.setProtection(x.getId(), Couleur.VERT, true);
 					}
 			}
 		}

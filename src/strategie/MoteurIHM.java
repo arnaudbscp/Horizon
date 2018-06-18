@@ -42,13 +42,13 @@ public class MoteurIHM extends Application {
 	
 	//Attributs et éléments nécessaires pour la création d'une IHM Semaine
 	public VBox semaine;
-	
+	public Button valider;
 	
 	private VBox creerResume() {
 		VBox resume = new VBox();
 		Font font = new Font("Arial", 20);
 		File billetFile = new File("ressources/billet.png");
-		Button valider = new Button();
+		valider = new Button();
 		valider.setText("Valider décisions");
 		valider.setOnMouseClicked(e -> {try {
 			jouerEtape(vj);
@@ -101,23 +101,20 @@ public class MoteurIHM extends Application {
 		partie = new Partie(desc, "Samuel");
 		vj = partie.getVueJoueur("Samuel");
 		scene = null;
-	
-		for(Tour t : desc.getSequence()) {
-			if(t.getTour() == 0) {
-			switch(t.getType()) {
-			case "Jalon":
-				jouerJalon(vj);
-				scene = new Scene(jalon);
-				break;
-			case "Semaine":
-				jouerEtape(vj);
-				break;
-			case "Quizz": 
-				jouerTest(vj);
-			}
-			}
-		}
 		
+		Font font = new Font("Arial", 32);
+		VBox menu = new VBox(); 
+		Label horizon = new Label("Horizon v2.0");
+		Button jouer = new Button("JOUER");
+		jouer.setFont(font);
+		Button quitter = new Button("QUITTER");
+		quitter.setFont(font);
+		menu.getChildren().addAll(horizon, jouer, quitter);
+		menu.setSpacing(30);
+		jouer.setOnMouseClicked(e -> {jouerJalon(vj, 0); scene = new Scene(jalon); stage.setScene(scene);});
+		quitter.setOnMouseClicked(e -> {primaryStage.close();});
+		
+		scene = new Scene(menu);
 		stage.setTitle("Horizon v2.0");
 		stage.setScene(scene);
 		stage.show();
@@ -125,7 +122,7 @@ public class MoteurIHM extends Application {
 	
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
-		IHMTache constructeur = new IHMTache((Tacheclass) desc.getDebut(), vj);
+		IHMTache constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj, partie);
 		semaine = new VBox();
 		semaine = constructeur.creerIHMSemaine();
 		scene = new Scene(semaine);
@@ -133,16 +130,16 @@ public class MoteurIHM extends Application {
 		}
 		
 	
-	public void jouerJalon(VueJoueur vue) {
+	public void jouerJalon(VueJoueur vue, int id) {
 		jalon = new TabPane(); 
 		Tache[] tab = null;
 		for(Tour t : desc.getSequence()) {
-			if(t.getType() == "Jalon" && t.getTour() == 0) {
+			if(t.getType() == "Jalon" && t.getTour() == id) {
 				tab = t.taches;
 			}
 		}
 		for(Tache t : tab) {
-			IHMTache bunny = new IHMTache((Tacheclass)t, vj);
+			IHMTache bunny = new IHMTache((Tacheclass)t, vj, partie);
 			Tab onglet = new Tab();
 			onglet.setText("Tâche " + t.getId());
 			try {
