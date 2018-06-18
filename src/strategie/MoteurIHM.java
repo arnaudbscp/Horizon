@@ -50,7 +50,9 @@ public class MoteurIHM extends Application {
 		File billetFile = new File("ressources/billet.png");
 		Button valider = new Button();
 		valider.setText("Valider décisions");
-		valider.setOnMouseClicked(e -> {jouerEtape(vj);});
+		valider.setOnMouseClicked(e -> {try {
+			jouerEtape(vj);
+		} catch (Exception e1) {e1.printStackTrace();}});
 		Image billet = null;
 		ImageView iv = null;
 		try {
@@ -122,14 +124,14 @@ public class MoteurIHM extends Application {
 	}
 	
 	
-	public void jouerEtape(VueJoueur vue) {
-		IHMTache constructeur = new IHMTache((Tacheclass)desc.getDebut(), vj);
+	public void jouerEtape(VueJoueur vue) throws Exception { 
+		IHMTache constructeur = new IHMTache((Tacheclass) desc.getDebut(), vj);
 		semaine = new VBox();
-		try {semaine = constructeur.creerIHMSemaine();
-		} catch (Exception e) {	e.printStackTrace();}
+		semaine = constructeur.creerIHMSemaine();
 		scene = new Scene(semaine);
 		stage.setScene(scene);
-	}
+		}
+		
 	
 	public void jouerJalon(VueJoueur vue) {
 		jalon = new TabPane(); 
