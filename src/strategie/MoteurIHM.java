@@ -2,6 +2,7 @@ package strategie;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import com.sun.prism.paint.Color;
 
@@ -10,16 +11,20 @@ import description.Description;
 import description.Tache;
 import description.Tacheclass;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import partie.Partie;
 import partie.Realisation;
@@ -31,8 +36,8 @@ public class MoteurIHM extends Application {
 	
 	public Scene scene;
 	public Stage stage;
-	public Partie partie;
-
+	public static Partie partie;
+	
 	//Attributs et éléments nécessaires pour la création de l'IHM Jalon
 	public TabPane jalon;
 	public Description desc;
@@ -42,15 +47,19 @@ public class MoteurIHM extends Application {
 	
 	//Attributs et éléments nécessaires pour la création d'une IHM Semaine
 	public VBox semaine;
+	public Button valider;
 	
+	public IHMTache constructeur;
 	
 	private VBox creerResume() {
 		VBox resume = new VBox();
 		Font font = new Font("Arial", 20);
 		File billetFile = new File("ressources/billet.png");
-		Button valider = new Button();
+		valider = new Button();
 		valider.setText("Valider décisions");
-		valider.setOnMouseClicked(e -> {jouerEtape(vj);});
+		valider.setOnMouseClicked(e -> {try {
+			jouerEtape(vj);
+		} catch (Exception e1) {e1.printStackTrace();}});
 		Image billet = null;
 		ImageView iv = null;
 		try {
@@ -89,6 +98,45 @@ public class MoteurIHM extends Application {
 		return resume;
 	}
 	
+	public class EventPasserSemaine implements EventHandler<MouseEvent> {
+		public Tacheclass tache;
+		public GraphicsContext gc;
+		public Label avancement;
+		
+		public EventPasserSemaine(Tacheclass t, GraphicsContext g, Label lab) {
+			tache = t; 
+			gc = g; 
+			avancement = lab;
+		}
+		
+		
+		public void handle(MouseEvent event) {
+			File fileAvancement = new File("ressources/rond_avancement.png");
+			Image imgAvancement = null;
+			try {
+				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
+			} catch (MalformedURLException e) {e.printStackTrace();}
+			if(tache.getAvancement() < tache.getDureeInitiale()) {
+			tache.avancer();
+			}
+			if(tache.getAvancement() <= tache.getDureeInitiale()) {
+				if(tache.getAvancement() == 1) {gc.drawImage(imgAvancement, 50, 10);}
+				else if(tache.getAvancement() == 2) {gc.drawImage(imgAvancement, 180, 10);}
+				else if(tache.getAvancement() == 3) {gc.drawImage(imgAvancement, 310, 10);}
+			avancement.setText("Avancement: "+tache.getAvancement()+" / "+tache.getDureeInitiale()); 
+				}
+			try {
+				if(constructeur.tache.getAvancement() == constructeur.tache.getDureeInitiale()) {
+					partie.passerTour();
+					jouerEtape(vj);
+				
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -99,43 +147,74 @@ public class MoteurIHM extends Application {
 		partie = new Partie(desc, "Samuel");
 		vj = partie.getVueJoueur("Samuel");
 		scene = null;
-	
-		for(Tour t : desc.getSequence()) {
-			if(t.getTour() == 0) {
-			switch(t.getType()) {
-			case "Jalon":
-				jouerJalon(vj);
-				scene = new Scene(jalon);
-				break;
-			case "Semaine":
-				jouerEtape(vj);
-				break;
-			case "Quizz": 
-				jouerTest(vj);
-			}
-			}
-		}
 		
+		Font font = new Font("Arial", 32);
+		VBox menu = new VBox(); 
+		Label horizon = new Label("   Horizon v2.0   ");
+		horizon.setFont(font);
+		horizon.setStyle("-fx-text-fill: blue");
+		Button jouer = new Button("JOUER");
+		jouer.setFont(font);
+		Button quitter = new Button("QUITTER");
+		quitter.setFont(font);
+		menu.getChildren().addAll(horizon, jouer, quitter);
+		menu.setSpacing(40);
+		menu.setMargin(horizon, new Insets(10, 0, 0, 0));
+		menu.setMargin(jouer, new Insets(0, 0, 0, 60));
+		menu.setMargin(quitter, new Insets(0, 0, 10, 40));
+		jouer.setOnMouseClicked(e -> {jouerJalon(vj, 0); scene = new Scene(jalon); stage.setScene(scene);});
+		quitter.setOnMouseClicked(e -> {primaryStage.close();});
+
+		
+		scene = new Scene(menu);
 		stage.setTitle("Horizon v2.0");
 		stage.setScene(scene);
 		stage.show();
 	}
 	
 	
-	public void jouerEtape(VueJoueur vue) {
-		IHMTache constructeur = new IHMTache((Tacheclass)desc.getDebut(), vj);
-		semaine = new VBox();
-		try {semaine = constructeur.creerIHMSemaine();
-		} catch (Exception e) {	e.printStackTrace();}
-		scene = new Scene(semaine);
-		stage.setScene(scene);
-	}
+	public void jouerEtape(VueJoueur vue) throws Exception { 
+		ArrayList<Realisation> re = vue.getSemainesaAvancer();
+		
+		if(re.size()>1) {
+			
+			/*for(Realisation r : re) {
+				IHM bunny = new IHMSemaine((Tacheclass)t, vj);
+				Tab onglet = new Tab();
+				onglet.setText("Tâche " + r.getTache().getId());
+				try {
+					onglet.setContent(bunny.creerIHMJalon());
+				} catch (Exception e) {e.printStackTrace();}
+				onglet.setClosable(false);
+				jalon.getTabs().add(onglet);
+			
+			}*/
+				
+			
+		}else {
+		
+			constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj);
+		
+			semaine = new VBox();
+			semaine = constructeur.creerIHMSemaine();
+			EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
+			constructeur.passer.setOnMouseClicked(event);
+		
+			System.out.println("Avancement tâche: " + constructeur.tache.getAvancement());
+			System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
+		
+		
+			scene = new Scene(semaine);
+			stage.setScene(scene);
+		}
+		}
+		
 	
-	public void jouerJalon(VueJoueur vue) {
+	public void jouerJalon(VueJoueur vue, int id) {
 		jalon = new TabPane(); 
 		Tache[] tab = null;
 		for(Tour t : desc.getSequence()) {
-			if(t.getType() == "Jalon" && t.getTour() == 0) {
+			if(t.getType() == "Jalon" && t.getTour() == id) {
 				tab = t.taches;
 			}
 		}

@@ -40,6 +40,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import partie.DonneesJoueurs;
+import partie.Partie;
 import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
@@ -64,11 +65,16 @@ public class IHMTache {
 	public ImageView ivCroix2;
 	public ImageView ivCroix3;
 	public Image bouclier_off;
-	public Image rondVide; 
+	public File fileRondVide = new File("ressources/rond_vide.png");
+	public File fileRondPlein = new File("ressources/rond_plein.png");
+	public Image rondVide;
 	public Image rondPlein;
 	public Description desc;
 	public TabPane jalon;
-	public Canvas canvasSemaines;
+	public Canvas canvasSemaines = new Canvas(600, 130);
+	public GraphicsContext gc = canvasSemaines.getGraphicsContext2D();
+	public Button passer;
+	public Label avancement;
 	
 	public IHMTache(Tacheclass t, VueJoueurs v) {
 		this.tache = t;
@@ -91,15 +97,14 @@ public class IHMTache {
 			donnees.getRealisation(tache.getId()).setAcceleration(true);
 			donnees.depense(tache.coutAcceleration());
 			tache.setDuree(tache.getDureeInitiale()-1);
-			redessinerSemaines(rondVide, rondPlein, canvasSemaines);
 			MoteurIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); 
 			} else {
 				donnees.getRealisation(tache.getId()).setAcceleration(false);
 				donnees.depense(-(tache.coutAcceleration()));
-				donnees.getRealisation(tache.getId()).reculer();
-				redessinerSemaines(rondVide, rondPlein, canvasSemaines);
+				//donnees.getRealisation(tache.getId()).reculer();
 				tache.setDuree(tache.getDureeInitiale()+1);
 			}
+			redessinerSemaines(rondVide, rondPlein);
 		}	 
 	}
 	
@@ -185,6 +190,8 @@ public class IHMTache {
 	}
 	
 	public VBox creerIHMJalon() throws Exception {
+		rondVide = new Image(fileRondVide.toURI().toURL().toString());
+		rondPlein = new Image(fileRondPlein.toURI().toURL().toString());
 		
 		//Déclaration de la VBox principale (qui contiendra tous les éléments d'une tâche) 
 		main = new VBox();
@@ -208,14 +215,7 @@ public class IHMTache {
 		top.setSpacing(100);
 		top.getChildren().addAll(id, intitule);
 		
-		//Elements pour la HBox des semaines et ajout de ces éléments
-		File fileRondVide = new File("ressources/rond_vide.png");
-		File fileRondPlein = new File("ressources/rond_plein.png");
-		Image rondVide = new Image(fileRondVide.toURI().toURL().toString());
-		Image rondPlein = new Image(fileRondPlein.toURI().toURL().toString());
-		canvasSemaines = new Canvas(600, 130);
-		GraphicsContext gc = canvasSemaines.getGraphicsContext2D();
-		redessinerSemaines(rondVide, rondPlein, canvasSemaines);
+		redessinerSemaines(rondVide, rondPlein);
 		
 		HBox acceleration = new HBox();
 		acceleration.setAlignment(Pos.CENTER);
@@ -345,9 +345,9 @@ public class IHMTache {
 		alea3.getChildren().remove(alea3.getChildren().get(1));
 		alea3.getChildren().remove(alea3.getChildren().get(1));
 		boite.setMargin(semaines, new Insets(20, 0, 0, 0));
-		boite.setMargin(aleas, new Insets(-40, 0, 0, 0));
+		boite.setMargin(aleas, new Insets(-50, 0, 0, 0));
 		//On créer et affiche l'avancement en-dessous des semaines
-		Label avancement = new Label(); 
+		avancement = new Label(); 
 		avancement.setText("Avancement: " + tache.getAvancement() + " / " + tache.getDureeInitiale());
 		avancement.setFont(new Font("Arial", 20));
 		avancement.setTextFill(Color.BLUE);
@@ -359,40 +359,29 @@ public class IHMTache {
 		infos.setFont(new Font("Arial", 18));
 		infos.setTextFill(Color.BLUE);
 		boite.getChildren().add(infos);
-		boite.setMargin(infos, new Insets(20, 0, 0, 70));
+		boite.setMargin(infos, new Insets(10, 0, 0, 70));
+		
+		passer = new Button(); 
+		passer.setText("Passer semaine");
+		boite.getChildren().add(passer);
+		boite.setMargin(passer, new Insets(8, 0, 0, 250));
 		
 		return boite;
 	}
 	
-	public void redessinerSemaines(Image rondVide, Image rondPlein, Canvas canvas) {
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		/*
-		for(int i = 0; i < tache.getDureeMax(); i++) {
-			if(i < tache.getDureeInitiale()) {
-				if(i == 0) {
-				gc.drawImage(rondVide, 50, 10);
-				} else {
-					gc.drawImage(rondVide, 180, 10);
-				}
-			} else {
-				if(i == tache.getDureeInitiale()) {
-					gc.drawImage(rondPlein, 310, 10);
-				} else {
-					gc.drawImage(rondPlein, 440, 10);
-				}
-			}
-		}*/ 
+	public void redessinerSemaines(Image vide, Image plein) {
 		int marge = 50;
 		for(int i = 0; i < tache.getDureeMax(); i++) {
 			if(i < tache.getDureeInitiale()) {
-				gc.drawImage(rondVide, marge, 10);
+				gc.drawImage(vide, marge, 10);
 				marge += 130;
 			} else {
-				gc.drawImage(rondPlein, marge, 10);
+				gc.drawImage(plein, marge, 10);
 				marge += 130;
 			}
 		}
 	}
+	
 	
 
 	
