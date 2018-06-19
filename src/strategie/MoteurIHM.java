@@ -144,7 +144,6 @@ public class MoteurIHM extends Application {
 	public class EventPasserSemainePara implements EventHandler<MouseEvent> {
 		public Collection<Tache> listeTache; 
 		public ArrayList<VBox> listeVbox;
-		public int indice = -1;
 		
 		public EventPasserSemainePara(Collection<Tache> t, ArrayList<VBox> liste) {
 			this.listeTache = t; 
@@ -155,8 +154,15 @@ public class MoteurIHM extends Application {
 		public void handle(MouseEvent event) {
 			try { imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
-			indice++;
+			int indice = -1;
+			int avancementMax = 0;
+			int dureeMax = 0;
 			for(Tache t : listeTache) {
+				if(Integer.valueOf(t.getId()) == listeTache.size()-1) {
+					avancementMax = t.getAvancement();
+					dureeMax = t.getDureeInitiale();
+				}
+				indice++;
 				VBox current = listeVbox.get(indice);
 				VBox semaines = (VBox) current.getChildren().get(1);
 				Canvas ronds = (Canvas)semaines.getChildren().get(0);
@@ -171,6 +177,14 @@ public class MoteurIHM extends Application {
 						else if(t.getAvancement() == 3) {gc.drawImage(imgAvancement, 310, 10);}
 						avancement.setText("Avancement: "+t.getAvancement()+" / "+t.getDureeInitiale()); 
 				}
+					try {
+						if(avancementMax == dureeMax) {
+							partie.passerTour();
+							jouerEtape(vj);
+						}
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 			}
 		}
 	}
