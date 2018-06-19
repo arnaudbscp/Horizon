@@ -56,7 +56,7 @@ public class MoteurIHM extends Application {
 	public File fileAvancement = new File("ressources/rond_avancement.png");
 	public Image imgAvancement;
 	
-	private VBox creerResume() {
+	private VBox creerResume(int id) {
 		VBox resume = new VBox();
 		Font font = new Font("Arial", 20);
 		File billetFile = new File("ressources/billet.png");
@@ -74,7 +74,7 @@ public class MoteurIHM extends Application {
 		caisse = new Label();
 		Label init = new Label("Caisse initiale: 300€\n\n");
 		Label op = new Label();
-		for(Tacheclass t : (Tacheclass[]) desc.getSequence()[0].taches) {
+		for(Tacheclass t : (Tacheclass[]) desc.getSequence()[id].taches) {
 			int coutTache = 0;
 			int cptProtec = 0;
 			Label onOff = new Label(); 
@@ -117,7 +117,6 @@ public class MoteurIHM extends Application {
 		
 		public void handle(MouseEvent event) {
 			imgAvancement = null;
-			System.out.println("TOUR :" + partie.getTour());
 			try {
 				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
@@ -133,7 +132,9 @@ public class MoteurIHM extends Application {
 			try {
 				if(constructeur.tache.getAvancement() == constructeur.tache.getDureeInitiale()) {
 					partie.passerTour();
+					if(tache.getId() != "8") {
 					jouerEtape(vj);
+					}
 				
 				}
 			} catch (Exception e1) {
@@ -191,8 +192,14 @@ public class MoteurIHM extends Application {
 					try {
 						if(avancementMax == dureeMax) {
 							partie.passerTour();
+							if(partie.getTour() != 4) {
 							System.out.println("TOUR :" + partie.getTour());
 							jouerEtape(vj);
+							} else {
+								jouerJalon(vj, 6);
+								scene = new Scene(jalon);
+								stage.setScene(scene);
+							}
 						}
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -239,6 +246,7 @@ public class MoteurIHM extends Application {
 	
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
+		System.out.println("TOUR: " + partie.getTour());
 		Tacheclass avant = null;
 		avant = (Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()));
 		//Si on est au-dessus du tour 0 et que la tache précédente à des successeurs
@@ -270,7 +278,6 @@ public class MoteurIHM extends Application {
 			scene = new Scene(semaine);
 			stage.setScene(scene);
 			} else if(partie.getTour() == 7){
-				System.out.println("TACHE 8");
 				constructeur = new IHMTache((Tacheclass) desc.getTacheById("8"), vj);
 				semaine = new VBox(); 
 				semaine = constructeur.creerIHMSemaine();
@@ -303,9 +310,9 @@ public class MoteurIHM extends Application {
 		
 		Tab submit = new Tab(); 
 		submit.setText("Résumé");
-		submit.setContent(creerResume());
+		submit.setContent(creerResume(id));
 		submit.setClosable(false);
-		submit.setOnSelectionChanged(e -> {submit.setContent(creerResume());});
+		submit.setOnSelectionChanged(e -> {submit.setContent(creerResume(id));});
 		jalon.getTabs().add(submit);
 	}
 	
