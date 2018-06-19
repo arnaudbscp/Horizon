@@ -108,15 +108,15 @@ public class VueJoueurs implements VueJoueur{
 		ArrayList<Realisation> semaines = new ArrayList<>();
 		
 		for(Realisation r: this.joueur.getRealisation()) {
-			if(r.getEtat().equals(Etat.EN_COURS) || r.getEtat().equals(Etat.IMMINENT)) {
+			if(r.getEtat() == Etat.EN_COURS || r.getEtat() == Etat.IMMINENT) {
 			semaines.add(r);}
 			
 		}		
 		return semaines;
 	}
-	public void tourSemaine(Couleur c, Realisation rea) {
-		
 	
+	
+	public void tourSemaine(Couleur c, Realisation rea) {
 		if (rea.getEtat() == Etat.IMMINENT ) {
 		 int gravite = rea.getTache().getAlea(c).getGravite();
 			if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI && !rea.isProtec(c)) {

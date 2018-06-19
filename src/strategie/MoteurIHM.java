@@ -3,6 +3,7 @@ package strategie;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.sun.prism.paint.Color;
 
@@ -14,6 +15,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +24,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -50,6 +53,8 @@ public class MoteurIHM extends Application {
 	public Button valider;
 	
 	public IHMTache constructeur;
+	public File fileAvancement = new File("ressources/rond_avancement.png");
+	public Image imgAvancement;
 	
 	private VBox creerResume() {
 		VBox resume = new VBox();
@@ -111,8 +116,7 @@ public class MoteurIHM extends Application {
 		
 		
 		public void handle(MouseEvent event) {
-			File fileAvancement = new File("ressources/rond_avancement.png");
-			Image imgAvancement = null;
+			imgAvancement = null;
 			try {
 				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
@@ -136,6 +140,41 @@ public class MoteurIHM extends Application {
 			}
 		}
 	}
+	
+	public class EventPasserSemainePara implements EventHandler<MouseEvent> {
+		public Collection<Tache> listeTache; 
+		public ArrayList<VBox> listeVbox;
+		public int indice = -1;
+		
+		public EventPasserSemainePara(Collection<Tache> t, ArrayList<VBox> liste) {
+			this.listeTache = t; 
+			this.listeVbox = liste;
+			
+		}
+		
+		public void handle(MouseEvent event) {
+			try { imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
+			} catch (MalformedURLException e) {e.printStackTrace();}
+			indice++;
+			for(Tache t : listeTache) {
+				VBox current = listeVbox.get(indice);
+				VBox semaines = (VBox) current.getChildren().get(1);
+				Canvas ronds = (Canvas)semaines.getChildren().get(0);
+				GraphicsContext gc = ronds.getGraphicsContext2D();
+				Label avancement = (Label)semaines.getChildren().get(1);
+				if(t.getAvancement() < t.getDureeInitiale()) {
+					t.avancer();
+				}
+					if(t.getAvancement() <= t.getDureeInitiale()) {
+						if(t.getAvancement() == 1) {gc.drawImage(imgAvancement, 50, 10);}
+						else if(t.getAvancement() == 2) {gc.drawImage(imgAvancement, 180, 10);}
+						else if(t.getAvancement() == 3) {gc.drawImage(imgAvancement, 310, 10);}
+						avancement.setText("Avancement: "+t.getAvancement()+" / "+t.getDureeInitiale()); 
+				}
+			}
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -174,40 +213,42 @@ public class MoteurIHM extends Application {
 	
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
-		ArrayList<Realisation> re = vue.getSemainesaAvancer();
-		
-		if(re.size()>1) {
+		Tacheclass avant = null;
+		if(partie.getTour() > 0 ) {
+		avant = (Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()));
+		if(avant.getSuccesseurs().size() > 0) {
+			System.out.println("ON ENTRE DANS LE IF");
+			HBox parallele = new HBox();  
+			ArrayList<VBox> listeVbox = new ArrayList<>();
+			EventPasserSemainePara para = new EventPasserSemainePara(avant.getSuccesseurs(), listeVbox);
+			boolean suppr = false;
+			for(Tache t : avant.getSuccesseurs()) {
+				IHMTache temp = new IHMTache((Tacheclass)t, vj);
+				VBox tache = temp.creerIHMSemaine();
+				listeVbox.add(tache);
+				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "6") {
+					tache.getChildren().remove(temp.passer);
+				}
+				temp.passer.setOnMouseClicked(para);
+				parallele.getChildren().add(tache);
+			}
 			
-			/*for(Realisation r : re) {
-				IHM bunny = new IHMSemaine((Tacheclass)t, vj);
-				Tab onglet = new Tab();
-				onglet.setText("Tâche " + r.getTache().getId());
-				try {
-					onglet.setContent(bunny.creerIHMJalon());
-				} catch (Exception e) {e.printStackTrace();}
-				onglet.setClosable(false);
-				jalon.getTabs().add(onglet);
 			
-			}*/
-				
-			
-		}else {
-		
+			scene = new Scene(parallele);
+			stage.setScene(scene);
+		} 
+		} else {
 			constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj);
-		
 			semaine = new VBox();
 			semaine = constructeur.creerIHMSemaine();
 			EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
 			constructeur.passer.setOnMouseClicked(event);
-		
 			System.out.println("Avancement tâche: " + constructeur.tache.getAvancement());
 			System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
-		
-		
 			scene = new Scene(semaine);
 			stage.setScene(scene);
 		}
-		}
+	}
 		
 	
 	public void jouerJalon(VueJoueur vue, int id) {
