@@ -230,7 +230,7 @@ public class MoteurIHM extends Application {
 		Tacheclass avant = null;
 		if(partie.getTour() > 0 ) {
 		avant = (Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()));
-		if(avant.getSuccesseurs().size() > 0) {
+		if(avant.getSuccesseurs().size() != 0) {
 			System.out.println("ON ENTRE DANS LE IF");
 			HBox parallele = new HBox();  
 			ArrayList<VBox> listeVbox = new ArrayList<>();
@@ -240,7 +240,7 @@ public class MoteurIHM extends Application {
 				IHMTache temp = new IHMTache((Tacheclass)t, vj);
 				VBox tache = temp.creerIHMSemaine();
 				listeVbox.add(tache);
-				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "6") {
+				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "7") {
 					tache.getChildren().remove(temp.passer);
 				}
 				temp.passer.setOnMouseClicked(para);

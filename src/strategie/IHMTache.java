@@ -370,6 +370,7 @@ public class IHMTache {
 	}
 	
 	public void redessinerSemaines(Image vide, Image plein) {
+		if(tache.getId() != "7") {
 		int marge = 50;
 		for(int i = 0; i < tache.getDureeMax(); i++) {
 			if(i < tache.getDureeInitiale()) {
@@ -378,7 +379,19 @@ public class IHMTache {
 			} else {
 				gc.drawImage(plein, marge, 10);
 				marge += 130;
+				}
 			}
+		} else {
+			int marge = 10; 
+			for(int i = 0; i < tache.getDureeMax(); i++) {
+				if(i < tache.getDureeInitiale()) {
+					gc.drawImage(vide, marge, 10);
+					marge += 95;
+				} else {
+					gc.drawImage(plein, marge, 10);
+					marge += 95;
+					}
+				}
 		}
 	}
 	
