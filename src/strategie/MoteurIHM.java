@@ -19,6 +19,7 @@ import description.Tacheclass;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -200,7 +201,7 @@ public class MoteurIHM extends Application {
 							partie.passerTour();
 							if(partie.getTour() != 4) {
 							System.out.println("TOUR :" + partie.getTour());
-							jouerEtape(vj);
+							jouerTest(vj);
 							} else {
 								jouerJalon(vj, 6);
 								scene = new Scene(jalon);
@@ -292,10 +293,6 @@ public class MoteurIHM extends Application {
 				scene = new Scene(semaine);
 				stage.setScene(scene);
 			}
-		
-		if(partie.getTour() == 5) {
-			jouerTest(vj);
-		}
 	}
 		
 	
@@ -342,18 +339,48 @@ public class MoteurIHM extends Application {
 		//Creation du visuel pour le quizz
 		VBox quizzBox = new VBox();
 		Label title = new Label("QUIZZ");
-		title.setFont(new Font("Arial", 24));
-		title.setStyle("-fx-fill: blue");
+		title.setFont(new Font("Arial", 38));
+		title.setStyle("-fx-text-fill: blue");
 		String aleaLigne = liste.get(alea);
 		String[] decompose = aleaLigne.split(",");
 		Label question = new Label(decompose[0]);
+		question.setAlignment(Pos.CENTER);
+		question.setMinWidth(quizzBox.getWidth());
+		question.setFont(new Font("Arial", 24));
+		question.setStyle("-fx-text-fill: blue");
 		quizzBox.getChildren().addAll(title, question);
 		for(int i = 1; i<decompose.length; i++) {
 			Label reponse = new Label(i + " - " + decompose[i]);
+			reponse.setOnMouseClicked(new EventQuizz(i));
+			reponse.setFont(new Font("Arial", 22));
 			quizzBox.getChildren().add(reponse);
 		}
+		quizzBox.setSpacing(30);
+		quizzBox.setAlignment(Pos.CENTER);
 		scene = new Scene(quizzBox);
 		stage.setScene(scene);
+	}
+	
+	public class EventQuizz implements EventHandler<MouseEvent> {
+		public int id;
+		
+		public EventQuizz(int i) {
+			id = i;
+		}
+		
+		public void handle(MouseEvent event) {
+			if(id == 1) {
+				System.out.println("GAGNER !");
+				try {
+					jouerEtape(vj);
+				} catch (Exception e) {e.printStackTrace();}
+			} else {
+				System.out.println("PERDU !");
+				try {
+					jouerEtape(vj);
+				} catch (Exception e) {e.printStackTrace();}
+			}
+		}
 	}
 	
 	
