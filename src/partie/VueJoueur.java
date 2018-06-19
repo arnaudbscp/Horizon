@@ -1,5 +1,7 @@
 package partie;
 
+import java.util.ArrayList;
+
 import description.Couleur;
 import description.Description;
 
@@ -17,4 +19,5 @@ public interface VueJoueur {
 	public int getQualite();
 	public void setAcceleration(String id, boolean active);
 	public void setProtection(String id, Couleur couleur, boolean active);
+	public ArrayList<Realisation> getSemainesaAvancer();
 }

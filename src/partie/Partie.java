@@ -102,18 +102,25 @@ public class Partie {
 		}
 		return r;
 	}
-
-	public void tourSemaine(VueJoueurs j, String id) {// check si la semaine a commencer (encours) sinon (on check si il a deja eu un
-										// tirage pour cette tache )* a faire plus tard sinon tirage la couleur
-		if(this.aleas[indiceA].equals(null)) {
-			Couleur c = Couleur.tirage();
-			aleas[indiceA++]=c;
-			j.tourSemaine(c, id);
-		}else {
-			j.tourSemaine(aleas[Integer.parseInt(id)-1],id);
+	public void tourSemaine(VueJoueurs j) {
+		ArrayList<Realisation> tache = j.getSemainesaAvancer();  
+		for(Realisation r : tache) {
+			if(r.getEtat().equals(Etat.IMMINENT)) {
+				int id =Integer.parseInt(r.getTache().getId())-1;
+				 if(aleas[id].equals(null)) {
+					 Couleur c = Couleur.tirage();
+					 aleas[id] = c;
+				}
+				 j.tourSemaine(aleas[id], r);
+				
+			}
 		}
-		j.FinDuTour();
+		
+		
+		
+		
 	}
+	
 
 	public void tourJalon(int tour) {
 		Tache[] taches = null;

@@ -2,6 +2,7 @@ package strategie;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import com.sun.prism.paint.Color;
 
@@ -173,18 +174,39 @@ public class MoteurIHM extends Application {
 	
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
-		constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj);
-		semaine = new VBox();
-		semaine = constructeur.creerIHMSemaine();
-		EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
-		constructeur.passer.setOnMouseClicked(event);
+		ArrayList<Realisation> re = vue.getSemainesaAvancer();
 		
-		System.out.println("Avancement tâche: " + constructeur.tache.getAvancement());
-		System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
+		if(re.size()>1) {
+			
+			/*for(Realisation r : re) {
+				IHM bunny = new IHMSemaine((Tacheclass)t, vj);
+				Tab onglet = new Tab();
+				onglet.setText("Tâche " + r.getTache().getId());
+				try {
+					onglet.setContent(bunny.creerIHMJalon());
+				} catch (Exception e) {e.printStackTrace();}
+				onglet.setClosable(false);
+				jalon.getTabs().add(onglet);
+			
+			}*/
+				
+			
+		}else {
+		
+			constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj);
+		
+			semaine = new VBox();
+			semaine = constructeur.creerIHMSemaine();
+			EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
+			constructeur.passer.setOnMouseClicked(event);
+		
+			System.out.println("Avancement tâche: " + constructeur.tache.getAvancement());
+			System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
 		
 		
-		scene = new Scene(semaine);
-		stage.setScene(scene);
+			scene = new Scene(semaine);
+			stage.setScene(scene);
+		}
 		}
 		
 	

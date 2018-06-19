@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import description.Couleur;
 import description.Description;
 import description.Tache;
+import description.Tacheclass;
 import description.TypeAlea;
 
 public class VueJoueurs implements VueJoueur{
@@ -103,13 +104,23 @@ public class VueJoueurs implements VueJoueur{
 		return b==a.size();
 	}
 	
-
-	public void tourSemaine(Couleur c, String id) {
-		Realisation rea = joueur.getRealisation(id);
-		if (rea.getEtat() == Etat.IMMINENT) {
+	public ArrayList<Realisation> getSemainesaAvancer() {
+		ArrayList<Realisation> semaines = new ArrayList<>();
+		
+		for(Realisation r: this.joueur.getRealisation()) {
+			if(r.getEtat().equals(Etat.EN_COURS) || r.getEtat().equals(Etat.IMMINENT)) {
+			semaines.add(r);}
+			
+		}		
+		return semaines;
+	}
+	public void tourSemaine(Couleur c, Realisation rea) {
+		
+	
+		if (rea.getEtat() == Etat.IMMINENT ) {
 		 int gravite = rea.getTache().getAlea(c).getGravite();
 			if (rea.getTache().getAlea(c).getType() == TypeAlea.DELAI && !rea.isProtec(c)) {
-				 joueur.getRealisation(id).getTache().setDuree(rea.getTache().getDureeInitiale() + gravite);
+				rea.getTache().setDuree(rea.getTache().getDureeInitiale() + gravite);
 			}
 			if (rea.getTache().getAlea(c).getType() == TypeAlea.COUT && !rea.isProtec(c)) {
 				this.joueur.depense(gravite * 10);
@@ -118,11 +129,11 @@ public class VueJoueurs implements VueJoueur{
 				this.joueur.baisseQualite(gravite);
 			}
 		}
-		joueur.getRealisation(id).setEtat(Etat.EN_COURS); // 
+		rea.setEtat(Etat.EN_COURS); // 
 		
-		joueur.getRealisation(id).avancer();
-		if(joueur.getRealisation(id).getEtat().equals(Etat.TERMINEE)) {
-			for(Tache a : joueur.getRealisation(id).getTache().getSuccesseurs()) {
+		rea.avancer();
+		if(rea.getEtat().equals(Etat.TERMINEE)) {
+			for(Tache a : rea.getTache().getSuccesseurs()) {
 				if(isImminent(joueur.getRealisation(a.getId()))) {
 					joueur.getRealisation(a.getId()).setEtat(Etat.IMMINENT);
 				}
