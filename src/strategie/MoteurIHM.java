@@ -1,9 +1,14 @@
 package strategie;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import com.sun.prism.paint.Color;
 
@@ -34,6 +39,7 @@ import partie.Realisation;
 import partie.VueJoueur;
 import partie.VueJoueurs;
 import tours.Tour;
+
 
 public class MoteurIHM extends Application {
 	
@@ -286,6 +292,10 @@ public class MoteurIHM extends Application {
 				scene = new Scene(semaine);
 				stage.setScene(scene);
 			}
+		
+		if(partie.getTour() == 5) {
+			jouerTest(vj);
+		}
 	}
 		
 	
@@ -316,8 +326,34 @@ public class MoteurIHM extends Application {
 		jalon.getTabs().add(submit);
 	}
 	
-	public void jouerTest(VueJoueur vue) {
-		
+	public void jouerTest(VueJoueur vue) throws IOException {
+		File quizz = new File("src/Quizz.csv");
+		FileReader fr = new FileReader(quizz);
+		BufferedReader br = new BufferedReader(fr);
+		ArrayList<String> liste = new ArrayList<>();
+		for(String line = br.readLine(); line != null; line = br.readLine()) {
+			liste.add(line);
+		}
+		Random rand = new Random(); 
+		int alea = 0;
+		while(alea == 0) {
+			alea = rand.nextInt(liste.size());
+		}
+		//Creation du visuel pour le quizz
+		VBox quizzBox = new VBox();
+		Label title = new Label("QUIZZ");
+		title.setFont(new Font("Arial", 24));
+		title.setStyle("-fx-fill: blue");
+		String aleaLigne = liste.get(alea);
+		String[] decompose = aleaLigne.split(",");
+		Label question = new Label(decompose[0]);
+		quizzBox.getChildren().addAll(title, question);
+		for(int i = 1; i<decompose.length; i++) {
+			Label reponse = new Label(i + " - " + decompose[i]);
+			quizzBox.getChildren().add(reponse);
+		}
+		scene = new Scene(quizzBox);
+		stage.setScene(scene);
 	}
 	
 	
