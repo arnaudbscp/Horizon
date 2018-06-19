@@ -55,10 +55,10 @@ public class Description {
 				(new Aleas(TypeAlea.COUT, 2,Couleur.JAUNE)),
 				(new Aleas(TypeAlea.QUAL, 2,Couleur.VERT))};
 		relation.put("1", new String[] {"2","3","4"});
-		relation.put("2", new String[] {"5","7"});
+		relation.put("2", new String[] {"5","6", "7"});
 		relation.put("3", new String[] {"5","7"});
 		relation.put("4", new String[] {"5","7"});
-		relation.put("5", new String[] {"6"});
+		relation.put("5", new String[] {"8"});
 		relation.put("6", new String[] {"8"});
 		relation.put("7", new String[] {"8"});
 		tabTache.add(new Tacheclass(10, tache1, "Réfléchir", 2, 4, "1")); 

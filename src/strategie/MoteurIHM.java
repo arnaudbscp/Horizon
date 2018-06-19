@@ -117,6 +117,7 @@ public class MoteurIHM extends Application {
 		
 		public void handle(MouseEvent event) {
 			imgAvancement = null;
+			System.out.println("TOUR :" + partie.getTour());
 			try {
 				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
@@ -144,6 +145,8 @@ public class MoteurIHM extends Application {
 	public class EventPasserSemainePara implements EventHandler<MouseEvent> {
 		public Collection<Tache> listeTache; 
 		public ArrayList<VBox> listeVbox;
+		public int avancementMax = 0;
+		public int dureeMax = 0;
 		
 		public EventPasserSemainePara(Collection<Tache> t, ArrayList<VBox> liste) {
 			this.listeTache = t; 
@@ -155,13 +158,15 @@ public class MoteurIHM extends Application {
 			try { imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
 			int indice = -1;
-			int avancementMax = 0;
-			int dureeMax = 0;
 			for(Tache t : listeTache) {
-				if(Integer.valueOf(t.getId()) == listeTache.size()-1) {
-					avancementMax = t.getAvancement();
+				if(t.getDureeInitiale() > dureeMax) {
 					dureeMax = t.getDureeInitiale();
 				}
+				if(t.getAvancement() > avancementMax) {
+					avancementMax = t.getAvancement();
+				}
+			}
+			for(Tache t : listeTache) {
 				indice++;
 				VBox current = listeVbox.get(indice);
 				VBox semaines = (VBox) current.getChildren().get(1);
@@ -172,14 +177,21 @@ public class MoteurIHM extends Application {
 					t.avancer();
 				}
 					if(t.getAvancement() <= t.getDureeInitiale()) {
+						if(t.getId() != "7") {
 						if(t.getAvancement() == 1) {gc.drawImage(imgAvancement, 50, 10);}
 						else if(t.getAvancement() == 2) {gc.drawImage(imgAvancement, 180, 10);}
 						else if(t.getAvancement() == 3) {gc.drawImage(imgAvancement, 310, 10);}
+						} else {
+							if(t.getAvancement() == 1) {gc.drawImage(imgAvancement, 10, 10);}
+							else if(t.getAvancement() == 2) {gc.drawImage(imgAvancement, 105, 10);}
+							else if(t.getAvancement() == 3) {gc.drawImage(imgAvancement, 200, 10);}
+						}
 						avancement.setText("Avancement: "+t.getAvancement()+" / "+t.getDureeInitiale()); 
 				}
 					try {
 						if(avancementMax == dureeMax) {
 							partie.passerTour();
+							System.out.println("TOUR :" + partie.getTour());
 							jouerEtape(vj);
 						}
 					} catch (Exception e1) {
@@ -228,10 +240,9 @@ public class MoteurIHM extends Application {
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
 		Tacheclass avant = null;
-		if(partie.getTour() > 0 ) {
 		avant = (Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()));
-		if(avant.getSuccesseurs().size() != 0) {
-			System.out.println("ON ENTRE DANS LE IF");
+		//Si on est au-dessus du tour 0 et que la tache précédente à des successeurs
+		if(partie.getTour() > 0 && avant.getSuccesseurs().size() > 2 && !avant.getSuccesseurs().isEmpty()) {
 			HBox parallele = new HBox();  
 			ArrayList<VBox> listeVbox = new ArrayList<>();
 			EventPasserSemainePara para = new EventPasserSemainePara(avant.getSuccesseurs(), listeVbox);
@@ -240,18 +251,15 @@ public class MoteurIHM extends Application {
 				IHMTache temp = new IHMTache((Tacheclass)t, vj);
 				VBox tache = temp.creerIHMSemaine();
 				listeVbox.add(tache);
-				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "7") {
+				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "5" || t.getId() == "7") {
 					tache.getChildren().remove(temp.passer);
 				}
 				temp.passer.setOnMouseClicked(para);
 				parallele.getChildren().add(tache);
 			}
-			
-			
 			scene = new Scene(parallele);
 			stage.setScene(scene);
-		} 
-		} else {
+		} else if(partie.getTour() == 0) {
 			constructeur = new IHMTache((Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()+1)), vj);
 			semaine = new VBox();
 			semaine = constructeur.creerIHMSemaine();
@@ -261,7 +269,16 @@ public class MoteurIHM extends Application {
 			System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
 			scene = new Scene(semaine);
 			stage.setScene(scene);
-		}
+			} else if(partie.getTour() == 7){
+				System.out.println("TACHE 8");
+				constructeur = new IHMTache((Tacheclass) desc.getTacheById("8"), vj);
+				semaine = new VBox(); 
+				semaine = constructeur.creerIHMSemaine();
+				EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
+				constructeur.passer.setOnMouseClicked(event);
+				scene = new Scene(semaine);
+				stage.setScene(scene);
+			}
 	}
 		
 	
