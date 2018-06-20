@@ -64,14 +64,15 @@ public class IHMTache {
 	public ImageView ivCroix1;
 	public ImageView ivCroix2;
 	public ImageView ivCroix3;
-	public Image bouclier_off;
 	public Image rondVide = new Image(getClass().getResourceAsStream("rond_vide.png"));
 	public Image rondPlein = new Image(getClass().getResourceAsStream("rond_plein.png"));
 	public Image accelImgClicked = new Image(getClass().getResourceAsStream("bouton_accelerer_clicked.png"));
 	public Image bouclierOnImg = new Image(getClass().getResourceAsStream("bouclier_on.png"));
-	public Image bouclierOffImg = new Image(getClass().getResourceAsStream("bouclier_off.png"));
+	public Image bouclier_off = new Image(getClass().getResourceAsStream("bouclier_off.png"));
 	public Image tick = new Image(getClass().getResourceAsStream("tick.png"));
 	public Image croix = new Image(getClass().getResourceAsStream("croix.png"));
+	public Image accelImg = new Image(getClass().getResourceAsStream("bouton_accelerer.png"));
+	public Image accelImgOnMouseMove = new Image(getClass().getResourceAsStream("bouton_accelerer_onmousemove.png"));
 	public Description desc;
 	public TabPane jalon;
 	public Canvas canvasSemaines = new Canvas(600, 130);
@@ -202,10 +203,6 @@ public class IHMTache {
 		
 		HBox acceleration = new HBox();
 		acceleration.setAlignment(Pos.CENTER);
-		File accelFile = new File("ressources/bouton_accelerer.png");
-		File accelFileOnMouseMove = new File("ressources/bouton_accelerer_onmousemove.png");
-		Image accelImg = new Image(accelFile.toURI().toURL().toString());
-		Image accelImgOnMouseMove = new Image(accelFileOnMouseMove.toURI().toURL().toString());
 		Canvas accelCanvas = new Canvas(210, 60);
 		this.gc2 = accelCanvas.getGraphicsContext2D();
 		gc2.drawImage(accelImg, 0, 5);
