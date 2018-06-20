@@ -73,12 +73,14 @@ public class IHMTache {
 	public Image croix = new Image(getClass().getResourceAsStream("croix.png"));
 	public Image accelImg = new Image(getClass().getResourceAsStream("bouton_accelerer.png"));
 	public Image accelImgOnMouseMove = new Image(getClass().getResourceAsStream("bouton_accelerer_onmousemove.png"));
+	public Image background = new Image(getClass().getResourceAsStream("fond.png"));
 	public Description desc;
 	public TabPane jalon;
 	public Canvas canvasSemaines = new Canvas(600, 130);
 	public GraphicsContext gc = canvasSemaines.getGraphicsContext2D();
 	public Button passer;
 	public Label avancement;
+	
 	
 	//Elements pour gérer les aléas
 	public Couleur[] listeAleas;
@@ -236,12 +238,6 @@ public class IHMTache {
 		VBox alea1 = new VBox(); 
 		VBox alea2 = new VBox(); 
 		VBox alea3 = new VBox(); 
-		File bouclierFile = new File("ressources/bouclier_off.png");
-		File croixFile = new File("ressources/croix.png");
-		File tickFile = new File("ressources/tick.png");
-		bouclier_off = new Image(bouclierFile.toURI().toURL().toString());
-		Image croix = new Image(croixFile.toURI().toURL().toString());
-		Image tick = new Image(tickFile.toURI().toURL().toString());
 		ivBouclier1 = new ImageView(bouclier_off);
 		ivBouclier1.setId("bouclier1");
 		//Gestion des évènements visuels pour les boucliers de protection des aléas
@@ -297,8 +293,6 @@ public class IHMTache {
 		aleas.getChildren().addAll(alea1, alea2, alea3);
 		
 		//Personnalisation de la VBox principale et ajout de tous les éléments à cette dernière
-		File backgroundFile = new File("ressources/fond.png");
-		Image background = new Image(backgroundFile.toURI().toURL().toString());
 		main.setBackground(new Background(new BackgroundImage(background, null, null, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		main.setMinSize(600, 400);
 		main.setMaxSize(600, 400);
