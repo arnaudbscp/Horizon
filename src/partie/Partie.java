@@ -70,7 +70,7 @@ public class Partie {
 				r.getTache().avancer();
 				if (r.getTache().getDureeInitiale() == r.getTache().getAvancement()) {
 					r.setEtat(Etat.TERMINEE);
-					setImminent(r);
+					
 				}
 			}
 
@@ -107,7 +107,7 @@ public class Partie {
 		for(Realisation r : tache) {
 			if(r.getEtat().equals(Etat.IMMINENT)) {
 				int id =Integer.parseInt(r.getTache().getId())-1;
-				 if(aleas[id].equals(null)) {
+				 if(aleas[id] == null) {
 					 Couleur c = Couleur.tirage();
 					 aleas[id] = c;
 				}
@@ -160,4 +160,9 @@ public class Partie {
 			}
 		}
 	}
+	
+	public Couleur[] getAleas() {
+		return aleas;
+	}
+
 }
