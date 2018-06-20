@@ -373,7 +373,7 @@ public class MoteurIHM extends Application {
 		Label infos = new Label("Nombre de semaines: " + (nbSemaines-2) +"\tVotre caisse: " + vj.getCaisse() + "\tQualité: " + vj.getQualite()+"\n");
 		float partInit = ((32 + (24-(nbSemaines-2)))*((float)vj.getCaisse()+20))/8000;
 		String stringPartInit = String.valueOf(partInit);
-		Label partMarcheInit = new Label("Part de marché initiale (sans la qualité): " + stringPartInit.substring(2, 4) + "%");
+		Label partMarcheInit = new Label("Part de marché initiale: " + stringPartInit.substring(2, 4) + "%");
 		infos.setFont(font);
 		partMarcheInit.setFont(font);
 		scoreBox.getChildren().addAll(title, infos, partMarcheInit);
