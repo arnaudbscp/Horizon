@@ -370,15 +370,15 @@ public class IHMTache {
 		//On gère l'affichage visuel des Aléas
 		Couleur aleaTirer = listeAleas[Integer.valueOf(tache.getId())-1];
 		if(aleaTirer == Couleur.ROUGE) {
-			System.out.println("ON A TIRER L'ALEA ROUGE");
+			
 			Label lab = (Label) alea1.getChildren().get(0);
 			lab.setStyle("-fx-border-style: solid;" + "-fx-border-color: blue;"+"-fx-border-width: 2px;"+"-fx-border-collapse: separate;" + "-fx-border-spacing: 5px 5px 5px 5px");		
 		} else if(aleaTirer == Couleur.JAUNE) {
-			System.out.println("ON A TIRER L'ALEA JAUNE");
+			
 			Label lab = (Label) alea2.getChildren().get(0);
 			lab.setStyle("-fx-border-style: solid;" + "-fx-border-color: blue;"+"-fx-border-width: 2px;"+"-fx-border-collapse: separate;" + "-fx-border-spacing: 5px 5px 5px 5px");
 		} else if(aleaTirer == Couleur.VERT) {
-			System.out.println("ON A TIRER L'ALEA VERT");
+			
 			Label lab = (Label) alea3.getChildren().get(0);
 			lab.setStyle("-fx-border-style: solid;" + "-fx-border-color: blue;"+"-fx-border-width: 2px;"+"-fx-border-collapse: separate;" + "-fx-border-spacing: 5px 5px 5px 5px");
 		}

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import com.sun.prism.paint.Color;
 
 import description.Couleur;
@@ -208,7 +210,7 @@ public class MoteurIHM extends Application {
 						if(avancementMax == dureeMax) {
 							partie.passerTour();
 							if(partie.getTour() == 4 || partie.getTour() == 7) {
-							System.out.println("TOUR :" + partie.getTour());
+							
 							jouerTest(vj);
 							} else {
 								jouerJalon(vj, 6);
@@ -274,10 +276,10 @@ public class MoteurIHM extends Application {
 			}
 			
 			EventPasserSemainePara para = new EventPasserSemainePara(tacheVue, listeVbox);
-			boolean suppr = false;
+		
 			for(Tache t : tacheVue) {
 				IHMTache temp = new IHMTache((Tacheclass)t, vj, partie.getAleas());
-				System.out.println(t.getDureeInitiale());
+				
 				VBox tache = temp.creerIHMSemaine();
 				listeVbox.add(tache);
 				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "5" || t.getId() == "7") {
@@ -294,8 +296,7 @@ public class MoteurIHM extends Application {
 			semaine = constructeur.creerIHMSemaine();
 			EventPasserSemaine event = new EventPasserSemaine(constructeur.tache, constructeur.gc, constructeur.avancement);
 			constructeur.passer.setOnMouseClicked(event);
-			System.out.println("Avancement tâche: " + constructeur.tache.getAvancement());
-			System.out.println("Durée initiale Tâche: " + constructeur.tache.getDureeInitiale());
+		
 			scene = new Scene(semaine);
 			stage.setScene(scene);
 			} else if(partie.getTour() == 7){
@@ -404,7 +405,9 @@ public class MoteurIHM extends Application {
 		
 		public void handle(MouseEvent event) {
 			if(id == 1) {
-				System.out.println("GAGNER !");
+				
+				JOptionPane.showMessageDialog(null, "GAGNER !!", "Réponse", JOptionPane.INFORMATION_MESSAGE);
+				
 				try {
 					if(partie.getTour() == 4) {
 						jouerJalon(vj, 6);
@@ -415,7 +418,9 @@ public class MoteurIHM extends Application {
 					}
 				} catch (Exception e) {e.printStackTrace();}
 			} else {
-				System.out.println("PERDU !");
+			
+				JOptionPane.showMessageDialog(null, "PERDU !!", "Réponse", JOptionPane.INFORMATION_MESSAGE);
+				
 				try {
 					if(partie.getTour() == 4) {
 						jouerJalon(vj, 6);
