@@ -258,17 +258,24 @@ public class MoteurIHM extends Application {
 	}
 	
 	
-	public void jouerEtape(VueJoueur vue) throws Exception { 
+	public void jouerEtape(VueJoueurs vue) throws Exception { 
 		Tacheclass avant = null;
 		avant = (Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()));
 		//Si on est au-dessus du tour 0 et que la tache précédente à des successeurs
-		if(partie.getTour() > 0 && avant.getSuccesseurs().size() > 2 && !avant.getSuccesseurs().isEmpty()) {
+		if(partie.getTour() > 0 && avant.getSuccesseurs().size() > 1 && !avant.getSuccesseurs().isEmpty()) {
 			HBox parallele = new HBox();  
 			ArrayList<VBox> listeVbox = new ArrayList<>();
-			EventPasserSemainePara para = new EventPasserSemainePara(avant.getSuccesseurs(), listeVbox);
-			boolean suppr = false;
+			ArrayList<Tache> tacheVue = new ArrayList<Tache>();
 			for(Tache t : avant.getSuccesseurs()) {
+				tacheVue.add(vue.getJoueur().getRealisation(t.getId()).getTache());
+			}
+			
+			EventPasserSemainePara para = new EventPasserSemainePara(tacheVue, listeVbox);
+			boolean suppr = false;
+			for(Tache t : tacheVue) {
+				
 				IHMTache temp = new IHMTache((Tacheclass)t, vj);
+				System.out.println(t.getDureeInitiale());
 				VBox tache = temp.creerIHMSemaine();
 				listeVbox.add(tache);
 				if(t.getId() == "2" || t.getId() == "4" || t.getId() == "5" || t.getId() == "7") {
