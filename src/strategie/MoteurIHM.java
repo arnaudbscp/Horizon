@@ -62,8 +62,7 @@ public class MoteurIHM extends Application {
 	public Button valider;
 	
 	public IHMTache constructeur;
-	public File fileAvancement = new File("ressources/rond_avancement.png");
-	public Image imgAvancement;
+	public Image imgAvancement = new Image(getClass().getResourceAsStream("rond_avancement.png"));
 	
 	public float nbSemaines = 0;
 	
@@ -129,10 +128,6 @@ public class MoteurIHM extends Application {
 		public void handle(MouseEvent event) {
 			partie.tourSemaine(vj);
 			nbSemaines++;
-			imgAvancement = null;
-			try {
-				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
-			} catch (MalformedURLException e) {e.printStackTrace();}
 			if(tache.getAvancement() < tache.getDureeInitiale()) {
 			tache.avancer();
 			}
@@ -173,8 +168,6 @@ public class MoteurIHM extends Application {
 		public void handle(MouseEvent event) {
 			nbSemaines++;
 			partie.tourSemaine(vj);
-			try { imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
-			} catch (MalformedURLException e) {e.printStackTrace();}
 			int indice = -1;
 			for(Tache t : listeTache) {
 				if(t.getDureeInitiale() > dureeMax) {
