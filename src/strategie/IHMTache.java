@@ -103,7 +103,6 @@ public class IHMTache {
 			donnees.depense(tache.coutAcceleration());
 			donnees.getRealisation(tache.getId()).getTache().setDuree(tache.getDureeInitiale()-1);
 			tache.setDuree(tache.getDureeInitiale()-1);
-			System.out.println(tache.getDureeInitiale() +"   !  "+ donnees.getRealisation(tache.getId()).getTache().getDureeInitiale());
 			MoteurIHM.caisse.setText("Votre caisse: " + joueur.getCaisse()); 
 			} else {
 				donnees.getRealisation(tache.getId()).setAcceleration(false);
