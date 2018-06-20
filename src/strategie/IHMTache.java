@@ -65,10 +65,8 @@ public class IHMTache {
 	public ImageView ivCroix2;
 	public ImageView ivCroix3;
 	public Image bouclier_off;
-	public File fileRondVide = new File("ressources/rond_vide.png");
-	public File fileRondPlein = new File("ressources/rond_plein.png");
-	public Image rondVide;
-	public Image rondPlein;
+	public Image rondVide = new Image(getClass().getResourceAsStream("rond_vide.png"));
+	public Image rondPlein = new Image(getClass().getResourceAsStream("rond_plein.png"));
 	public Description desc;
 	public TabPane jalon;
 	public Canvas canvasSemaines = new Canvas(600, 130);
@@ -196,9 +194,6 @@ public class IHMTache {
 	}
 	
 	public VBox creerIHMJalon() throws Exception {
-		rondVide = new Image(fileRondVide.toURI().toURL().toString());
-		rondPlein = new Image(fileRondPlein.toURI().toURL().toString());
-		
 		//Déclaration de la VBox principale (qui contiendra tous les éléments d'une tâche) 
 		main = new VBox();
 		main.setMinSize(500, 300);
