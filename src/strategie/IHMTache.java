@@ -68,6 +68,10 @@ public class IHMTache {
 	public Image rondVide = new Image(getClass().getResourceAsStream("rond_vide.png"));
 	public Image rondPlein = new Image(getClass().getResourceAsStream("rond_plein.png"));
 	public Image accelImgClicked = new Image(getClass().getResourceAsStream("bouton_accelerer_clicked.png"));
+	public Image bouclierOnImg = new Image(getClass().getResourceAsStream("bouclier_on.png"));
+	public Image bouclierOffImg = new Image(getClass().getResourceAsStream("bouclier_off.png"));
+	public Image tick = new Image(getClass().getResourceAsStream("tick.png"));
+	public Image croix = new Image(getClass().getResourceAsStream("croix.png"));
 	public Description desc;
 	public TabPane jalon;
 	public Canvas canvasSemaines = new Canvas(600, 130);
@@ -89,11 +93,6 @@ public class IHMTache {
 	class EventAcceleration implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {
 			cptClickAccel += 1;
-			File accelFileClicked = new File("ressources/bouton_accelerer_clicked.png");
-			
-			try {
-				accelImgClicked = new Image(accelFileClicked.toURI().toURL().toString());
-			} catch (MalformedURLException e) {e.printStackTrace();}
 			if(cptClickAccel == 1 || !(cptClickAccel % 2 == 0)) {
 			gc2.drawImage(accelImgClicked, 0, 5);
 			prix.setTextFill(Color.web("009c00"));
@@ -128,11 +127,6 @@ public class IHMTache {
 			case "bouclier3": cpt = cptClickBouclier3;
 			}
 			if(cpt == 0 || cpt % 2 == 0) {
-			File bouclierOn = new File("ressources/bouclier_on.png");
-			Image bouclierOnImg = null;
-			try {
-				bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
-			} catch (MalformedURLException e) {	e.printStackTrace();}
 			iv.setImage(bouclierOnImg);
 			}
 			}
@@ -157,14 +151,6 @@ public class IHMTache {
 			}
 			
 			if(cpt == 1 || !(cpt % 2 == 0)) {
-				File bouclierOn = new File("ressources/bouclier_on.png");
-				File tickFile = new File("ressources/tick.png");
-				Image bouclierOnImg = null;
-				Image tick = null;
-				try {
-					bouclierOnImg = new Image(bouclierOn.toURI().toURL().toString());
-					tick = new Image(tickFile.toURI().toURL().toString());
-				} catch (MalformedURLException e) {	e.printStackTrace();}
 				switch(iv1.getId()) {
 				case "bouclier1":
 					couleurAlea = Couleur.ROUGE;
@@ -182,11 +168,6 @@ public class IHMTache {
 				iv2.setImage(tick);
 			} else {
 				iv1.setImage(bouclier_off);
-				File croixFile = new File("ressources/croix.png");
-				Image croix = null;
-				try {
-					croix = new Image(croixFile.toURI().toURL().toString());
-				} catch (MalformedURLException e) {e.printStackTrace();}
 				iv2.setImage(croix); 
 				donnees.getRealisation(tache.getId()).setProtection(couleurAlea, false);
 				donnees.depense(-10);
