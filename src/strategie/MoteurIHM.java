@@ -116,7 +116,7 @@ public class MoteurIHM extends Application {
 		public Tacheclass tache;
 		public GraphicsContext gc;
 		public Label avancement;
-		
+		//Commentaire
 		public EventPasserSemaine(Tacheclass t, GraphicsContext g, Label lab) {
 			tache = t; 
 			gc = g; 
