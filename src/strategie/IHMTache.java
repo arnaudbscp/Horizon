@@ -75,6 +75,8 @@ public class IHMTache {
 	public GraphicsContext gc = canvasSemaines.getGraphicsContext2D();
 	public Button passer;
 	public Label avancement;
+	
+	//Elements pour gérer les aléas
 	public Couleur[] listeAleas;
 	
 	public IHMTache(Tacheclass t, VueJoueurs v, Couleur[] al) {
@@ -369,35 +371,17 @@ public class IHMTache {
 		Couleur aleaTirer = listeAleas[Integer.valueOf(tache.getId())-1];
 		if(aleaTirer == Couleur.ROUGE) {
 			System.out.println("ON A TIRER L'ALEA ROUGE");
-			Canvas alea1Canvas = new Canvas(); 
-			GraphicsContext gcAlea1 = alea1Canvas.getGraphicsContext2D();
-			File fileAleaRouge = new File("ressources/aleaRouge.png");
-			Image aleaRouge = new Image(fileAleaRouge.toURI().toURL().toString());
-			gcAlea1.drawImage(aleaRouge, 0, 0);
-			alea1.getChildren().add(alea1Canvas);
-			
+			Label lab = (Label) alea1.getChildren().get(0);
+			lab.setStyle("-fx-border-style: solid;" + "-fx-border-color: blue;"+"-fx-border-width: 2px;"+"-fx-border-collapse: separate;" + "-fx-border-spacing: 5px 5px 5px 5px");		
 		} else if(aleaTirer == Couleur.JAUNE) {
 			System.out.println("ON A TIRER L'ALEA JAUNE");
-			Canvas alea2Canvas = new Canvas(); 
-			GraphicsContext gcAlea2 = alea2Canvas.getGraphicsContext2D();
-			File fileAleaJaune = new File("ressources/aleaJaune.png");
-			Image aleaJaune = new Image(fileAleaJaune.toURI().toURL().toString());
-			gcAlea2.drawImage(aleaJaune, 0, 0);
-			alea2.getChildren().add(alea2Canvas);
-		
+			Label lab = (Label) alea2.getChildren().get(0);
+			lab.setStyle("-fx-border-style: solid;" + "-fx-border-color: blue;"+"-fx-border-width: 2px;"+"-fx-border-collapse: separate;" + "-fx-border-spacing: 5px 5px 5px 5px");
 		} else if(aleaTirer == Couleur.VERT) {
 			System.out.println("ON A TIRER L'ALEA VERT");
-			Canvas alea3Canvas = new Canvas(); 
-			GraphicsContext gcAlea3 = alea3Canvas.getGraphicsContext2D();
-			File fileAleaVert = new File("ressources/aleaVert.png");
-			Image aleaVert = new Image(fileAleaVert.toURI().toURL().toString());
-			gcAlea3.drawImage(aleaVert, 0, 0);
-			alea3.getChildren().add(alea3Canvas);
-			
+			Label lab = (Label) alea3.getChildren().get(0);
+			lab.setStyle("-fx-border-style: solid;" + "-fx-border-color: blue;"+"-fx-border-width: 2px;"+"-fx-border-collapse: separate;" + "-fx-border-spacing: 5px 5px 5px 5px");
 		}
-		
-		
-		System.out.println("Alea tirer :" + aleaTirer);
 		
 		passer = new Button(); 
 		passer.setText("Passer semaine");
