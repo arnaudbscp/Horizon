@@ -67,6 +67,7 @@ public class IHMTache {
 	public Image bouclier_off;
 	public Image rondVide = new Image(getClass().getResourceAsStream("rond_vide.png"));
 	public Image rondPlein = new Image(getClass().getResourceAsStream("rond_plein.png"));
+	public Image accelImgClicked = new Image(getClass().getResourceAsStream("bouton_accelerer_clicked.png"));
 	public Description desc;
 	public TabPane jalon;
 	public Canvas canvasSemaines = new Canvas(600, 130);
@@ -89,7 +90,7 @@ public class IHMTache {
 		public void handle(MouseEvent event) {
 			cptClickAccel += 1;
 			File accelFileClicked = new File("ressources/bouton_accelerer_clicked.png");
-			Image accelImgClicked = null;
+			
 			try {
 				accelImgClicked = new Image(accelFileClicked.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
