@@ -63,24 +63,19 @@ public class MoteurIHM extends Application {
 	
 	public IHMTache constructeur;
 	public Image imgAvancement = new Image(getClass().getResourceAsStream("rond_avancement.png"));
+	public Image billet = new Image(getClass().getResourceAsStream("billet.png"));
 	
 	public float nbSemaines = 0;
 	
 	private VBox creerResume(int id) {
 		VBox resume = new VBox();
 		Font font = new Font("Arial", 20);
-		File billetFile = new File("ressources/billet.png");
 		valider = new Button();
 		valider.setText("Valider décisions");
 		valider.setOnMouseClicked(e -> {try {
 			jouerEtape(vj);
 		} catch (Exception e1) {e1.printStackTrace();}});
-		Image billet = null;
-		ImageView iv = null;
-		try {
-			billet = new Image(billetFile.toURI().toURL().toString());
-			iv = new ImageView(billet);
-		} catch (MalformedURLException e) {	e.printStackTrace();}
+		ImageView iv = new ImageView(billet);
 		caisse = new Label();
 		Label init = new Label("Caisse initiale: 300€\n\n");
 		Label op = new Label();
