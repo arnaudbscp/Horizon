@@ -63,6 +63,8 @@ public class MoteurIHM extends Application {
 	public File fileAvancement = new File("ressources/rond_avancement.png");
 	public Image imgAvancement;
 	
+	public int nbSemaines;
+	
 	private VBox creerResume(int id) {
 		VBox resume = new VBox();
 		Font font = new Font("Arial", 20);
@@ -123,6 +125,7 @@ public class MoteurIHM extends Application {
 		
 		
 		public void handle(MouseEvent event) {
+			nbSemaines++;
 			imgAvancement = null;
 			try {
 				imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
@@ -141,6 +144,8 @@ public class MoteurIHM extends Application {
 					partie.passerTour();
 					if(tache.getId() != "8") {
 					jouerEtape(vj);
+					} else {
+						jouerScore(vj);
 					}
 				
 				}
@@ -163,6 +168,7 @@ public class MoteurIHM extends Application {
 		}
 		
 		public void handle(MouseEvent event) {
+			nbSemaines++;
 			try { imgAvancement = new Image(fileAvancement.toURI().toURL().toString());
 			} catch (MalformedURLException e) {e.printStackTrace();}
 			int indice = -1;
@@ -199,7 +205,7 @@ public class MoteurIHM extends Application {
 					try {
 						if(avancementMax == dureeMax) {
 							partie.passerTour();
-							if(partie.getTour() != 4) {
+							if(partie.getTour() == 4 || partie.getTour() == 7) {
 							System.out.println("TOUR :" + partie.getTour());
 							jouerTest(vj);
 							} else {
@@ -253,7 +259,6 @@ public class MoteurIHM extends Application {
 	
 	
 	public void jouerEtape(VueJoueur vue) throws Exception { 
-		System.out.println("TOUR: " + partie.getTour());
 		Tacheclass avant = null;
 		avant = (Tacheclass) desc.getTacheById(String.valueOf(partie.getTour()));
 		//Si on est au-dessus du tour 0 et que la tache précédente à des successeurs
@@ -292,7 +297,7 @@ public class MoteurIHM extends Application {
 				constructeur.passer.setOnMouseClicked(event);
 				scene = new Scene(semaine);
 				stage.setScene(scene);
-			}
+			} 
 	}
 		
 	
@@ -361,6 +366,26 @@ public class MoteurIHM extends Application {
 		stage.setScene(scene);
 	}
 	
+	public void jouerScore(VueJoueur vue) throws Exception {
+		VBox scoreBox = new VBox(); 
+		Label title = new Label("SCORE");
+		title.setFont(new Font("Arial", 32));
+		title.setStyle("-fx-text-fill: blue");
+		Font font = new Font("Arial", 24);
+		Label infos = new Label("Nombre de semaines: " + (nbSemaines-2) +"\tVotre caisse: " + vj.getCaisse() + "\tQualité: " + vj.getQualite()+"\n");
+		float partInit = ((32 + (24-(nbSemaines-2)))*(vj.getCaisse()+20))/8000;
+		float partFinal = partInit-vj.getQualite();
+		Label partMarcheInit = new Label("Part de marché initiale (sans la qualité): " + partInit);
+		Label partMarcheFinal = new Label("Part de marché finale (avec qualité): " + partFinal);
+		infos.setFont(font);
+		partMarcheInit.setFont(font);
+		partMarcheFinal.setFont(font);
+		scoreBox.getChildren().addAll(title, infos, partMarcheInit, partMarcheFinal);
+		scoreBox.setSpacing(30);
+		scene = new Scene(scoreBox);
+		stage.setScene(scene);
+	}
+	
 	public class EventQuizz implements EventHandler<MouseEvent> {
 		public int id;
 		
@@ -372,14 +397,27 @@ public class MoteurIHM extends Application {
 			if(id == 1) {
 				System.out.println("GAGNER !");
 				try {
+					if(partie.getTour() == 4) {
+						jouerJalon(vj, 6);
+						scene = new Scene(jalon);
+						stage.setScene(scene);
+					} else {
 					jouerEtape(vj);
+					}
 				} catch (Exception e) {e.printStackTrace();}
 			} else {
 				System.out.println("PERDU !");
 				try {
+					if(partie.getTour() == 4) {
+						jouerJalon(vj, 6);
+						scene = new Scene(jalon);
+						stage.setScene(scene);
+					} else {
 					jouerEtape(vj);
+					}
 				} catch (Exception e) {e.printStackTrace();}
 			}
+			
 		}
 	}
 	
