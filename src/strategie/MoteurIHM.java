@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -327,8 +328,7 @@ public class MoteurIHM extends Application {
 	}
 	
 	public void jouerTest(VueJoueur vue) throws IOException {
-		File quizz = new File("src/Quizz.csv");
-		FileReader fr = new FileReader(quizz);
+		InputStreamReader fr = new InputStreamReader(getClass().getResourceAsStream("Quizz.csv"));
 		BufferedReader br = new BufferedReader(fr);
 		ArrayList<String> liste = new ArrayList<>();
 		for(String line = br.readLine(); line != null; line = br.readLine()) {
@@ -374,11 +374,9 @@ public class MoteurIHM extends Application {
 		float partInit = ((32 + (24-(nbSemaines-2)))*((float)vj.getCaisse()+20))/8000;
 		String stringPartInit = String.valueOf(partInit);
 		Label partMarcheInit = new Label("Part de marché initiale (sans la qualité): " + stringPartInit.substring(2, 4) + "%");
-		Label partMarcheFinal = new Label("Part de marché finale (avec qualité): " + "A FAIRE");
 		infos.setFont(font);
 		partMarcheInit.setFont(font);
-		partMarcheFinal.setFont(font);
-		scoreBox.getChildren().addAll(title, infos, partMarcheInit, partMarcheFinal);
+		scoreBox.getChildren().addAll(title, infos, partMarcheInit);
 		scoreBox.setSpacing(30);
 		scene = new Scene(scoreBox);
 		stage.setScene(scene);
