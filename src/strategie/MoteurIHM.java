@@ -63,7 +63,7 @@ public class MoteurIHM extends Application {
 	public File fileAvancement = new File("ressources/rond_avancement.png");
 	public Image imgAvancement;
 	
-	public int nbSemaines;
+	public float nbSemaines = 0;
 	
 	private VBox creerResume(int id) {
 		VBox resume = new VBox();
@@ -373,10 +373,10 @@ public class MoteurIHM extends Application {
 		title.setStyle("-fx-text-fill: blue");
 		Font font = new Font("Arial", 24);
 		Label infos = new Label("Nombre de semaines: " + (nbSemaines-2) +"\tVotre caisse: " + vj.getCaisse() + "\tQualité: " + vj.getQualite()+"\n");
-		float partInit = ((32 + (24-(nbSemaines-2)))*(vj.getCaisse()+20))/8000;
-		float partFinal = partInit-vj.getQualite();
-		Label partMarcheInit = new Label("Part de marché initiale (sans la qualité): " + partInit);
-		Label partMarcheFinal = new Label("Part de marché finale (avec qualité): " + partFinal);
+		float partInit = ((32 + (24-(nbSemaines-2)))*((float)vj.getCaisse()+20))/8000;
+		String stringPartInit = String.valueOf(partInit);
+		Label partMarcheInit = new Label("Part de marché initiale (sans la qualité): " + stringPartInit.substring(2, 4) + "%");
+		Label partMarcheFinal = new Label("Part de marché finale (avec qualité): " + "A FAIRE");
 		infos.setFont(font);
 		partMarcheInit.setFont(font);
 		partMarcheFinal.setFont(font);
